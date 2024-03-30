@@ -31,7 +31,17 @@ const router = createBrowserRouter([
         path: "/theme",
         element: <ChooseTheme />
       },
-    ],
+
+
+      {
+        path: "/user",
+        element: <Home />
+      },
+      {
+        path: "/user/theme",
+        element: <ChooseTheme />
+      }
+    ]
   },
 ]);
 

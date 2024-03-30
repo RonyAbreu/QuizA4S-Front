@@ -45,3 +45,13 @@
     color: #fff;
     text-decoration: none;
 }
+
+.profile{
+    font-size: 2.6em;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+
+.profile:hover{
+    color: rgb(76, 76, 250);
+}

@@ -1,12 +1,16 @@
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import '../css/Home.css'
 
 const Home = () => {
-
+  const path = useLocation()
   const navigate = useNavigate()
 
   function handleNavigate(){
-    navigate("/theme")
+    if(path.pathname === "/user"){
+      navigate("/user/theme")
+    } else {
+      navigate("/theme")
+    }
   }
 
   return (
