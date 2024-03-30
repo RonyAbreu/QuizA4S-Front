@@ -1,13 +1,17 @@
-import React from "react";
-import { useRouteError } from "react-router-dom";
+import "../css/ErrorPage.css";
+import { useNavigate, useRouteError } from "react-router-dom";
 
 const ErrorPage = () => {
   const routerError = useRouteError();
+  const navigate = useNavigate();
   return (
-    <div>
-      <h1>Ops! Página não encontrada</h1>
-      <p>{routerError.error.message}</p>
-      <p>{routerError.statusText}</p>
+    <div className="container-erro">
+      <div className="container-data">
+        <h1 className="title-erro">Ops! Página não encontrada</h1>
+        <p>{routerError.status}</p>
+        <p>{routerError.statusText}</p>
+        <button type="button" onClick={() => navigate("/")}>Voltar ao Ínicio</button>
+      </div>
     </div>
   );
 };
