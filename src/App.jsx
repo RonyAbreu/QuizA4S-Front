@@ -18,7 +18,7 @@ function App() {
   const path = useLocation().pathname;
 
   useEffect(() => {
-    if (path === "/theme" || path.startsWith("/user")) {
+    if (path.startsWith("/user")) {
       setHome(true);
       setRegister(true);
       setLogin(true);
