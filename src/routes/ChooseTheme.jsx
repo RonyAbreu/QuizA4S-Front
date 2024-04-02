@@ -4,6 +4,7 @@ import { URL_BASE } from "../App";
 
 //Css
 import "../css/ChooseTheme.css";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const url = `${URL_BASE}/theme`;
 
@@ -11,6 +12,8 @@ const ChooseTheme = () => {
   const [themeName, setThemeName] = useState("");
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate()
+  const path = useLocation().pathname
 
   async function searchThemeName(e) {
     const inputName = e.target.value;
@@ -41,8 +44,16 @@ const ChooseTheme = () => {
     getAllThemes();
   }, []);
 
+  function startQuiz(id){
+    if(path.includes('user')){
+      navigate(`/user/theme/quiz/${id}`)
+    } else {
+      navigate(`/theme/quiz/${id}`)
+    }
+  }
+
   return (
-    <div className="container-theme">
+    <div className="container-theme outlet">
       <div className="container-theme-data">
         <div className="theme-form">
           <h1>Escolha o tema do seu Quiz</h1>
@@ -59,7 +70,7 @@ const ChooseTheme = () => {
         <div className="container-all-themes">
           {themes &&
             themes.map((theme) => (
-              <div className="theme" key={theme.id}>
+              <div className="theme" key={theme.id} onClick={() => startQuiz(theme.id)}>
                 <img src={theme.imageUrl} alt="theme-image" />
                 <p>{theme.name}</p>
               </div>

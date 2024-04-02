@@ -5,7 +5,7 @@ const ErrorPage = () => {
   const routerError = useRouteError();
   const navigate = useNavigate();
   return (
-    <div className="container-erro">
+    <div className="container-erro outlet">
       <div className="container-data">
         <h1 className="title-erro">Ops! Página não encontrada</h1>
         <p>{routerError.status}</p>
