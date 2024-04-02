@@ -8,6 +8,7 @@ import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
 import Register from "./routes/Register.jsx";
 import ChooseTheme from "./routes/ChooseTheme.jsx";
+import Quiz from "./routes/Quiz.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
         path: "/theme",
         element: <ChooseTheme />
       },
+      {
+        path: "/theme/quiz/:id",
+        element: <Quiz />
+      },
 
 
       {
@@ -40,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/user/theme",
         element: <ChooseTheme />
+      },
+      {
+        path: "/user/theme/quiz/:id",
+        element: <Quiz />
       }
     ]
   },
