@@ -1,0 +1,9 @@
+.container-quiz{
+    width: 80%;
+    padding: 40px;
+    background-color: #fff;
+    box-shadow: 0px 0px 5px #000;
+    margin: 40px;
+    border-radius: 20px;
+    min-height: 600px;
+}
