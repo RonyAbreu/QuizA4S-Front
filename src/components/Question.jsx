@@ -1,14 +1,14 @@
-const Question = ({ title, alternatives }) => {
+import "../css/Question.css";
+
+const Question = ({ title, alternatives, onAnswerClick }) => {
   return (
     <div className="question">
-      <div className="question-title">
-        <h1>{title}</h1>
-      </div>
+      <h1 className="question-title">{title}</h1>
 
       <ul className="alternatives">
         {alternatives &&
           alternatives.map((alternative) => (
-            <li key={alternative.id} value={alternative.correct}>
+            <li key={alternative.id} value={alternative.correct} onClick={onAnswerClick}>
               {alternative.text}
             </li>
           ))}
