@@ -47,7 +47,7 @@ const Header = ({ home, register, login, profile }) => {
         )}
 
         {!profile && (
-          <i class="bi bi-person-circle profile"></i>
+          <i className="bi bi-person-circle profile"></i>
         )}
       </ul>
     </header>
