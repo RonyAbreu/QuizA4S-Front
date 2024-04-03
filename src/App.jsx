@@ -18,17 +18,20 @@ function App() {
   const path = useLocation().pathname;
 
   useEffect(() => {
-    if (path.startsWith("/user")) {
-      setHome(true);
-      setRegister(true);
-      setLogin(true);
-      setProfile(false);
-    } else {
-      setHome(false);
-      setRegister(false);
-      setLogin(false);
-      setProfile(true);
-    }
+    // if (path.startsWith("/user")) {
+    //   setHome(true);
+    //   setRegister(true);
+    //   setLogin(true);
+    //   setProfile(false);
+    // } else {
+    //   setHome(false);
+    //   setRegister(false);
+    //   setLogin(false);
+    //   setProfile(true);
+    // }
+    setHome(false);
+    setRegister(true);
+    setLogin(true);
   }, [path]);
 
   return (
