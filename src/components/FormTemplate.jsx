@@ -4,6 +4,7 @@ import InformationBox from "../components/InformationBox";
 import { URL_BASE } from "../App";
 
 import "../css/FormTemplate.css";
+import Loading from "./Loading";
 
 const FormTemplate = ({
   title,
@@ -15,6 +16,7 @@ const FormTemplate = ({
   const [formData, setFormData] = useState({});
   const [activeInformationBox, setInformationBox] = useState(false);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
 
@@ -23,7 +25,7 @@ const FormTemplate = ({
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     if (isInvalidPassword()) return;
@@ -32,6 +34,7 @@ const FormTemplate = ({
   };
 
   const handleRequest = async (url) => {
+    setLoading(true)
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -39,6 +42,7 @@ const FormTemplate = ({
       },
       body: JSON.stringify(formData),
     });
+    setLoading(false)
 
     if (![200, 201].includes(response.status)) {
       setError("Credenciais inválidas");
@@ -49,6 +53,7 @@ const FormTemplate = ({
     if (url.includes("register")) {
       let newUrl = url.replace("register", "login");
 
+      setLoading(true)
       const responseLogin = await fetch(newUrl, {
         method: "POST",
         headers: {
@@ -56,6 +61,7 @@ const FormTemplate = ({
         },
         body: JSON.stringify(formData),
       });
+      setLoading(false)
 
       const responseJson = await responseLogin.json();
       window.localStorage.setItem("token", responseJson.token);
@@ -100,6 +106,8 @@ const FormTemplate = ({
             />
           </label>
         ))}
+
+        {loading && <Loading />}
 
         {activeInformationBox && (
           <InformationBox

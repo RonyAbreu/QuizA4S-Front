@@ -6,6 +6,7 @@ import Question from "../components/Question";
 //Css
 import "../css/Quiz.css";
 import InformationBox from "../components/InformationBox";
+import Loading from "../components/Loading";
 
 const Quiz = () => {
   const path = useLocation().pathname;
@@ -69,7 +70,7 @@ const Quiz = () => {
 
   return (
     <div className="container-quiz">
-      {loading && <h1>Carregando...</h1>}
+      {loading && <Loading />}
 
       {informationBox && (
         <InformationBox

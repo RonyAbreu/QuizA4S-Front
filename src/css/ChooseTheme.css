@@ -88,11 +88,6 @@
     top: 50%;
 }
 
-.loading{
-    background-color: #ffffff;
-    padding: 10px;
-}
-
 .pagination-buttons{
     width: 100%;
     display: flex;

@@ -5,6 +5,7 @@ import { URL_BASE } from "../App";
 //Css
 import "../css/ChooseTheme.css";
 import { useLocation, useNavigate } from "react-router-dom";
+import Loading from "../components/Loading";
 
 const url = `${URL_BASE}/theme`;
 
@@ -118,7 +119,7 @@ const ChooseTheme = () => {
 
           {!themes && <h2 className="not-found">Nenhum tema encontrado!</h2>}
           <div className="container-info">
-            {loading && <h2 className="loading">Carregando...</h2>}
+            {loading && <Loading />}
           </div>
         </div>
       </div>
