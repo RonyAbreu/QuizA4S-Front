@@ -5,6 +5,7 @@ import Question from "../components/Question";
 
 //Css
 import "../css/Quiz.css";
+import InformationBox from "../components/InformationBox";
 
 const Quiz = () => {
   const path = useLocation().pathname;
@@ -12,8 +13,9 @@ const Quiz = () => {
   const [loading, setLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [informationBox, setInformationBox] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   let themeId;
 
@@ -39,27 +41,44 @@ const Quiz = () => {
   }, []);
 
   function handleAnswerClick(alternative) {
-    if (currentQuestionIndex === questions.length - 1) {
-      alert("quiz acabou");
-      alert(`Você acertou ${score + 1} de 10 questões!`);
-      navigate("/theme")
-      return;
-    }
+    const alternatives = document.querySelectorAll("li");
 
-    setCurrentQuestionIndex(currentQuestionIndex + 1);
+    alternatives.forEach((alt) => {
+      if (alt.getAttribute("value") === "true")
+        alt.style.backgroundColor = "green";
+      else alt.style.backgroundColor = "red";
+    });
 
-    if (isAlternativeCorrect(alternative)) {
-      setScore(score + 1);
-    }
+    setTimeout(() => {
+      if (currentQuestionIndex === questions.length - 1) {
+        setInformationBox(true);
+        return;
+      }
+
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+
+      if (isAlternativeCorrect(alternative)) {
+        setScore(score + 1);
+      }
+    }, 1500);
   }
 
-  function isAlternativeCorrect(alternative){
+  function isAlternativeCorrect(alternative) {
     return alternative.target.getAttribute("value") === "true";
   }
 
   return (
     <div className="container-quiz">
       {loading && <h1>Carregando...</h1>}
+
+      {informationBox && (
+        <InformationBox
+          text={`Você acertou ${score + 1} de 10 questões!`}
+          closeBox={() => navigate("/theme")}
+          icon="check"
+          color="green"
+        />
+      )}
 
       {questions.length > 0 && (
         <Question
