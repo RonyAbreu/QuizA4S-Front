@@ -61,7 +61,7 @@ const Quiz = () => {
       if (isAlternativeCorrect(alternative)) {
         setScore(score + 1);
       }
-    }, 1500);
+    }, 1000);
   }
 
   function isAlternativeCorrect(alternative) {
@@ -86,6 +86,8 @@ const Quiz = () => {
           title={questions[currentQuestionIndex].title}
           alternatives={questions[currentQuestionIndex].alternatives}
           onAnswerClick={handleAnswerClick}
+          currentQuestion={currentQuestionIndex + 1}
+          lastQuestion={questions.length}
         />
       )}
     </div>

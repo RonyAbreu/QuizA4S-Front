@@ -3,9 +3,22 @@
     min-height: 500px;
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: start;
     flex-direction: column;
     gap: 100px;
+}
+
+.question-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.question-number{
+    font-size: 1.2em;
 }
 
 .question-title{
