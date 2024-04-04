@@ -1,0 +1,7 @@
+version: '3.5'
+
+services:
+  frontend-quiz:
+    image: ronyabreu/frontend-quiz
+    ports:
+      - "8888:80"
