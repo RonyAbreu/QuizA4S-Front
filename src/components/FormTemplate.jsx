@@ -105,6 +105,8 @@ const FormTemplate = ({
           <InformationBox
             text={error}
             closeBox={closeInformationBox}
+            icon="exclamation"
+            color="red"
           />
         )}
 

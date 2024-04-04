@@ -22,9 +22,8 @@
   word-wrap: break-word;
 }
 
-.exclamation {
+.box-icon {
   font-size: 45px;
-  color: red;
 }
 
 .button {
@@ -35,7 +34,6 @@
   cursor: pointer;
   font-size: 1.1em;
   font-weight: bold;
-  background-color: red;
   color: #fff;
   transition: 0.3s ease-in-out;
 }

@@ -1,14 +1,17 @@
 import "../css/InformationBox.css";
 
-const InformationBox = ({ text, closeBox}) => {
+// icon vai ser "exclamation" para erro e "check" para sucesso
+
+const InformationBox = ({ text, closeBox, icon, color}) => {
   return (
     <div className="box">
-      <h2 className="text">{text}</h2>
-      <i class="bi bi-exclamation-circle-fill exclamation"></i>
+      <h2 className="text" style={{color: `${color}`}}>{text}</h2>
+      <i className={`bi bi-${icon}-circle-fill box-icon`} style={{color: `${color}`}}></i>
       <button
         className="button"
         type="button"
         onClick={closeBox}
+        style={{backgroundColor: `${color}`}}
       >
         Ok
       </button>
