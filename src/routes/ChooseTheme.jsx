@@ -18,76 +18,47 @@ const ChooseTheme = () => {
   const path = useLocation().pathname;
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [firstPage, setFirstPage] = useState(true);
-  const [lastPage, setLastPage] = useState(false);
-
-  async function searchThemeName(e) {
-    const inputName = e.target.value;
-
-    setThemeName(inputName);
-
-    setLoading(true);
-    const response = await fetch(`${url}/search?name=${inputName}`);
-
-    const pageOfThemesByName = await response.json();
-    const themesByName = pageOfThemesByName.content;
-    setLoading(false);
-
-    setThemes(themesByName);
-  }
+  const [isFirstPage, setIsFirstPage] = useState(true);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   useEffect(() => {
     async function getAllThemes() {
       setLoading(true);
       const response = await fetch(`${url}?page=${currentPage}`);
       const page = await response.json();
-
-      setFirstPage(page.first);
-      setLastPage(page.last);
-
       const themes = page.content;
       setLoading(false);
       setThemes(themes);
+      setIsFirstPage(currentPage === 0);
+      setIsLastPage(currentPage === page.totalPages - 1);
     }
 
     getAllThemes();
   }, [currentPage]);
 
-  function startQuiz(id) {
-    if (path.includes("user")) {
-      navigate(`/user/theme/quiz/${id}`);
-    } else {
-      navigate(`/theme/quiz/${id}`);
-    }
+  async function searchThemeName(e) {
+    const inputName = e.target.value;
+    setThemeName(inputName);
+    setLoading(true);
+    const response = await fetch(`${url}/search?name=${inputName}`);
+    const pageOfThemesByName = await response.json();
+    const themesByName = pageOfThemesByName.content;
+    setLoading(false);
+    setThemes(themesByName);
   }
 
-  function alterPage(e) {
-    const buttonValue = e.target.value;
+  function startQuiz(id) {
+    const quizPath = path.includes("user") ? "/user/theme/quiz/" : "/theme/quiz/";
+    navigate(`${quizPath}${id}`);
+  }
 
-    if (buttonValue === "prev" && !firstPage) {
+  function alterPage(direction) {
+    if (direction === "prev" && !isFirstPage) {
       setCurrentPage(currentPage - 1);
-    }
-
-    if (buttonValue === "next" && !lastPage) {
+    } else if (direction === "next" && !isLastPage) {
       setCurrentPage(currentPage + 1);
     }
   }
-
-  useEffect(()=>{
-
-    const btnPrev = document.getElementById("prev");
-    const btnNext = document.getElementById("next")
-
-    if(firstPage){
-      btnPrev.setAttribute("disabled", "disabled")
-    } else if(lastPage){
-      btnNext.setAttribute("disabled", "disabled")
-    } else {
-      btnPrev.removeAttribute("disabled")
-      btnNext.removeAttribute("disabled")
-    }
-
-  }, [firstPage, lastPage])
 
   return (
     <div className="container-theme outlet">
@@ -125,10 +96,18 @@ const ChooseTheme = () => {
       </div>
 
       <div className="pagination-buttons">
-        <button type="button" onClick={alterPage} value="prev" id="prev">
+        <button
+          type="button"
+          onClick={() => alterPage("prev")}
+          disabled={isFirstPage}
+        >
           Anterior
         </button>
-        <button type="button" onClick={alterPage} value="next" id="next">
+        <button
+          type="button"
+          onClick={() => alterPage("next")}
+          disabled={isLastPage}
+        >
           Próximo
         </button>
       </div>
