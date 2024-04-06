@@ -48,8 +48,7 @@ const ChooseTheme = () => {
   }
 
   function startQuiz(id) {
-    const quizPath = path.includes("user") ? "/user/theme/quiz/" : "/theme/quiz/";
-    navigate(`${quizPath}${id}`);
+    navigate(`/theme/quiz/${id}`);
   }
 
   function alterPage(direction) {

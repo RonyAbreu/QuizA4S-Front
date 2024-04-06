@@ -2,13 +2,14 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import { createBrowserRouter, RouterProvider, Router } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./routes/ErrorPage.jsx";
 import Home from "./routes/Home.jsx";
 import Login from "./routes/Login.jsx";
 import Register from "./routes/Register.jsx";
 import ChooseTheme from "./routes/ChooseTheme.jsx";
 import Quiz from "./routes/Quiz.jsx";
+import { AuthenticationProvider } from "./context/AutenticationContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,32 +31,20 @@ const router = createBrowserRouter([
       },
       {
         path: "/theme",
-        element: <ChooseTheme />
+        element: <ChooseTheme />,
       },
       {
         path: "/theme/quiz/:id",
-        element: <Quiz />
+        element: <Quiz />,
       },
-
-
-      {
-        path: "/user",
-        element: <Home />
-      },
-      {
-        path: "/user/theme",
-        element: <ChooseTheme />
-      },
-      {
-        path: "/user/theme/quiz/:id",
-        element: <Quiz />
-      }
-    ]
+    ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthenticationProvider>
+      <RouterProvider router={router} />
+    </AuthenticationProvider>
   </React.StrictMode>
 );

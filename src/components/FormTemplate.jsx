@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InformationBox from "../components/InformationBox";
 import { URL_BASE } from "../App";
 
 import "../css/FormTemplate.css";
 import Loading from "./Loading";
+import { AuthenticationContext } from "../context/AutenticationContext";
 
 const FormTemplate = ({
   title,
@@ -18,7 +19,7 @@ const FormTemplate = ({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
+  const {isAuthenticated, setAuthenticated} = useContext(AuthenticationContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,11 +31,11 @@ const FormTemplate = ({
 
     if (isInvalidPassword()) return;
 
-    handleRequest(URL_BASE + onSubmit.url)
+    handleRequest(URL_BASE + onSubmit.url);
   };
 
   const handleRequest = async (url) => {
-    setLoading(true)
+    setLoading(true);
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -42,7 +43,7 @@ const FormTemplate = ({
       },
       body: JSON.stringify(formData),
     });
-    setLoading(false)
+    setLoading(false);
 
     if (![200, 201].includes(response.status)) {
       setError("Credenciais inválidas");
@@ -50,10 +51,14 @@ const FormTemplate = ({
       return;
     }
 
+    const responseJson = await response.json();
+    window.localStorage.setItem("token", responseJson.token);
+    setAuthenticated(true)
+
     if (url.includes("register")) {
       let newUrl = url.replace("register", "login");
 
-      setLoading(true)
+      setLoading(true);
       const responseLogin = await fetch(newUrl, {
         method: "POST",
         headers: {
@@ -61,13 +66,14 @@ const FormTemplate = ({
         },
         body: JSON.stringify(formData),
       });
-      setLoading(false)
+      setLoading(false);
 
       const responseJson = await responseLogin.json();
       window.localStorage.setItem("token", responseJson.token);
+      setAuthenticated(true)
     }
 
-    navigate("/user");
+    navigate("/");
   };
 
   const isInvalidPassword = () => {

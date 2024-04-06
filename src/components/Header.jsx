@@ -3,7 +3,8 @@ import logo from "../assets/logo-a4s.png";
 
 import "../css/Header.css";
 
-const Header = ({ home, register, login, profile }) => {
+const Header = ({ isAuth }) => {
+
   return (
     <header className="header">
       <Link to="/">
@@ -13,7 +14,7 @@ const Header = ({ home, register, login, profile }) => {
       <h1 className="title">Quiz A4S</h1>
 
       <ul className="nav-bar">
-        {!home && (
+        {!isAuth && (
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -24,7 +25,7 @@ const Header = ({ home, register, login, profile }) => {
           </NavLink>
         )}
 
-        {!register && (
+        {!isAuth && (
           <NavLink
             to="/register"
             className={({ isActive }) =>
@@ -35,7 +36,7 @@ const Header = ({ home, register, login, profile }) => {
           </NavLink>
         )}
 
-        {!login && (
+        {!isAuth && (
           <NavLink
             to="/login"
             className={({ isActive }) =>
@@ -46,7 +47,7 @@ const Header = ({ home, register, login, profile }) => {
           </NavLink>
         )}
 
-        {!profile && (
+        {isAuth && (
           <i className="bi bi-person-circle profile"></i>
         )}
       </ul>

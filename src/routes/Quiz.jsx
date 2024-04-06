@@ -18,15 +18,12 @@ const Quiz = () => {
 
   const navigate = useNavigate();
 
-  let themeId;
+  
 
-  if (path.includes("user")) {
-    themeId = path.substring("/user/theme/quiz/".length);
-  } else {
-    themeId = path.substring("/theme/quiz/".length);
-  }
 
   useEffect(() => {
+    let themeId = path.substring("/theme/quiz/".length)
+    
     async function getQuestionsByThemeId() {
       const url = `${URL_BASE}/question/quiz/${themeId}`;
 
@@ -61,7 +58,7 @@ const Quiz = () => {
       if (isAlternativeCorrect(alternative)) {
         setScore(score + 1);
       }
-    }, 1000);
+    }, 500);
   }
 
   function isAlternativeCorrect(alternative) {
