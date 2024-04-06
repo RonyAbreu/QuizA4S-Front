@@ -1,39 +1,30 @@
 // Components
 import Header from "./components/Header";
-import { Outlet, useLocation, useParams } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import Footer from "./components/Footer";
 
 // Css
 import "./App.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AuthenticationContext } from "./context/AutenticationContext";
 
 export const URL_BASE = "http://api.observatorioturismopb.com.br:8085/api/v1";
 
 function App() {
-  const [home, setHome] = useState(false);
-  const [register, setRegister] = useState(false);
-  const [login, setLogin] = useState(false);
-  const [profile, setProfile] = useState(true);
-
-  const path = useLocation().pathname;
+  const {isAuthenticated, setAuthenticated} = useContext(AuthenticationContext);
 
   useEffect(() => {
-    if (path.startsWith("/user")) {
-      setHome(true);
-      setRegister(true);
-      setLogin(true);
-      setProfile(false);
-    } else {
-      setHome(false);
-      setRegister(false);
-      setLogin(false);
-      setProfile(true);
+    const token = localStorage.getItem('token');
+
+    if(token){
+      setAuthenticated(true)
     }
-  }, [path]);
+
+  }, []);
 
   return (
     <div className="app">
-      <Header home={home} register={register} login={login} profile={profile} />
+      <Header isAuth={isAuthenticated} />
       <Outlet />
       <Footer />
     </div>
