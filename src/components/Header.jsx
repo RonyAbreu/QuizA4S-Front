@@ -2,8 +2,12 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/logo-a4s.png";
 
 import "../css/Header.css";
+import { useState } from "react";
+import Menu from "./Menu";
 
 const Header = ({ isAuth }) => {
+
+  const [menu, setMenu] = useState(false);
 
   return (
     <header className="header">
@@ -48,9 +52,11 @@ const Header = ({ isAuth }) => {
         )}
 
         {isAuth && (
-          <i className="bi bi-person-circle profile"></i>
+          <i className="bi bi-person-circle profile" onClick={() => setMenu(true)}></i>
         )}
       </ul>
+
+      {menu && <Menu setMenu={setMenu} />}
     </header>
   );
 };

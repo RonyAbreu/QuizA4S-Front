@@ -1,0 +1,59 @@
+.menu{
+    width: 300px;
+    min-height: 35%;
+    background-color: #fff;
+    border-bottom-left-radius: 15px;
+    box-shadow: inset 0px 0px 5px #000;
+    position: fixed;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.container-btn-fechar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    height: 50px;
+    margin-bottom: 1.5em;
+}
+
+.container-btn-fechar button{
+    height: 100%;
+    width: 40px;
+    font-size: 1.6em;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.container-btn-fechar button:hover{
+    color: red;
+}
+
+.container-btns{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .5em;
+}
+
+.container-btns button{
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.1em;
+    border-radius: 5px;
+    background-color: #3498db;
+    border: 2px solid #3498db;
+    color: #fff;
+    font-weight: bold;
+}
+
+.container-btns button:hover{
+    background-color: #3498dbb5;
+}

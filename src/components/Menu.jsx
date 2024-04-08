@@ -1,10 +1,40 @@
-const Menu = () => {
+import { useContext } from "react";
+import { AuthenticationContext } from "../context/AutenticationContext";
+import { useNavigate } from "react-router-dom";
+
+import "../css/Menu.css";
+
+const Menu = ({ setMenu }) => {
+
+  const { isAuthenticated, setAuthenticated } = useContext(AuthenticationContext)
+  const navigate = useNavigate();
+
+  function logout(){
+    const token = localStorage.getItem('token')
+
+    if(token){
+      localStorage.removeItem('token')
+      setMenu(false)
+      setAuthenticated(false)
+      navigate("/login")
+    }
+  }
+
   return (
-    <div>
+    <div className="menu">
+      <div className="container-btn-fechar">
+        <button type="button" onClick={() => setMenu(false)}>
+          X
+        </button>
+      </div>
+
+      <div className="container-btns">
         <button type="button">Meu Perfil</button>
         <button type="button">Criar Quiz</button>
+        <button type="button" onClick={logout}>Sair</button>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;
