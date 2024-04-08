@@ -5,22 +5,13 @@ import Footer from "./components/Footer";
 
 // Css
 import "./App.css";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthenticationContext } from "./context/AutenticationContext";
 
 export const URL_BASE = "http://api.observatorioturismopb.com.br:8085/api/v1";
 
 function App() {
-  const {isAuthenticated, setAuthenticated} = useContext(AuthenticationContext);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    if(token){
-      setAuthenticated(true)
-    }
-
-  }, []);
+  const { isAuthenticated } = useContext(AuthenticationContext);
 
   return (
     <div className="app">
