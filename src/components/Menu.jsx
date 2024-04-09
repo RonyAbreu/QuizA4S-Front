@@ -6,7 +6,7 @@ import "../css/Menu.css";
 
 const Menu = ({ setMenu }) => {
 
-  const { isAuthenticated, setAuthenticated } = useContext(AuthenticationContext)
+  const { setAuthenticated } = useContext(AuthenticationContext)
   const navigate = useNavigate();
 
   function logout(){

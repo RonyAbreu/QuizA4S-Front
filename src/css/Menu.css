@@ -1,8 +1,9 @@
 .menu{
     width: 300px;
-    min-height: 35%;
+    height: 100%;
     background-color: #fff;
     border-bottom-left-radius: 15px;
+    border-top-left-radius: 15px;
     box-shadow: inset 0px 0px 5px #000;
     position: fixed;
     right: 0;
@@ -19,7 +20,7 @@
     align-items: center;
     justify-content: end;
     height: 50px;
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 
 .container-btn-fechar button{

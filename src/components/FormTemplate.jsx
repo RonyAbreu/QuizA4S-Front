@@ -19,7 +19,7 @@ const FormTemplate = ({
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const {isAuthenticated, setAuthenticated} = useContext(AuthenticationContext);
+  const {setAuthenticated} = useContext(AuthenticationContext);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
