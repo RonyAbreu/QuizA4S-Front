@@ -1,9 +1,9 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from "../assets/logo-a4s.png";
+import logo from "../../assets/logo-a4s.png";
 
-import "../css/Header.css";
+import "./Header.css";
 import { useState } from "react";
-import Menu from "./Menu";
+import Menu from "../menu/Menu";
 
 const Header = ({ isAuth }) => {
 

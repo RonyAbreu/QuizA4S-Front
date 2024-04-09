@@ -3,13 +3,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import ErrorPage from "./routes/ErrorPage.jsx";
-import Home from "./routes/Home.jsx";
-import Login from "./routes/Login.jsx";
-import Register from "./routes/Register.jsx";
-import ChooseTheme from "./routes/ChooseTheme.jsx";
-import Quiz from "./routes/Quiz.jsx";
+import ErrorPage from "./routes/erroPage/ErrorPage.jsx";
+import Home from "./routes/home/Home.jsx";
+import Login from "./routes/user/Login.jsx";
+import Register from "./routes/user/Register.jsx";
+import ChooseTheme from "./routes/chooseTheme/ChooseTheme.jsx";
+import Quiz from "./routes/quiz/Quiz.jsx";
 import { AuthenticationProvider } from "./context/AutenticationContext.jsx";
+import CreateQuiz from "./routes/quiz/CreateQuiz.jsx";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         path: "/theme/quiz/:id",
         element: <Quiz />,
       },
+      {
+        path: "/create/quiz",
+        element: <CreateQuiz />
+      }
     ],
   },
 ]);

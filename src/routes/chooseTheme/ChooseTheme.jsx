@@ -1,11 +1,12 @@
 // Components
 import { useEffect, useState } from "react";
-import { URL_BASE } from "../App";
+import { URL_BASE } from "../../App";
+import { useLocation, useNavigate } from "react-router-dom";
+import Loading from "../../components/loading/Loading";
 
 //Css
-import "../css/ChooseTheme.css";
-import { useLocation, useNavigate } from "react-router-dom";
-import Loading from "../components/Loading";
+import "./ChooseTheme.css";
+
 
 const url = `${URL_BASE}/theme`;
 

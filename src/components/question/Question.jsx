@@ -1,4 +1,4 @@
-import "../css/Question.css";
+import "./Question.css";
 
 const Question = ({
   title,

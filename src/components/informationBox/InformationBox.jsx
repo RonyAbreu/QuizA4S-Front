@@ -1,4 +1,4 @@
-import "../css/InformationBox.css";
+import "./InformationBox.css";
 
 // icon vai ser "exclamation" para erro e "check" para sucesso
 

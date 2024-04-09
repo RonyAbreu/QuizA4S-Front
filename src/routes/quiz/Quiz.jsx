@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { URL_BASE } from "../App";
-import Question from "../components/Question";
+import { URL_BASE } from "../../App";
+import Question from "../../components/question/Question";
 
 //Css
-import "../css/Quiz.css";
-import InformationBox from "../components/InformationBox";
-import Loading from "../components/Loading";
+import "./Quiz.css";
+import InformationBox from "../../components/informationBox/InformationBox";
+import Loading from "../../components/loading/Loading";
 
 const Quiz = () => {
   const path = useLocation().pathname;

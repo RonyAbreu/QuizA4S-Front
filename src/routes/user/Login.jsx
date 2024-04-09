@@ -1,4 +1,4 @@
-import FormTemplate from "../components/FormTemplate";
+import FormTemplate from "../../components/formTemplate/FormTemplate.jsx";
 
 const fields = [
   { name: "email", label: "Email", type: "email", placeholder: "Digite seu email" },
