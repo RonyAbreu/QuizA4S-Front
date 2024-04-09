@@ -18,9 +18,6 @@ const Quiz = () => {
 
   const navigate = useNavigate();
 
-  
-
-
   useEffect(() => {
     let themeId = path.substring("/theme/quiz/".length)
     
