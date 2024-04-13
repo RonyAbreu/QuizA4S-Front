@@ -8,13 +8,15 @@ import "./CreateQuiz.css";
 const CreateQuiz = () => {
   const [currentComponent, setCurrentComponent] = useState(0);
 
-  const quizComponents = [<SelectTheme />, <CreateQuestions />];
+  const quizComponents = [<SelectTheme currentComponent={currentComponent} setCurrentComponent={setCurrentComponent} />, <CreateQuestions />];
 
   return (
     <div className="container-create-quiz outlet">
       <h1 className="create-quiz-title">Crie seu Quiz</h1>
 
-      <div className="container-create">{quizComponents[currentComponent]}</div>
+      <div className="container-create">
+        {quizComponents[currentComponent]}
+      </div>
     </div>
   );
 };

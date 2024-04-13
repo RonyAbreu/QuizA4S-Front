@@ -1,0 +1,25 @@
+.container-select-theme{
+    display: flex;
+    flex-direction: column;
+}
+
+.add-theme-btn{
+    width: 100%;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.add-theme-btn i{
+    font-size: 3em;
+    margin-right: -100px;
+    margin-top: 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+}
+
+.add-theme-btn i:hover{
+    color: green;
+}
