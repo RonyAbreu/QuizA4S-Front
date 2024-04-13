@@ -1,7 +1,17 @@
 import React, { useState } from "react";
 import "./CreateQuestions.css";
+import { URL_BASE } from "../../App";
+import { useLocation } from "react-router-dom";
+
+const urlQuestion = `${URL_BASE}/question`
+const urlAlternative = `${URL_BASE}/alternative/all`
+
 
 const CreateQuestions = () => {
+
+  const path = useLocation().pathname
+  const idTheme = Number(path.substring("/create/quiz/".length))
+
   const [question, setQuestion] = useState({
     title: "",
     imageUrl: "",
@@ -13,6 +23,79 @@ const CreateQuestions = () => {
     { text: "", correct: false },
     { text: "", correct: false },
   ]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+
+    if(!token) return;
+
+    postQuestion(token)
+  };
+
+  async function postQuestion(token){
+    const questionResponse = await fetch(`${urlQuestion}/${idTheme}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(question)
+    })
+
+    if(!questionResponse.ok){
+      alert("Erro na requisição da questão")
+      return;
+    }
+
+    const questionJson = await questionResponse.json()
+    
+    postAllAltervatives(questionJson.id, token)
+  }
+
+  async function postAllAltervatives(idQuestion, token){
+    const alternativeResponse = await fetch(`${urlAlternative}/${idQuestion}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify(alternatives)
+    })
+
+    if(!alternativeResponse.ok){
+      alert("Requisição alternativas deu erro")
+      removeQuestion(idQuestion, token)
+      return
+    }
+
+    alert("Questão cadastrada com sucesso!")
+    clearForm()
+  }
+
+  async function removeQuestion(idQuestion, token){
+    const questionResponse = await fetch(`${urlQuestion}/${idQuestion}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      },
+    })
+
+    if(!questionResponse.ok){
+      alert("Requisição de remover question deu erro")
+    }
+  }
+
+  function clearForm(){
+    setQuestion((prevQuestion) =>{
+      return {...prevQuestion, title: "", imageUrl: ""}
+    })
+    
+    for(let i = 0; i < alternatives.length; i++){
+      alternatives[i] = {text: "", correct: false}
+    }
+  }
 
   const changeQuestion = (value, data) => {
     setQuestion((prevQuestion) => ({ ...prevQuestion, [value]: data }));
@@ -29,15 +112,10 @@ const CreateQuestions = () => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aqui você pode lidar com o envio do formulário
-  };
-
   return (
     <div className="container-create-questions">
       <h2 className="create-questions-title">Crie as Questões do seu Quiz</h2>
-      <form onSubmit={handleSubmit} className="create-questions-form">
+      <form onSubmit={handleSubmit} className="create-questions-form" id="form">
         <div className="container-question">
           <label className="data-question">
             <span>Titulo:</span>
