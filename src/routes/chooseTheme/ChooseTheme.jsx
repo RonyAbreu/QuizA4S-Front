@@ -1,7 +1,7 @@
 // Components
 import { useEffect, useState } from "react";
 import { URL_BASE } from "../../App";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "../../components/loading/Loading";
 
 //Css
@@ -16,7 +16,6 @@ const ChooseTheme = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const path = useLocation().pathname;
 
   const [currentPage, setCurrentPage] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(true);
@@ -39,11 +38,13 @@ const ChooseTheme = () => {
 
   async function searchThemeName(e) {
     const inputName = e.target.value;
+
     setThemeName(inputName);
     setLoading(true);
     const response = await fetch(`${url}/search?name=${inputName}`);
     const pageOfThemesByName = await response.json();
     const themesByName = pageOfThemesByName.content;
+
     setLoading(false);
     setThemes(themesByName);
   }

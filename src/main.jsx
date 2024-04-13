@@ -10,7 +10,7 @@ import Register from "./routes/user/Register.jsx";
 import ChooseTheme from "./routes/chooseTheme/ChooseTheme.jsx";
 import Quiz from "./routes/quiz/Quiz.jsx";
 import { AuthenticationProvider } from "./context/AutenticationContext.jsx";
-import CreateQuiz from "./routes/quiz/CreateQuiz.jsx";
+import CreateQuiz from "./routes/createQuiz/CreateQuiz.jsx";
 
 const router = createBrowserRouter([
   {
