@@ -1,16 +1,26 @@
 import React, { useState } from "react";
-import "./CreateQuestions.css";
 import { URL_BASE } from "../../App";
 import { useLocation } from "react-router-dom";
+import Loading from "../../components/loading/Loading";
+import InformationBox from "../../components/informationBox/InformationBox";
 
-const urlQuestion = `${URL_BASE}/question`
-const urlAlternative = `${URL_BASE}/alternative/all`
+import "./CreateQuestions.css";
 
+const urlQuestion = `${URL_BASE}/question`;
+const urlAlternative = `${URL_BASE}/alternative/all`;
 
 const CreateQuestions = () => {
+  const [loading, setLoading] = useState(false);
+  const [informationBox, setInformationBox] = useState(false);
 
-  const path = useLocation().pathname
-  const idTheme = Number(path.substring("/create/quiz/".length))
+  const [informationBoxData, setInformationBoxData] = useState({
+    text: "Dados inválidos",
+    color: "red",
+    icon: "exclamation",
+  });
+
+  const path = useLocation().pathname;
+  const idTheme = Number(path.substring("/create/quiz/".length));
 
   const [question, setQuestion] = useState({
     title: "",
@@ -27,73 +37,90 @@ const CreateQuestions = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
 
-    if(!token) return;
+    if (!token) return;
 
-    postQuestion(token)
+    postQuestion(token);
   };
 
-  async function postQuestion(token){
+  async function postQuestion(token) {
+    setLoading(true);
     const questionResponse = await fetch(`${urlQuestion}/${idTheme}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(question)
-    })
+      body: JSON.stringify(question),
+    });
+    setLoading(false);
 
-    if(!questionResponse.ok){
-      alert("Erro na requisição da questão")
+    if (!questionResponse.ok) {
+      setInformationBox(true);
+      setLoading(false);
       return;
     }
 
-    const questionJson = await questionResponse.json()
-    
-    postAllAltervatives(questionJson.id, token)
+    const questionJson = await questionResponse.json();
+
+    postAllAltervatives(questionJson.id, token);
   }
 
-  async function postAllAltervatives(idQuestion, token){
+  async function postAllAltervatives(idQuestion, token) {
+    setLoading(true)
     const alternativeResponse = await fetch(`${urlAlternative}/${idQuestion}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(alternatives)
-    })
+      body: JSON.stringify(alternatives),
+    });
+    setLoading(false)
 
-    if(!alternativeResponse.ok){
-      alert("Requisição alternativas deu erro")
-      removeQuestion(idQuestion, token)
-      return
+    if (!alternativeResponse.ok) {
+      setInformationBox(true)
+      removeQuestion(idQuestion, token);
+      setLoading(false)
+      return;
     }
 
-    alert("Questão cadastrada com sucesso!")
-    clearForm()
+    setInformationBoxData((prevData) =>{
+      return {
+        ...prevData,
+        color: "green",
+        text: "Questão criada com sucesso",
+        icon: "check",
+      }
+    })
+    setInformationBox(true)
+    clearForm();
   }
 
-  async function removeQuestion(idQuestion, token){
+  async function removeQuestion(idQuestion, token) {
+    setLoading(true)
     const questionResponse = await fetch(`${urlQuestion}/${idQuestion}`, {
       method: "DELETE",
       headers: {
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`,
       },
-    })
+    });
+    setLoading(false)
 
-    if(!questionResponse.ok){
-      alert("Requisição de remover question deu erro")
+    if (!questionResponse.ok) {
+      alert("Erro do servidor")
+      setLoading(false)
     }
   }
 
-  function clearForm(){
-    setQuestion((prevQuestion) =>{
-      return {...prevQuestion, title: "", imageUrl: ""}
-    })
-    
-    for(let i = 0; i < alternatives.length; i++){
-      alternatives[i] = {text: "", correct: false}
+  function clearForm() {
+    setQuestion((prevQuestion) => {
+      return { ...prevQuestion, title: "", imageUrl: "" };
+    });
+
+    for (let i = 0; i < alternatives.length; i++) {
+      alternatives[i] = { text: "", correct: false };
     }
   }
 
@@ -170,8 +197,20 @@ const CreateQuestions = () => {
           ))}
         </div>
 
-        <button type="submit" className="btn-create-question">Criar</button>
+        <button type="submit" className="btn-create-question">
+          Criar
+        </button>
       </form>
+
+      {loading && <Loading />}
+      {informationBox && (
+        <InformationBox
+          closeBox={() => setInformationBox(false)}
+          color={informationBoxData.color}
+          text={informationBoxData.text}
+          icon={informationBoxData.icon}
+        />
+      )}
     </div>
   );
 };
