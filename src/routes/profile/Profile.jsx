@@ -1,9 +1,13 @@
 import { useState } from "react";
-import "./Profile.css";
 import MyQuiz from "./MyQuiz";
 import MyResponse from "./MyResponse";
+import { ApiFetch } from "../../api/ApiFetch";
+
+import "./Profile.css";
 
 const Profile = () => {
+
+  const apiFetch = new ApiFetch();
 
   const [currentItem, setCurrentItem] = useState(0)
   const componentsItens = [
@@ -11,17 +15,37 @@ const Profile = () => {
     <MyResponse />
   ]
 
-  const { name, email } = JSON.parse(localStorage.getItem('user'))
+  const { uuid, name, email } = JSON.parse(localStorage.getItem('user'))
+
+  function updateAccount(){
+    
+
+  }
+
+  function removeAccount(){
+    const options = confirm("Deseja remover sua conta?");
+
+    if(!options) return;
+
+    const promisse = apiFetch.delete(`/user/${uuid}`, true);
+    promisse.then(response =>{
+      if(!response.removed){
+        alert(response.message)
+        return;
+      }
+    })
+
+    alert("Conta removida com sucesso!")
+  }
 
   return (
     <div className="container-profile outlet">
-        
         <div className="user-profile">
           <i className="bi bi-person-circle"></i>
           <p>{name}</p>
           <p>{email}</p>
-          <button type="button">Editar Perfil</button>
-          <button type="button">Excluir Conta</button>
+          <button id="user-profile-btn-update" type="button" onClick={updateAccount}>Editar Perfil</button>
+          <button id="user-profile-btn-delete" type="button" onClick={removeAccount}>Excluir Conta</button>
         </div>
 
         <div className="container-user-itens">
