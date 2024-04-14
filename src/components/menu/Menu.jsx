@@ -5,23 +5,19 @@ import { useNavigate } from "react-router-dom";
 import "./Menu.css";
 
 const Menu = ({ setMenu }) => {
-
-  const { setAuthenticated } = useContext(AuthenticationContext)
+  const { setAuthenticated } = useContext(AuthenticationContext);
   const navigate = useNavigate();
 
-  function logout(){
-    const token = localStorage.getItem('token')
-
-    if(token){
-      localStorage.removeItem('token')
-      setMenu(false)
-      setAuthenticated(false)
-      navigate("/login")
-    }
+  function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setMenu(false);
+    setAuthenticated(false);
+    navigate("/login");
   }
 
   function createQuiz() {
-    navigate("/create/quiz")
+    navigate("/create/quiz");
   }
 
   return (
@@ -33,10 +29,18 @@ const Menu = ({ setMenu }) => {
       </div>
 
       <div className="container-btns">
-        <button type="button" onClick={() => navigate("/")}>Início</button>
-        <button type="button" onClick={() => navigate("/profile")}>Meu Perfil</button>
-        <button type="button" onClick={createQuiz}>Criar Quiz</button>
-        <button type="button" onClick={logout}>Sair</button>
+        <button type="button" onClick={() => navigate("/")}>
+          Início
+        </button>
+        <button type="button" onClick={() => navigate("/profile")}>
+          Meu Perfil
+        </button>
+        <button type="button" onClick={createQuiz}>
+          Criar Quiz
+        </button>
+        <button type="button" onClick={logout}>
+          Sair
+        </button>
       </div>
     </div>
   );

@@ -6,9 +6,9 @@ export const AuthenticationContext = createContext();
 export const AuthenticationProvider = ({ children }) => {
   const [isAuthenticated, setAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
+  useEffect(() => {
     async function checkToken() {
       const response = await fetch(`${URL_BASE}/user/find`, {
         headers: {
@@ -30,7 +30,7 @@ export const AuthenticationProvider = ({ children }) => {
     }
 
     checkToken();
-  }, []);
+  }, [token]);
 
   return (
     <AuthenticationContext.Provider

@@ -52,8 +52,10 @@ const FormTemplate = ({
     }
 
     const responseJson = await response.json();
-    window.localStorage.setItem("token", responseJson.token);
-    setAuthenticated(true)
+    if(responseJson.token){
+      window.localStorage.setItem("token", responseJson.token);
+      setAuthenticated(true)
+    }
 
     if (url.includes("register")) {
       let newUrl = url.replace("register", "login");
