@@ -152,6 +152,7 @@ const CreateQuestions = () => {
               placeholder="Insira o título da questão"
               value={question.title}
               onChange={(e) => changeQuestion("title", e.target.value)}
+              required
             />
           </label>
 
@@ -163,6 +164,7 @@ const CreateQuestions = () => {
               placeholder="Insira a url da imagem"
               value={question.imageUrl}
               onChange={(e) => changeQuestion("imageUrl", e.target.value)}
+              required
             />
           </label>
         </div>
@@ -181,6 +183,7 @@ const CreateQuestions = () => {
                     changeAlternative(index, "text", e.target.value)
                   }
                   className="input-alternative-text"
+                  required
                 />
                 <input
                   type="radio"
@@ -191,6 +194,7 @@ const CreateQuestions = () => {
                     changeAlternative(index, "correct", e.target.checked)
                   }
                   className="input-alternative-check"
+                  required
                 />
               </label>
             </div>
