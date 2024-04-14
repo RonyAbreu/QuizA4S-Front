@@ -23,6 +23,9 @@ export const AuthenticationProvider = ({ children }) => {
         return;
       }
 
+      const userDetails = await response.json()
+      localStorage.setItem("user", JSON.stringify(userDetails))
+
       setAuthenticated(true);
     }
 
