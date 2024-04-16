@@ -32,10 +32,12 @@ const Profile = () => {
 
   const { uuid, name, email } = JSON.parse(localStorage.getItem("user"));
 
-  function updateAccount() {}
+  function updateAccount() {
+    
+  }
 
-  function showConfirmationBox(){
-    setConfirmBox(true)
+  function showConfirmationBox() {
+    setConfirmBox(true);
   }
 
   function removeAccount() {
@@ -44,12 +46,23 @@ const Profile = () => {
     setLoading(false);
     promisse.then((response) => {
       if (!response.removed) {
-        alert(response.message);
+        setInformationData((prevData) => {
+          return { ...prevData, text: response.message };
+        });
+        setInformationBox(true);
         return;
       }
     });
 
-    alert("Conta removida com sucesso!");
+    setInformationData((prevData) => {
+      return {
+        ...prevData,
+        text: "Conta removida com sucesso",
+        icon: "check",
+        color: "green",
+      };
+    });
+    setInformationBox(true);
   }
 
   return (
