@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   frontend-quiz:
-    image: ronyabreu/frontend-quiz
+    image: a4sufpb/frontend-quiz
     restart: always
     ports:
       - "8888:80"
