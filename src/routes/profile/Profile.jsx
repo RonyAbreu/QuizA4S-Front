@@ -2,16 +2,20 @@ import { useState } from "react";
 import MyQuiz from "./MyQuiz";
 import MyResponse from "./MyResponse";
 import { ApiFetch } from "../../api/ApiFetch";
-
-import "./Profile.css";
 import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
 import ConfirmBox from "../../components/confirmBox/ConfirmBox";
+import UpdateBox from "../../components/updateBox/UpdateBox";
+
+import "./Profile.css";
 
 const Profile = () => {
+  const apiFetch = new ApiFetch();
+
   const [loading, setLoading] = useState(false);
   const [informationBox, setInformationBox] = useState(false);
   const [confirmBox, setConfirmBox] = useState(false);
+  const [updateBox, setUpdateBox] = useState(false);
 
   const [informationData, setInformationData] = useState({
     text: "",
@@ -25,19 +29,50 @@ const Profile = () => {
     textBtn2: "Não",
   });
 
-  const apiFetch = new ApiFetch();
-
   const [currentItem, setCurrentItem] = useState(0);
   const componentsItens = [<MyQuiz />, <MyResponse />];
 
   const { uuid, name, email } = JSON.parse(localStorage.getItem("user"));
 
-  function updateAccount() {
-    
-  }
+  const [newName, setNewName] = useState("");
 
-  function showConfirmationBox() {
-    setConfirmBox(true);
+  const updateBoxData = {
+    title: "Editar perfil",
+    inputs: [
+      {
+        label: "Novo nome:",
+        type: "text",
+        placeholder: "Digite seu novo nome",
+        value: newName,
+      },
+    ],
+  };
+
+  const userUpdate = {
+    name: newName,
+  };
+
+  function updateAccount() {
+    setLoading(true);
+    const promisse = apiFetch.patch(`/user/${uuid}`, userUpdate)
+    setLoading(false);
+
+    promisse.then(response =>{
+      if(!response.success){
+        setInformationData((prevData) =>{
+          return {...prevData, text: response.message}
+        })
+        setInformationBox(true)
+        return;
+      }
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ uuid: uuid, name: userUpdate.name, email: email })
+      );
+
+      setUpdateBox(false);
+    })
   }
 
   function removeAccount() {
@@ -53,16 +88,14 @@ const Profile = () => {
         return;
       }
     });
+  }
 
-    setInformationData((prevData) => {
-      return {
-        ...prevData,
-        text: "Conta removida com sucesso",
-        icon: "check",
-        color: "green",
-      };
-    });
-    setInformationBox(true);
+  function showConfirmationBox() {
+    setConfirmBox(true);
+  }
+
+  function showUpdateBox() {
+    setUpdateBox(true);
   }
 
   return (
@@ -74,7 +107,7 @@ const Profile = () => {
         <button
           id="user-profile-btn-update"
           type="button"
-          onClick={updateAccount}
+          onClick={showUpdateBox}
         >
           Editar Perfil
         </button>
@@ -116,6 +149,15 @@ const Profile = () => {
           textBtn2={confirmBoxData.textBtn2}
           onClickBtn1={removeAccount}
           onClickBtn2={() => setConfirmBox(false)}
+        />
+      )}
+      {updateBox && (
+        <UpdateBox
+          title={updateBoxData.title}
+          inputs={updateBoxData.inputs}
+          onChange={setNewName}
+          onClickSave={updateAccount}
+          onClickCancel={() => setUpdateBox(false)}
         />
       )}
     </div>

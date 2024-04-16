@@ -1,6 +1,17 @@
 import "./UpdateBox.css";
 
-const UpdateBox = ({title, inputs, onChange, onClickSave, onClickCancel }) => {
+// Exemplo de Input
+
+/* inputs = [
+  {
+    label: "Nome",
+    type: "text",
+    placeholder: "Digite seu nome",
+    value: "Valor do input",
+  },
+];
+*/
+const UpdateBox = ({ title, inputs, onChange, onClickSave, onClickCancel }) => {
   return (
     <div className="container-update-box">
       <div className="update-box">
@@ -13,7 +24,7 @@ const UpdateBox = ({title, inputs, onChange, onClickSave, onClickCancel }) => {
                 type={input.type}
                 placeholder={input.placeholder}
                 value={input.value}
-                onChange={(e)=> onChange(e.target.value)}
+                onChange={(e) => onChange(e.target.value, input.label)}
                 required
               />
             </label>
