@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { URL_BASE } from "../../App";
 import { ApiFetch } from "../../util/ApiFetch";
 import "./MyTheme.css";
+import Pagination from "../../components/pagination/Pagination";
 
 const url = `${URL_BASE}/theme/creator`;
 
@@ -9,15 +10,17 @@ const MyTheme = () => {
   const apiFetch = new ApiFetch();
 
   const [themes, setThemes] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
 
   useEffect(() => {
-    const promisse = apiFetch.getPagesWithToken(url);
+    const promisse = apiFetch.getPagesWithToken(`${url}?page=`);
     promisse.then((response) => {
       if (!response.success) {
         alert("Nenum tema cadastrado!");
         return;
       }
-
+      
+      setTotalPages(response.totalPages);
       setThemes(response.data);
     });
   }, []);
@@ -45,10 +48,7 @@ const MyTheme = () => {
           ))}
       </div>
 
-      <div className="my-theme-buttons">
-          <button type="button">Anterior</button>
-          <button type="button">Próximo</button>
-      </div>
+      <Pagination totalPages={totalPages} />
 
       {themes.length == 0 && <h2>Nenhum tema cadastrado</h2>}
     </div>

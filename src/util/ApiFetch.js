@@ -76,6 +76,7 @@ export class ApiFetch {
       message: "",
       success: false,
       data: [],
+      totalPages: 0,
     };
 
     const token = localStorage.getItem("token");
@@ -103,8 +104,9 @@ export class ApiFetch {
 
     const responseJson = await response.json();
     const responsePage = responseJson.content;
+    const totalPages = responseJson.totalPages
 
-    info = { ...info, message: "OK", success: true, data: responsePage };
+    info = { ...info, message: "OK", success: true, data: responsePage, totalPages: totalPages };
 
     return { ...info };
   }
