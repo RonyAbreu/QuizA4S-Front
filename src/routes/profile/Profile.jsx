@@ -1,7 +1,7 @@
 import { useState } from "react";
 import MyQuiz from "./MyQuiz";
 import MyResponse from "./MyResponse";
-import { ApiFetch } from "../../api/ApiFetch";
+import { ApiFetch } from "../../util/ApiFetch";
 import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
 import ConfirmBox from "../../components/confirmBox/ConfirmBox";
