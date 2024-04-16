@@ -1,5 +1,5 @@
-import { useState } from "react";
-import MyQuiz from "./MyQuiz";
+import { useEffect, useState } from "react";
+import MyQuiz from "./MyTheme";
 import MyResponse from "./MyResponse";
 import { ApiFetch } from "../../util/ApiFetch";
 import Loading from "../../components/loading/Loading";
@@ -32,6 +32,19 @@ const Profile = () => {
   const [currentItem, setCurrentItem] = useState(0);
   const componentsItens = [<MyQuiz />, <MyResponse />];
 
+  useEffect(() => {
+    const btnQuiz = document.getElementById("btn-quiz");
+    const btnResponse = document.getElementById("btn-response");
+
+    if (currentItem === 0) {
+      btnQuiz.classList.add("selected-btn")
+      btnResponse.classList.remove("selected-btn")
+    } else {
+      btnQuiz.classList.remove("selected-btn")
+      btnResponse.classList.add("selected-btn")
+    }
+  }, [currentItem]);
+
   const { uuid, name, email } = JSON.parse(localStorage.getItem("user"));
 
   const [newName, setNewName] = useState("");
@@ -54,15 +67,15 @@ const Profile = () => {
 
   function updateAccount() {
     setLoading(true);
-    const promisse = apiFetch.patch(`/user/${uuid}`, userUpdate)
+    const promisse = apiFetch.patch(`/user/${uuid}`, userUpdate);
     setLoading(false);
 
-    promisse.then(response =>{
-      if(!response.success){
-        setInformationData((prevData) =>{
-          return {...prevData, text: response.message}
-        })
-        setInformationBox(true)
+    promisse.then((response) => {
+      if (!response.success) {
+        setInformationData((prevData) => {
+          return { ...prevData, text: response.message };
+        });
+        setInformationBox(true);
         return;
       }
 
@@ -72,7 +85,7 @@ const Profile = () => {
       );
 
       setUpdateBox(false);
-    })
+    });
   }
 
   function removeAccount() {
@@ -122,10 +135,20 @@ const Profile = () => {
 
       <div className="container-user-itens">
         <div className="select-user-item">
-          <button type="button" onClick={() => setCurrentItem(0)}>
-            Meus Quizzes
+          <button
+            type="button"
+            onClick={() => setCurrentItem(0)}
+            id="btn-quiz"
+            className="select-user-btn"
+          >
+            Meus Temas
           </button>
-          <button type="button" onClick={() => setCurrentItem(1)}>
+          <button
+            type="button"
+            onClick={() => setCurrentItem(1)}
+            id="btn-response"
+            className="select-user-btn"
+          >
             Minhas Respostas
           </button>
         </div>

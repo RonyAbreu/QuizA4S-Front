@@ -76,7 +76,7 @@
     gap: 1.5em;
 }
 
-.select-user-item button{
+.select-user-btn{
     width: 180px;
     height: 35px;
     border-radius: 4px;
@@ -89,18 +89,16 @@
     border: none;
 }
 
-.select-user-item button:hover{
-    background-color: #fff;
-    color: #3498db;
-}
-
-.select-user-item button:focus{
+.select-user-btn:hover{
     background-color: #fff;
     color: #3498db;
 }
 
 .user-itens{
-    border: 1px solid white;
-    padding: 10px;
-    border-radius: 5px;
+    margin-top: .3em;
+}
+
+.selected-btn{
+    background-color: #fff;
+    color: #3498db;
 }

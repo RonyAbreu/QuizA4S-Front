@@ -5,8 +5,8 @@ export class ApiFetch {
 
   async delete(basePath, isRemoveUser) {
     let info = {
-        message: "",
-        removed: false,
+      message: "",
+      removed: false,
     };
 
     const token = localStorage.getItem("token");
@@ -17,32 +17,32 @@ export class ApiFetch {
     }
 
     const response = await fetch(`${URL_BASE}${basePath}`, {
-        method: "DELETE",
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
 
-    if(!response.ok){
-        info.message = "Erro do servidor";
-        return info;
+    if (!response.ok) {
+      info.message = "Erro do servidor";
+      return info;
     }
 
-    if(isRemoveUser){
-        localStorage.removeItem("token");
-        localStorage.removeItem("user")
-        window.location.href = "/login";
+    if (isRemoveUser) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.href = "/login";
     }
 
-    info = {...info, message: "OK", removed: true};
+    info = { ...info, message: "OK", removed: true };
 
-    return {...info};
+    return { ...info };
   }
 
   async patch(basePath, data) {
     let info = {
-        message: "",
-        success: false,
+      message: "",
+      success: false
     };
 
     const token = localStorage.getItem("token");
@@ -53,21 +53,59 @@ export class ApiFetch {
     }
 
     const response = await fetch(`${URL_BASE}${basePath}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(data)
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
     });
 
-    if(!response.ok){
-        info.message = "Erro ao atualizar. Tente novamente!";
-        return info;
+    if (!response.ok) {
+      info.message = "Erro ao atualizar. Tente novamente!";
+      return info;
     }
 
-    info = {...info, message: "OK", success: true};
+    info = { ...info, message: "OK", success: true};
 
-    return {...info};
+    return { ...info };
+  }
+
+  async getPagesWithToken(basePath) {
+    let info = {
+      message: "",
+      success: false,
+      data: [],
+    };
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      info.message = "Token inválido";
+      return info;
+    }
+
+    const response = await fetch(basePath , {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if ([403, 500].includes(response.status)) {
+      info.message = "Erro ao buscar dados. Tente novamente!";
+      return info;
+    }
+
+    if(response.status === 404){
+      info.message = "Nenhum tema foi cadastrado!";
+      return info;
+    }
+
+    const responseJson = await response.json();
+    const responsePage = responseJson.content;
+
+    info = { ...info, message: "OK", success: true, data: responsePage };
+
+    return { ...info };
   }
 }
