@@ -68,13 +68,13 @@ const Profile = () => {
   function updateAccount() {
     setLoading(true);
     const promisse = apiFetch.patch(`/user/${uuid}`, userUpdate);
-    setLoading(false);
 
     promisse.then((response) => {
       if (!response.success) {
         setInformationData((prevData) => {
           return { ...prevData, text: response.message };
         });
+        setLoading(false);
         setInformationBox(true);
         return;
       }
@@ -83,6 +83,7 @@ const Profile = () => {
         "user",
         JSON.stringify({ uuid: uuid, name: userUpdate.name, email: email })
       );
+      setLoading(false);
 
       setUpdateBox(false);
     });
