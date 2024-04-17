@@ -1,8 +1,7 @@
 import "./Pagination.css";
 import { useEffect, useState } from "react";
 
-const Pagination = ({ totalPages }) => {
-  const [currentPage, setCurrentPage] = useState(0);
+const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
 
