@@ -6,6 +6,7 @@ import Loading from "../loading/Loading";
 //Css
 import "./ThemeTemplate.css";
 
+const defaultImgUrl = "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
 const ThemeTemplate = ({url, onClickFunction }) => {
   const [themeName, setThemeName] = useState("");
@@ -75,7 +76,7 @@ const ThemeTemplate = ({url, onClickFunction }) => {
                 key={theme.id}
                 onClick={() => onClickFunction(theme.id)}
               >
-                <img src={theme.imageUrl} alt="theme-image" />
+                <img src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl} alt="theme-image" />
                 <p>{theme.name}</p>
               </div>
             ))}
