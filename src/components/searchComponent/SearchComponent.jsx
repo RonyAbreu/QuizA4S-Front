@@ -28,7 +28,6 @@ const SearchComponent = ({ url, placeholder, setData }) => {
         setActiveInput(true);
         setInformationText(response.message)
         setInformationBox(true)
-        setName("");
       }
 
       setLoading(false);
@@ -39,7 +38,6 @@ const SearchComponent = ({ url, placeholder, setData }) => {
   function closeBoxEvent(){
     setInformationBox(false);
     setActiveInput(false);
-    searchThemeName("");
   }
 
   return (

@@ -6,6 +6,7 @@ import Theme from "../../components/theme/Theme";
 
 import "./MyTheme.css";
 import Loading from "../../components/loading/Loading";
+import SearchComponent from "../../components/searchComponent/SearchComponent";
 
 const url = `${URL_BASE}/theme/creator`;
 
@@ -21,7 +22,10 @@ const MyTheme = () => {
 
   useEffect(() => {
     setLoading(true);
-    const promisse = apiFetch.getPagesWithToken(`${url}?page=${currentPage}`, "Nenhum tema encontrado!");
+    const promisse = apiFetch.getPagesWithToken(
+      `${url}?page=${currentPage}`,
+      "Nenhum tema encontrado!"
+    );
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);
@@ -34,18 +38,18 @@ const MyTheme = () => {
     });
   }, [currentPage, callBack]);
 
-
-
   return (
     <div className="container-my-theme">
-      <div className="my-theme-search">
-        <input type="text" name="name" placeholder="Digite o nome do tema" />
-      </div>
+      <SearchComponent
+        placeholder="Digite o nome de um tema"
+        setData={setThemes}
+        url={`${url}?name=`}
+      />
 
-      <Theme themes={themes} setThemes={setThemes} setCallBack={setCallBack}/>
+      <Theme themes={themes} setThemes={setThemes} setCallBack={setCallBack} />
 
       {!loading && themes.length == 0 && (
-        <h2 style={{ marginBottom: "2em" }}>Nenhum tema cadastrado</h2>
+        <h2 style={{ marginBottom: "2em" }}>Nenhum tema encontrado</h2>
       )}
 
       <Pagination
