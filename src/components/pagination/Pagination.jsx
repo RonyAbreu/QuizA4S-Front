@@ -8,7 +8,7 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
   useEffect(() => {
     setIsFirstPage(currentPage === 0);
     setIsLastPage(currentPage === totalPages - 1);
-  }, [currentPage]);
+  }, [currentPage, totalPages]);
 
   function alterPage(direction) {
     if (direction === "prev" && !isFirstPage) {
