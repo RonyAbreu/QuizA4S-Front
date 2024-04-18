@@ -42,7 +42,7 @@ const ThemeTemplate = ({url, onClickFunction }) => {
   return (
     <div className="container-theme outlet">
       <div className="container-theme-data">
-        <SearchComponent url={`${url}/search?name=`} placeholder="Digite o nome de um tema" setData={setThemes}/>
+        <SearchComponent title="Escolha o tema do seu Quiz" url={`${url}/search?name=`} placeholder="Digite o nome de um tema" setData={setThemes}/>
 
         <div className="container-all-themes">
           {themes &&

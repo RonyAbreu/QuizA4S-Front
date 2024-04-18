@@ -5,7 +5,7 @@ import InformationBox from "../informationBox/InformationBox";
 
 import "./SearchComponent.css";
 
-const SearchComponent = ({ url, placeholder, setData }) => {
+const SearchComponent = ({ title, url, placeholder, setData }) => {
   const apiFetch = new ApiFetch();
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -42,6 +42,7 @@ const SearchComponent = ({ url, placeholder, setData }) => {
 
   return (
     <div className="container-search">
+      <h2>{title}</h2>
       <input
         type="text"
         placeholder={placeholder}

@@ -1,9 +1,16 @@
 .container-search{
     width: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 1.5em;
     align-items: center;
     justify-content: center;
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
+}
+
+.container-search h2{
+    font-size: 2.1em;
+    color: #fff;
 }
 
 .search-input{

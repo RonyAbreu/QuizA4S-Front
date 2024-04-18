@@ -21,9 +21,14 @@ const SelectTheme = ({ currentComponent, setCurrentComponent }) => {
   return (
     <div className="container-select-theme">
       <div className="add-theme-btn">
-        <i className="bi bi-plus-circle-fill" onClick={() => setThemeMenu(true)}></i>
+        <i
+          className="bi bi-plus-circle-fill"
+          onClick={() => setThemeMenu(true)}
+          onMouseEnter={(e) => e.target.style.transform = 'translateX(0)'}
+          onMouseLeave={(e) => e.target.style.transform = 'translateX(-100%)'}
+        ></i>
       </div>
-      
+
       <ThemeTemplate url={url} onClickFunction={showCreateQuestion} />
 
       {isThemeMenu && <ThemeMenu setThemeMenu={setThemeMenu} />}
