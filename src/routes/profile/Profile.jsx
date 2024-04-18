@@ -23,11 +23,11 @@ const Profile = () => {
     color: "red",
   });
 
-  const [confirmBoxData, setConfirmBoxData] = useState({
+  const confirmBoxData = {
     title: "Deseja remover sua conta?",
     textBtn1: "Sim",
     textBtn2: "Não",
-  });
+  };
 
   const [currentItem, setCurrentItem] = useState(0);
   const componentsItens = [<MyQuiz />, <MyResponse />];

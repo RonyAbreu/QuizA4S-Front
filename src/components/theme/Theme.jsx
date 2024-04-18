@@ -3,20 +3,29 @@ import ConfirmBox from "../confirmBox/ConfirmBox";
 import UpdateBox from "../updateBox/UpdateBox";
 import { ApiFetch } from "../../util/ApiFetch";
 import Loading from "../loading/Loading";
+import InformationBox from "../informationBox/InformationBox";
 
 import "./Theme.css";
 
-const defaultImgUrl = "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
+const defaultImgUrl =
+  "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
-const Theme = ({ themes }) => {
+const Theme = ({ themes, setThemes, setCallBack }) => {
   const apiFetch = new ApiFetch();
 
   const [loading, setLoading] = useState(false);
 
   const [isConfirmBox, setConfirmBox] = useState(false);
   const [isUpdateBox, setUpdateBox] = useState(false);
-  const [themeId, setThemeId] = useState(0);
+  const [isInformationBox, setInformationBox] = useState(false);
 
+  const [informationData, setInformationData] = useState({
+    text: "",
+    icon: "exclamation",
+    color: "red",
+  });
+
+  const [themeId, setThemeId] = useState(0);
   const [newName, setNewName] = useState("");
   const [newUrl, setNewUrl] = useState("");
 
@@ -49,43 +58,59 @@ const Theme = ({ themes }) => {
     setUpdateBox(true);
   }
 
-  const newTheme = {
-    name: newName,
-    imageUrl: newUrl,
-  }
-
   function removeTheme() {
     setLoading(true);
     const promisse = apiFetch.delete(`/theme/${themeId}`, false);
 
-    promisse.then((response) =>{
-      if(!response.removed){
-        alert(response.message)
+    promisse.then((response) => {
+      if (!response.removed) {
+        activeInformationBox(true, response.message);
         setLoading(false);
         return;
       }
 
+      activeInformationBox(false, "Tema removido com sucesso!");
+      setThemes(themes.filter((theme) => themeId !== theme.id));
       setLoading(false);
       setConfirmBox(false);
-      alert("Removeu")
-    })
+    });
   }
+
+  const newTheme = {
+    name: newName,
+    imageUrl: newUrl,
+  };
 
   function updateTheme() {
     setLoading(true);
     const promisse = apiFetch.patch(`/theme/${themeId}`, newTheme);
 
-    promisse.then((response) =>{
-      if(!response.success){
-        alert(response.message)
+    promisse.then((response) => {
+      if (!response.success) {
+        activeInformationBox(true, response.message);
         setLoading(false);
         return;
       }
 
+      activeInformationBox(false, "Tema atualizado com sucesso");
+      setCallBack({});
       setLoading(false);
       setUpdateBox(false);
-      alert("Atualizou")
-    })
+    });
+  }
+
+  function activeInformationBox(isFail, message) {
+    if (isFail) {
+      setInformationData((prevData) => {
+        return { ...prevData, text: message };
+      });
+      setInformationBox(true);
+    } else {
+      setInformationData((prevData) => {
+        return { ...prevData, text: message, color: "green", icon: "check" };
+      });
+      setInformationBox(true);
+    }
   }
 
   function changeValue(value, label) {
@@ -106,7 +131,10 @@ const Theme = ({ themes }) => {
       {themes &&
         themes.map((theme) => (
           <div key={theme.id} className="theme-data">
-            <img src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl} alt="image" />
+            <img
+              src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
+              alt="image"
+            />
             <div className="theme-questions">
               <p>{theme.name}</p>
               <button type="button">Questões</button>
@@ -144,6 +172,14 @@ const Theme = ({ themes }) => {
           onChange={changeValue}
           onClickSave={updateTheme}
           onClickCancel={() => setUpdateBox(false)}
+        />
+      )}
+      {isInformationBox && (
+        <InformationBox
+          text={informationData.text}
+          color={informationData.color}
+          icon={informationData.icon}
+          closeBox={() => setInformationBox(false)}
         />
       )}
 

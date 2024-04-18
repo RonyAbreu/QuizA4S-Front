@@ -7,14 +7,16 @@ import Footer from "./components/footer/Footer";
 import "./App.css";
 import { useContext } from "react";
 import { AuthenticationContext } from "./context/AutenticationContext";
+import Loading from "./components/loading/Loading";
 
 export const URL_BASE = "http://api.observatorioturismopb.com.br:8085/api/v1";
 
 function App() {
-  const { isAuthenticated } = useContext(AuthenticationContext);
+  const { isAuthenticated, loading } = useContext(AuthenticationContext);
 
   return (
     <div className="app">
+      {loading && <Loading />}
       <Header isAuth={isAuthenticated} />
       <Outlet />
       <Footer />

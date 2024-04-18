@@ -10,8 +10,9 @@
 
 .theme-data{
     background-color: #ffffffe4;
-    min-width: 45%;
-    padding: 20px;
+    width: 48%;
+    min-width: 340px;
+    padding: 15px;
     border-radius: 7px;
     display: flex;
     align-items: center;
@@ -24,7 +25,7 @@
 }
 
 .theme-questions{
-    width: 80%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -35,9 +36,9 @@
 
 .theme-questions p{
     font-size: 1.2em;
-    font-weight: 600;
     word-wrap: break-word;
-    max-width: 100%;
+    overflow: hidden;
+    max-width: 70%;
 }
 
 .theme-questions button{
@@ -57,6 +58,7 @@
 }
 
 .theme-action{
+    min-width: 30px;
     display: flex;
     flex-direction: column;
     gap: 1em;

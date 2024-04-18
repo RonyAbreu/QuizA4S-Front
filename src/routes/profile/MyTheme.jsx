@@ -17,6 +17,7 @@ const MyTheme = () => {
   const [themes, setThemes] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [callBack, setCallBack] = useState({});
 
   useEffect(() => {
     setLoading(true);
@@ -31,7 +32,7 @@ const MyTheme = () => {
       setTotalPages(response.totalPages);
       setThemes(response.data);
     });
-  }, [currentPage]);
+  }, [currentPage, callBack]);
 
 
 
@@ -41,7 +42,7 @@ const MyTheme = () => {
         <input type="text" name="name" placeholder="Digite o nome do tema" />
       </div>
 
-      <Theme themes={themes} />
+      <Theme themes={themes} setThemes={setThemes} setCallBack={setCallBack}/>
 
       {!loading && themes.length == 0 && (
         <h2 style={{ marginBottom: "2em" }}>Nenhum tema cadastrado</h2>

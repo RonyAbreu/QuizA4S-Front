@@ -5,11 +5,13 @@ export const AuthenticationContext = createContext();
 
 export const AuthenticationProvider = ({ children }) => {
   const [isAuthenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
     async function checkToken() {
+      setLoading(true);
       const response = await fetch(`${URL_BASE}/user/find`, {
         headers: {
           "Content-Type": "application/json",
@@ -20,9 +22,11 @@ export const AuthenticationProvider = ({ children }) => {
       if (!response.ok) {
         localStorage.removeItem("token");
         setAuthenticated(false);
+        setLoading(false);
         return;
       }
 
+      setLoading(false);
       const userDetails = await response.json()
       localStorage.setItem("user", JSON.stringify(userDetails))
 
@@ -34,7 +38,7 @@ export const AuthenticationProvider = ({ children }) => {
 
   return (
     <AuthenticationContext.Provider
-      value={{ isAuthenticated, setAuthenticated }}
+      value={{ isAuthenticated, setAuthenticated, loading }}
     >
       {children}
     </AuthenticationContext.Provider>
