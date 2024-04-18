@@ -21,7 +21,7 @@ const MyTheme = () => {
 
   useEffect(() => {
     setLoading(true);
-    const promisse = apiFetch.getPagesWithToken(`${url}?page=${currentPage}`);
+    const promisse = apiFetch.getPagesWithToken(`${url}?page=${currentPage}`, "Nenhum tema encontrado!");
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);

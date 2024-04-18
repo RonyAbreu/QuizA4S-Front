@@ -71,7 +71,7 @@ export class ApiFetch {
     return { ...info };
   }
 
-  async getPagesWithToken(basePath) {
+  async getPagesWithToken(basePath, messageNotFound) {
     let info = {
       message: "",
       success: false,
@@ -98,7 +98,7 @@ export class ApiFetch {
     }
 
     if(response.status === 404){
-      info.message = "Nenhum tema foi cadastrado!";
+      info.message = messageNotFound;
       return info;
     }
 

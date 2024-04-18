@@ -5,11 +5,11 @@ import Loading from "../loading/Loading";
 
 //Css
 import "./ThemeTemplate.css";
+import SearchComponent from "../searchComponent/SearchComponent";
 
 const defaultImgUrl = "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
 const ThemeTemplate = ({url, onClickFunction }) => {
-  const [themeName, setThemeName] = useState("");
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -32,19 +32,6 @@ const ThemeTemplate = ({url, onClickFunction }) => {
     getAllThemes();
   }, [currentPage]);
 
-  async function searchThemeName(e) {
-    const inputName = e.target.value;
-
-    setThemeName(inputName);
-    setLoading(true);
-    const response = await fetch(`${url}/search?name=${inputName}`);
-    const pageOfThemesByName = await response.json();
-    const themesByName = pageOfThemesByName.content;
-
-    setLoading(false);
-    setThemes(themesByName);
-  }
-
   function alterPage(direction) {
     if (direction === "prev" && !isFirstPage) {
       setCurrentPage(currentPage - 1);
@@ -56,17 +43,7 @@ const ThemeTemplate = ({url, onClickFunction }) => {
   return (
     <div className="container-theme outlet">
       <div className="container-theme-data">
-        <div className="theme-form">
-          <h1>Escolha o tema do seu Quiz</h1>
-          <form>
-            <input
-              type="text"
-              placeholder="Digite o nome de um tema"
-              value={themeName}
-              onChange={searchThemeName}
-            />
-          </form>
-        </div>
+        <SearchComponent url={`${url}/search?name=`} placeholder="Digite o nome de um tema" setData={setThemes}/>
 
         <div className="container-all-themes">
           {themes &&
@@ -81,7 +58,7 @@ const ThemeTemplate = ({url, onClickFunction }) => {
               </div>
             ))}
 
-          {!themes && <h2 className="not-found">Nenhum tema encontrado!</h2>}
+          {themes.length == 0 && <h2 className="not-found">Nenhum tema encontrado!</h2>}
           <div className="container-info">
             {loading && <Loading />}
           </div>
