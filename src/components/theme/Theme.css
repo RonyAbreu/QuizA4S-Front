@@ -1,0 +1,78 @@
+.my-theme-list{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1em;
+    margin-bottom: 2em;
+}
+
+.theme-data{
+    background-color: #ffffffe4;
+    width: 48%;
+    min-width: 340px;
+    padding: 15px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.theme-data img{
+    width: 100px;
+    height: 100px;
+}
+
+.theme-questions{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .5em;
+    text-align: center;
+}
+
+.theme-questions p{
+    font-size: 1.2em;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-width: 70%;
+}
+
+.theme-questions button{
+    width: 120px;
+    height: 25px;
+    font-size: 1em;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    background-color: #3498db;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.theme-questions button:hover{
+    background-color: #3498dbbc;
+}
+
+.theme-action{
+    min-width: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.theme-action i{
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.theme-action i:nth-child(1){
+    color: red;
+}
+
+.theme-action i:nth-child(2){
+    color: blue;
+}

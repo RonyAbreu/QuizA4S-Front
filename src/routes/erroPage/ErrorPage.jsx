@@ -1,15 +1,15 @@
+import { useNavigate } from "react-router-dom";
+import ImageNotFound from "../../assets/page-not-found.jpg"
+
 import "./ErrorPage.css";
-import { useNavigate, useRouteError } from "react-router-dom";
 
 const ErrorPage = () => {
-  const routerError = useRouteError();
   const navigate = useNavigate();
   return (
     <div className="container-erro outlet">
       <div className="container-data">
-        <h1 className="title-erro">Ops! Página não encontrada</h1>
-        <p>{routerError.status}</p>
-        <p>{routerError.statusText}</p>
+        <h1>Ops! Página não encontrada</h1>
+        <img src={ImageNotFound} alt="img-not-found" />
         <button type="button" onClick={() => navigate("/")}>Voltar ao Ínicio</button>
       </div>
     </div>

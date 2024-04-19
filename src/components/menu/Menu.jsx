@@ -30,10 +30,13 @@ const Menu = ({ setMenu }) => {
 
       <div className="container-btns">
         <button type="button" onClick={() => navigate("/")}>
-          Início
+          Jogar
         </button>
         <button type="button" onClick={() => navigate("/profile")}>
           Meu Perfil
+        </button>
+        <button type="button" onClick={() => navigate("/myquiz")}>
+          Meus Quizzes
         </button>
         <button type="button" onClick={createQuiz}>
           Criar Quiz

@@ -1,0 +1,50 @@
+.container-my-theme{
+    width: 100%;
+    background-color: #3498db;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+    padding: 45px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1em;
+    border-radius: 7px;
+}
+
+.my-theme-search{
+    margin-bottom: 1.5em;
+}
+
+.my-theme-search input{
+    width: 400px;
+    height: 40px;
+    border-radius: 50px;
+    border: 2px solid #3498db;
+    padding: 8px;
+    font-size: .9em;
+    outline: none;
+}
+
+.my-theme-search input:focus{
+    border: 2px solid blue;
+}
+
+.my-theme-buttons{
+    display: flex;
+    gap: 1.5em;
+}
+
+.my-theme-buttons button{
+    width: 140px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition:  .2s ease-in-out;
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.my-theme-buttons button:hover{
+    background-color: #c3c3c3;
+}

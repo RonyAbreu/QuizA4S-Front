@@ -1,48 +1,51 @@
 // Components
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import Loading from "../loading/Loading";
 
 //Css
 import "./ThemeTemplate.css";
+import SearchComponent from "../searchComponent/SearchComponent";
+import NotFoundComponent from "../notFound/NotFoundComponent";
+import { ApiFetch } from "../../util/ApiFetch";
 
+const defaultImgUrl =
+  "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
-const ThemeTemplate = ({url, onClickFunction }) => {
-  const [themeName, setThemeName] = useState("");
+const ThemeTemplate = ({ url, onClickFunction }) => {
+  const apiFetch = new ApiFetch();
+
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
+  const [isNotFound, setNotFound] = useState(false);
+
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
-    async function getAllThemes() {
-      setLoading(true);
-      const response = await fetch(`${url}?page=${currentPage}`);
-      const page = await response.json();
-      const themes = page.content;
-      setLoading(false);
-      setThemes(themes);
-      setIsFirstPage(currentPage === 0);
-      setIsLastPage(currentPage === page.totalPages - 1);
-    }
-
-    getAllThemes();
-  }, [currentPage]);
-
-  async function searchThemeName(e) {
-    const inputName = e.target.value;
-
-    setThemeName(inputName);
     setLoading(true);
-    const response = await fetch(`${url}/search?name=${inputName}`);
-    const pageOfThemesByName = await response.json();
-    const themesByName = pageOfThemesByName.content;
 
-    setLoading(false);
-    setThemes(themesByName);
-  }
+    const promisse = apiFetch.getPagesWithToken(
+      `${url}?page=${currentPage}`,
+      "Tema não encontrado"
+    );
+
+    promisse.then((response) => {
+      if (!response.success) {
+        setLoading(false);
+        setNotFound(true);
+        return;
+      }
+
+      setNotFound(false);
+      setLoading(false);
+      setThemes(response.data);
+      setIsFirstPage(currentPage === 0);
+      setIsLastPage(currentPage === response.totalPages - 1);
+    });
+  }, [currentPage]);
 
   function alterPage(direction) {
     if (direction === "prev" && !isFirstPage) {
@@ -55,17 +58,12 @@ const ThemeTemplate = ({url, onClickFunction }) => {
   return (
     <div className="container-theme outlet">
       <div className="container-theme-data">
-        <div className="theme-form">
-          <h1>Escolha o tema do seu Quiz</h1>
-          <form>
-            <input
-              type="text"
-              placeholder="Digite o nome de um tema"
-              value={themeName}
-              onChange={searchThemeName}
-            />
-          </form>
-        </div>
+        <SearchComponent
+          title="Escolha o tema do seu Quiz"
+          url={`/theme/search?page=${currentPage}&name=`}
+          placeholder="Digite o nome de um tema"
+          setData={setThemes}
+        />
 
         <div className="container-all-themes">
           {themes &&
@@ -75,15 +73,16 @@ const ThemeTemplate = ({url, onClickFunction }) => {
                 key={theme.id}
                 onClick={() => onClickFunction(theme.id)}
               >
-                <img src={theme.imageUrl} alt="theme-image" />
+                <img
+                  src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
+                  alt="theme-image"
+                />
                 <p>{theme.name}</p>
               </div>
             ))}
 
-          {!themes && <h2 className="not-found">Nenhum tema encontrado!</h2>}
-          <div className="container-info">
-            {loading && <Loading />}
-          </div>
+          {isNotFound && <NotFoundComponent title="Tema não encontrado!" />}
+          <div className="container-info">{loading && <Loading />}</div>
         </div>
       </div>
 

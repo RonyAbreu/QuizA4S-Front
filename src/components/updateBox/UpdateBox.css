@@ -43,8 +43,49 @@
 }
 
 .update-box-input input{
-    height: 25px;
+    height: 30px;
     border: none;
     border-radius: 5px;
     padding: 5px;
 }
+
+.update-box-buttons{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1em;
+    gap: 1em;
+}
+
+.update-box-buttons button{
+    width: 40%;
+    height: 30px;
+    font-size: 1em;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease-in;
+    color: #fff;
+    border-radius: 50px;
+}
+
+.update-box-buttons button:nth-child(1){
+    background-color: green;
+}
+
+.update-box-buttons button:nth-child(1):hover{
+    background-color: #fff;
+    color: green;
+}
+
+.update-box-buttons button:nth-child(2){
+    background-color: red;
+}
+
+.update-box-buttons button:nth-child(2):hover{
+    background-color: #fff;
+    color: red;
+}
+
+

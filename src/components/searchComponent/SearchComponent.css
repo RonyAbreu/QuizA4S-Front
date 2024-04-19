@@ -1,0 +1,28 @@
+.container-search{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5em;
+}
+
+.search-title{
+    font-size: 2.1em;
+    color: #fff;
+}
+
+.search-input{
+    width: 300px;
+    height: 35px;
+    border-radius: 5px;
+    border: 2px solid white;
+    padding: 5px;
+    font-size: 1.1em;
+    outline: none;
+}
+
+.search-input:focus{
+    border: 2px solid blue;
+}

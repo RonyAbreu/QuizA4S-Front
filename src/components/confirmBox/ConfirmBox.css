@@ -12,7 +12,7 @@
 }
 
 .confirm-box{
-    width: 350px;
+    width: 400px;
     height: 250px;
     background-color: #3498db;
     display: flex;
@@ -39,7 +39,7 @@
 
 .confirm-box-buttons button{
     width: 40%;
-    height: 30px;
+    height: 35px;
     font-size: 1em;
     font-weight: bold;
     word-wrap: break-word;
@@ -49,9 +49,10 @@
     cursor: pointer;
     transition: .3s ease-in-out;
 }
+
 .bi-question-circle-fill{
-    font-size: 40px;
-    color: #fff;
+    font-size: 45px;
+    color: #eee;
 }
 
 .confirm-box-buttons button:nth-child(1){
