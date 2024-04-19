@@ -86,7 +86,7 @@ export class ApiFetch {
       return info;
     }
 
-    const response = await fetch(basePath , {
+    const response = await fetch(`${URL_BASE}${basePath}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
