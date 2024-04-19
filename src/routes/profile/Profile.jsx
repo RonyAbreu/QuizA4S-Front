@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import MyQuiz from "./MyTheme";
+import MyTheme from "./MyTheme";
 import MyResponse from "./MyResponse";
 import { ApiFetch } from "../../util/ApiFetch";
 import Loading from "../../components/loading/Loading";
@@ -30,7 +30,7 @@ const Profile = () => {
   };
 
   const [currentItem, setCurrentItem] = useState(0);
-  const componentsItens = [<MyQuiz />, <MyResponse />];
+  const componentsItens = [<MyTheme />, <MyResponse />];
 
   useEffect(() => {
     const btnQuiz = document.getElementById("btn-quiz");
@@ -150,7 +150,7 @@ const Profile = () => {
             id="btn-response"
             className="select-user-btn"
           >
-            Minhas Respostas
+            Painel de Respostas
           </button>
         </div>
 
