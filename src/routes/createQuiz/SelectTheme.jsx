@@ -24,8 +24,6 @@ const SelectTheme = ({ currentComponent, setCurrentComponent }) => {
         <i
           className="bi bi-plus-circle-fill"
           onClick={() => setThemeMenu(true)}
-          onMouseEnter={(e) => e.target.style.transform = 'translateX(0)'}
-          onMouseLeave={(e) => e.target.style.transform = 'translateX(-100%)'}
         ></i>
       </div>
 

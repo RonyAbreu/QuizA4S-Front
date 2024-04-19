@@ -35,6 +35,9 @@ const Menu = ({ setMenu }) => {
         <button type="button" onClick={() => navigate("/profile")}>
           Meu Perfil
         </button>
+        <button type="button" onClick={() => navigate("/myquiz")}>
+          Meus Quizzes
+        </button>
         <button type="button" onClick={createQuiz}>
           Criar Quiz
         </button>

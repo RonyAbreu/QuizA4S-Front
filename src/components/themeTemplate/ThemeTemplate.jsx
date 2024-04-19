@@ -6,9 +6,10 @@ import Loading from "../loading/Loading";
 import "./ThemeTemplate.css";
 import SearchComponent from "../searchComponent/SearchComponent";
 
-const defaultImgUrl = "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
+const defaultImgUrl =
+  "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
-const ThemeTemplate = ({url, onClickFunction }) => {
+const ThemeTemplate = ({ url, onClickFunction }) => {
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -42,7 +43,12 @@ const ThemeTemplate = ({url, onClickFunction }) => {
   return (
     <div className="container-theme outlet">
       <div className="container-theme-data">
-        <SearchComponent title="Escolha o tema do seu Quiz" url={`${url}/search?name=`} placeholder="Digite o nome de um tema" setData={setThemes}/>
+        <SearchComponent
+          title="Escolha o tema do seu Quiz"
+          url={`${url}/search?name=`}
+          placeholder="Digite o nome de um tema"
+          setData={setThemes}
+        />
 
         <div className="container-all-themes">
           {themes &&
@@ -52,15 +58,18 @@ const ThemeTemplate = ({url, onClickFunction }) => {
                 key={theme.id}
                 onClick={() => onClickFunction(theme.id)}
               >
-                <img src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl} alt="theme-image" />
+                <img
+                  src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
+                  alt="theme-image"
+                />
                 <p>{theme.name}</p>
               </div>
             ))}
 
-          {themes.length == 0 && <h2 className="not-found">Nenhum tema encontrado!</h2>}
-          <div className="container-info">
-            {loading && <Loading />}
-          </div>
+          {themes.length == 0 && (
+            <h2 className="not-found">Nenhum tema encontrado!</h2>
+          )}
+          <div className="container-info">{loading && <Loading />}</div>
         </div>
       </div>
 
