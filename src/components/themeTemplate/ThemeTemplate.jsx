@@ -58,7 +58,7 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
       <div className="container-theme-data">
         <SearchComponent
           title="Escolha o tema do seu Quiz"
-          url={`${url}/search?name=`}
+          url={`/theme/search?page=${currentPage}&name=`}
           placeholder="Digite o nome de um tema"
           setData={setThemes}
         />

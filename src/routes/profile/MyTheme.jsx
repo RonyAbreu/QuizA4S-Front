@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { URL_BASE } from "../../App";
 import { ApiFetch } from "../../util/ApiFetch";
 import Pagination from "../../components/pagination/Pagination";
 import Theme from "../../components/theme/Theme";
@@ -7,8 +6,6 @@ import Theme from "../../components/theme/Theme";
 import "./MyTheme.css";
 import Loading from "../../components/loading/Loading";
 import SearchComponent from "../../components/searchComponent/SearchComponent";
-
-const url = `${URL_BASE}/theme/creator`;
 
 const MyTheme = () => {
   const apiFetch = new ApiFetch();
@@ -23,7 +20,7 @@ const MyTheme = () => {
   useEffect(() => {
     setLoading(true);
     const promisse = apiFetch.getPagesWithToken(
-      `${url}?page=${currentPage}`,
+      `/theme/creator?page=${currentPage}`,
       "Nenhum tema encontrado!"
     );
     promisse.then((response) => {
@@ -43,7 +40,7 @@ const MyTheme = () => {
       <SearchComponent
         placeholder="Digite o nome de um tema"
         setData={setThemes}
-        url={`${url}?name=`}
+        url={`/theme/creator?page=${currentPage}&name=`}
       />
 
       <Theme themes={themes} setThemes={setThemes} setCallBack={setCallBack} />

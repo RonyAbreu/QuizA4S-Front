@@ -8,8 +8,9 @@ const SearchComponent = ({ title, url, placeholder, setData }) => {
   const apiFetch = new ApiFetch();
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
+  console.log(url)
 
-  function searchThemeName(value) {
+  function searchDataName(value) {
     const inputName = value;
 
     setName(inputName);
@@ -31,7 +32,7 @@ const SearchComponent = ({ title, url, placeholder, setData }) => {
         type="text"
         placeholder={placeholder}
         value={name}
-        onChange={(e) => searchThemeName(e.target.value)}
+        onChange={(e) => searchDataName(e.target.value)}
         className="search-input"
       />
       {loading && <Loading />}
