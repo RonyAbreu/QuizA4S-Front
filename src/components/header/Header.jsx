@@ -52,7 +52,7 @@ const Header = ({ isAuth }) => {
         )}
 
         {isAuth && (
-          <i className="bi bi-person-circle profile" onClick={() => setMenu(true)}></i>
+          <i className="bi bi-list profile" onClick={() => setMenu(true)}></i>
         )}
       </ul>
 

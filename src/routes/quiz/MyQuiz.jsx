@@ -1,9 +1,22 @@
+import { URL_BASE } from "../../App";
+import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate"
+import { useNavigate } from "react-router-dom";
+
 import "./MyQuiz.css";
 
+const url = `${URL_BASE}/theme/creator`
+
 const MyQuiz = () => {
+
+  const navigate = useNavigate()
+
+  function startQuiz(id) {
+    navigate(`/myquiz/quiz/${id}`);
+  }
+
   return (
     <div className="container-my-quiz outlet">
-        MyQuiz
+      <ThemeTemplate url={url} onClickFunction={startQuiz}/>
     </div>
   )
 }

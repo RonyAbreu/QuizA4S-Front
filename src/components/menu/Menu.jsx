@@ -30,7 +30,7 @@ const Menu = ({ setMenu }) => {
 
       <div className="container-btns">
         <button type="button" onClick={() => navigate("/")}>
-          Início
+          Jogar
         </button>
         <button type="button" onClick={() => navigate("/profile")}>
           Meu Perfil

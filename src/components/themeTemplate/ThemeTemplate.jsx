@@ -17,10 +17,23 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
 
+  const token = localStorage.getItem("token");
+
   useEffect(() => {
     async function getAllThemes() {
       setLoading(true);
-      const response = await fetch(`${url}?page=${currentPage}`);
+      let response;
+
+      if(token){
+        response = await fetch(`${url}?page=${currentPage}`,{
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
+        });
+      } else {
+        response = await fetch(`${url}?page=${currentPage}`);
+      }
+      
       const page = await response.json();
       const themes = page.content;
       setLoading(false);

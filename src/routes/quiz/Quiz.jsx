@@ -19,7 +19,13 @@ const Quiz = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    let themeId = path.substring("/theme/quiz/".length)
+    let themeId;
+
+    if(path.includes("myquiz")){
+      themeId = path.substring("/myquiz/quiz/".length)
+    } else {
+      themeId = path.substring("/theme/quiz/".length)
+    }
     
     async function getQuestionsByThemeId() {
       const url = `${URL_BASE}/question/quiz/${themeId}`;
@@ -62,6 +68,14 @@ const Quiz = () => {
     return alternative.target.getAttribute("value") === "true";
   }
 
+  function restart(){
+    if(path.includes("myquiz")){
+      navigate("/myquiz")
+    } else {
+      navigate("/theme")
+    }
+  }
+
   return (
     <div className="container-quiz">
       {loading && <Loading />}
@@ -69,7 +83,7 @@ const Quiz = () => {
       {informationBox && (
         <InformationBox
           text={`Você acertou ${score + 1} de 10 questões!`}
-          closeBox={() => navigate("/theme")}
+          closeBox={restart}
           icon="check"
           color="green"
         />
