@@ -14,10 +14,11 @@
 
 .container-all-themes{
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     flex-wrap: wrap;
-    max-width: 800px;
+    width: 800px;
+    height: 600px;
     gap: 2em;
     background-color: #ffffff8b;
     border-radius: 15px;

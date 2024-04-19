@@ -6,6 +6,7 @@ import Theme from "../../components/theme/Theme";
 import "./MyTheme.css";
 import Loading from "../../components/loading/Loading";
 import SearchComponent from "../../components/searchComponent/SearchComponent";
+import NotFoundComponent from "../../components/notFound/NotFoundComponent";
 
 const MyTheme = () => {
   const apiFetch = new ApiFetch();
@@ -46,7 +47,7 @@ const MyTheme = () => {
       <Theme themes={themes} setThemes={setThemes} setCallBack={setCallBack} />
 
       {!loading && themes.length == 0 && (
-        <h2 style={{ marginBottom: "2em" }}>Nenhum tema encontrado</h2>
+        <NotFoundComponent title="Tema não encontrado"/>
       )}
 
       <Pagination

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import ImageNotFound from "../../assets/not-found-img.jpg"
+import ImageNotFound from "../../assets/page-not-found.jpg"
 
 import "./ErrorPage.css";
 

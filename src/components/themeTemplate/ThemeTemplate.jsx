@@ -5,44 +5,46 @@ import Loading from "../loading/Loading";
 //Css
 import "./ThemeTemplate.css";
 import SearchComponent from "../searchComponent/SearchComponent";
+import NotFoundComponent from "../notFound/NotFoundComponent";
+import { ApiFetch } from "../../util/ApiFetch";
 
 const defaultImgUrl =
   "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
 const ThemeTemplate = ({ url, onClickFunction }) => {
+  const apiFetch = new ApiFetch();
+
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [isFirstPage, setIsFirstPage] = useState(true);
   const [isLastPage, setIsLastPage] = useState(false);
+  const [isNotFound, setNotFound] = useState(false);
 
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    async function getAllThemes() {
-      setLoading(true);
-      let response;
+    setLoading(true);
 
-      if(token){
-        response = await fetch(`${url}?page=${currentPage}`,{
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-      } else {
-        response = await fetch(`${url}?page=${currentPage}`);
+    const promisse = apiFetch.getPagesWithToken(
+      `${url}?page=${currentPage}`,
+      "Tema não encontrado"
+    );
+
+    promisse.then((response) => {
+      if (!response.success) {
+        setLoading(false);
+        setNotFound(true);
+        return;
       }
-      
-      const page = await response.json();
-      const themes = page.content;
-      setLoading(false);
-      setThemes(themes);
-      setIsFirstPage(currentPage === 0);
-      setIsLastPage(currentPage === page.totalPages - 1);
-    }
 
-    getAllThemes();
+      setNotFound(false);
+      setLoading(false);
+      setThemes(response.data);
+      setIsFirstPage(currentPage === 0);
+      setIsLastPage(currentPage === response.totalPages - 1);
+    });
   }, [currentPage]);
 
   function alterPage(direction) {
@@ -79,9 +81,7 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
               </div>
             ))}
 
-          {themes == undefined && 
-            <h2 className="not-found">Nenhum tema encontrado!</h2>
-          }
+          {isNotFound && <NotFoundComponent title="Tema não encontrado!" />}
           <div className="container-info">{loading && <Loading />}</div>
         </div>
       </div>

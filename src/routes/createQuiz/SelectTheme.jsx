@@ -1,5 +1,4 @@
 import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate";
-import { URL_BASE } from "../../App";
 import { useNavigate } from "react-router-dom";
 
 import "./SelectTheme.css";
@@ -7,7 +6,7 @@ import { useState } from "react";
 import ThemeMenu from "../../components/menu/ThemeMenu";
 
 const SelectTheme = ({ currentComponent, setCurrentComponent }) => {
-  const url = `${URL_BASE}/theme`;
+  const url = `/theme`;
 
   const [isThemeMenu, setThemeMenu] = useState(false);
 

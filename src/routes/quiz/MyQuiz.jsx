@@ -2,7 +2,7 @@ import { URL_BASE } from "../../App";
 import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate"
 import { useNavigate } from "react-router-dom";
 
-const url = `${URL_BASE}/theme/creator`
+const url = `/theme/creator`
 
 const MyQuiz = () => {
 
