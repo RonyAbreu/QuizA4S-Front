@@ -79,9 +79,9 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
               </div>
             ))}
 
-          {themes.length == 0 && (
+          {themes == undefined && 
             <h2 className="not-found">Nenhum tema encontrado!</h2>
-          )}
+          }
           <div className="container-info">{loading && <Loading />}</div>
         </div>
       </div>

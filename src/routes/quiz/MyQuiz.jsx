@@ -2,8 +2,6 @@ import { URL_BASE } from "../../App";
 import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate"
 import { useNavigate } from "react-router-dom";
 
-import "./MyQuiz.css";
-
 const url = `${URL_BASE}/theme/creator`
 
 const MyQuiz = () => {

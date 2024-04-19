@@ -8,7 +8,6 @@ const SearchComponent = ({ title, url, placeholder, setData }) => {
   const apiFetch = new ApiFetch();
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  console.log(url)
 
   function searchDataName(value) {
     const inputName = value;

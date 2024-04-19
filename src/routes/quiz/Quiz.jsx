@@ -82,7 +82,7 @@ const Quiz = () => {
 
       {informationBox && (
         <InformationBox
-          text={`Você acertou ${score + 1} de 10 questões!`}
+          text={`Você acertou ${score + 1} de ${questions.length} questões!`}
           closeBox={restart}
           icon="check"
           color="green"
