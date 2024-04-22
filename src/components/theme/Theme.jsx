@@ -6,12 +6,15 @@ import Loading from "../loading/Loading";
 import InformationBox from "../informationBox/InformationBox";
 
 import "./Theme.css";
+import { useNavigate } from "react-router-dom";
 
 const defaultImgUrl =
   "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
 const Theme = ({ themes, setThemes, setCallBack }) => {
   const apiFetch = new ApiFetch();
+
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -126,6 +129,16 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
     }
   }
 
+  function showQuestions(id, name, imageUrl){
+    const theme = {
+      id,
+      name,
+      imageUrl,
+    }
+    localStorage.setItem("theme", JSON.stringify(theme));
+    navigate(`/profile/theme/${id}/question`)
+  }
+
   return (
     <div className="my-theme-list">
       {themes &&
@@ -137,7 +150,7 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
             />
             <div className="theme-questions">
               <p>{theme.name}</p>
-              <button type="button">Questões</button>
+              <button type="button" onClick={() => showQuestions(theme.id, theme.name, theme.imageUrl)}>Questões</button>
             </div>
             <div className="theme-action">
               <i
