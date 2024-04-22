@@ -1,0 +1,148 @@
+.container-my-question{
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.my-question{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.my-question-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.my-question-header h1{
+    font-size: 2.1em;
+    color: #fff;
+    margin-bottom: .5em;
+}
+
+.theme-info{
+    text-align: center;
+    width: 140px;
+    position: fixed;
+    left: 0;
+    top: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .5em;
+    color: #fff;
+}
+
+.theme-info p{
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.theme-info img{
+    width: 100px;
+    height: 100px;
+    border-radius: 10px;
+}
+
+.theme-info span{
+    max-width: 90%;
+    font-size: 1.1em;
+    font-weight: 600;
+    word-wrap: break-word;
+}
+
+.my-question-body{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+}
+
+.my-question-data{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5em;
+    margin-bottom: 2em;
+}
+
+.question-data{
+    width: 100%;
+    height: 150px;
+    background-color: #ffffffb8;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 1em;
+}
+
+.question-data img{
+    width: 100px;
+    height: 100px;
+}
+
+.question-info{
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: .8em;
+}
+
+.question-info p{
+    max-width: 95%;
+    width: 95%;
+    text-align: center;
+    font-size: 1.1em;
+    word-wrap: break-word;
+}
+
+.question-info button{
+    width: 100px;
+    height: 25px;
+    border-radius: 5px;
+    border: none;
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+    transition: all .2s ease-in-out;
+    font-size: .9em;
+}
+
+.question-info button:hover{
+    background-color: #3498dbb4;
+}
+
+.question-action{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.question-action i{
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.question-action i:nth-child(1){
+    color: red;
+}
+
+.question-action i:nth-child(2){
+    color: blue;
+}
