@@ -114,6 +114,7 @@
     color: #fff;
     cursor: pointer;
     transition: all .2s ease-in-out;
+    font-size: .9em;
 }
 
 .question-info button:hover{
