@@ -8,6 +8,7 @@ import ConfirmBox from "../../components/confirmBox/ConfirmBox";
 import UpdateBox from "../../components/updateBox/UpdateBox";
 
 import "./MyQuestion.css";
+import MyAlternative from "./MyAlternative";
 
 const defaultImgUrl =
   "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
@@ -93,17 +94,17 @@ const MyQuestion = () => {
 
   function showConfirmBox(id, title, imageUrl) {
     setQuestionId(id);
-    setNewQuestion({title: title, imageUrl: imageUrl})
-    setConfirmBox(true)
+    setNewQuestion({ title: title, imageUrl: imageUrl });
+    setConfirmBox(true);
   }
 
   function showUpdateBox(id, title, imageUrl) {
     setQuestionId(id);
-    setNewQuestion({title: title, imageUrl: imageUrl})
-    setUpdateBox(true)
+    setNewQuestion({ title: title, imageUrl: imageUrl });
+    setUpdateBox(true);
   }
 
-  function removeQuestion(){
+  function removeQuestion() {
     setLoading(true);
     const promisse = apiFetch.delete(`/question/${questionId}`, false);
 
@@ -121,7 +122,7 @@ const MyQuestion = () => {
     });
   }
 
-  function updateQuestion(){
+  function updateQuestion() {
     setLoading(true);
     const promisse = apiFetch.patch(`/question/${questionId}`, newQuestion);
 
@@ -137,7 +138,6 @@ const MyQuestion = () => {
       setLoading(false);
       setUpdateBox(false);
     });
-    
   }
 
   function activeInformationBox(isFail, message) {
@@ -152,6 +152,14 @@ const MyQuestion = () => {
       });
       setInformationBox(true);
     }
+  }
+
+  const [alternatives, setAlternatives] = useState([]);
+  const [isShowAlternatives, setShowAlternatives] = useState(false);
+
+  function showAlternatives(alternatives) {
+    setAlternatives(alternatives);
+    setShowAlternatives(true);
   }
 
   return (
@@ -188,7 +196,12 @@ const MyQuestion = () => {
                   />
                   <div className="question-info">
                     <p>{question.title}</p>
-                    <button type="button">Alternativas</button>
+                    <button
+                      type="button"
+                      onClick={() => showAlternatives(question.alternatives)}
+                    >
+                      Alternativas
+                    </button>
                   </div>
 
                   <div className="question-action">
@@ -224,6 +237,14 @@ const MyQuestion = () => {
           />
         </div>
       </div>
+
+      {isShowAlternatives && (
+        <MyAlternative
+          alternatives={alternatives}
+          setShowAlternatives={setShowAlternatives}
+          setCallBack={setCallBack}
+        />
+      )}
 
       {isConfirmBox && (
         <ConfirmBox
