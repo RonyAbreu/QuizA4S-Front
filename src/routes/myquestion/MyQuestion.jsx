@@ -6,6 +6,7 @@ import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
 import ConfirmBox from "../../components/confirmBox/ConfirmBox";
 import UpdateBox from "../../components/updateBox/UpdateBox";
+import NotFoundComponent from "../../components/notFound/NotFoundComponent";
 
 import "./MyQuestion.css";
 import MyAlternative from "./MyAlternative";
@@ -42,16 +43,19 @@ const MyQuestion = () => {
   });
 
   useEffect(() => {
+    setLoading(true);
     const promisse = apiFetch.getPagesWithToken(
       basePath,
-      "Questões não encontradas"
+      "Questões não encontradas ou não cadastradas"
     );
 
     promisse.then((response) => {
       if (!response.success) {
-        alert(response.message);
+        activeInformationBox(true, response.message)
+        setLoading(false);
       }
 
+      setLoading(false);
       setTotalPages(response.totalPages);
       setQuestions(response.data);
     });
@@ -229,6 +233,10 @@ const MyQuestion = () => {
                 </div>
               ))}
           </div>
+
+          {!loading && questions.length == 0 && (
+            <NotFoundComponent title="Questão não encontrada" />
+          )}
 
           <Pagination
             currentPage={currentPage}
