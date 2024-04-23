@@ -20,7 +20,7 @@ const MyTheme = () => {
 
   useEffect(() => {
     setLoading(true);
-    const promisse = apiFetch.getPagesWithToken(
+    const promisse = apiFetch.getPages(
       `/theme/creator?page=${currentPage}`,
       "Nenhum tema encontrado!"
     );

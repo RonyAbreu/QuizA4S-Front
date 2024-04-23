@@ -44,7 +44,7 @@ const MyQuestion = () => {
 
   useEffect(() => {
     setLoading(true);
-    const promisse = apiFetch.getPagesWithToken(
+    const promisse = apiFetch.getPages(
       basePath,
       "Questões não encontradas ou não cadastradas"
     );
