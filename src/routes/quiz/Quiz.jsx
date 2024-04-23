@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { URL_BASE } from "../../App";
 import Question from "../../components/question/Question";
+import InformationBox from "../../components/informationBox/InformationBox";
+import Loading from "../../components/loading/Loading";
+import { ApiFetch } from "../../util/ApiFetch";
+import { URL_BASE } from "../../App";
 
 //Css
 import "./Quiz.css";
-import InformationBox from "../../components/informationBox/InformationBox";
-import Loading from "../../components/loading/Loading";
+
 
 const Quiz = () => {
+  const apiFetch = new ApiFetch();
+
   const path = useLocation().pathname;
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -17,6 +21,10 @@ const Quiz = () => {
   const [informationBox, setInformationBox] = useState(false);
 
   const navigate = useNavigate();
+
+  const { uuid } = JSON.parse(localStorage.getItem("user"));
+  const [questionId, setQuestionId] = useState(0);
+  const token = localStorage.getItem("token");
 
   useEffect(() => {
     let themeId;
@@ -41,12 +49,11 @@ const Quiz = () => {
     getQuestionsByThemeId();
   }, []);
 
-  function handleAnswerClick(alternative) {
+  function handleAnswerClick(event, alternativeId) {
     const alternatives = document.querySelectorAll("li");
 
     alternatives.forEach((alt) => {
-      if (alt.getAttribute("value") === "true")
-        alt.style.backgroundColor = "green";
+      if (alt.getAttribute("value") === "true") alt.style.backgroundColor = "green";
       else alt.style.backgroundColor = "red";
     });
 
@@ -57,15 +64,36 @@ const Quiz = () => {
       }
 
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setQuestionId(questions[currentQuestionIndex].id)
 
-      if (isAlternativeCorrect(alternative)) {
+      if (isAlternativeCorrect(event)) {
         setScore(score + 1);
       }
     }, 500);
+
+    if(token){
+      postResponse(uuid, questionId, alternativeId);
+    }
+    
   }
 
-  function isAlternativeCorrect(alternative) {
-    return alternative.target.getAttribute("value") === "true";
+  function isAlternativeCorrect(event) {
+    return event.target.getAttribute("value") === "true";
+  }
+
+  function postResponse(uuid, questionId, alternativeId){
+    const basePath = `/response/${uuid}/${questionId}/${alternativeId}`;
+
+    const promisse = apiFetch.postResponse(basePath);
+
+    promisse.then((response) =>{
+      if(!response.success){
+        console.log(response.message)
+      }
+
+      console.log(response.message)
+    })
+
   }
 
   function restart(){

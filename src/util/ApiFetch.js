@@ -110,4 +110,34 @@ export class ApiFetch {
 
     return { ...info };
   }
+
+  async postResponse(basePath){
+    let info = {
+      message: "",
+      success: false,
+    };
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      info.message = "Token inválido";
+      return info;
+    }
+
+    const response = await fetch(`${URL_BASE}${basePath}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if ([403, 500].includes(response.status)) {
+      info.message = "Erro ao cadastrar resposta!";
+      return info;
+    }
+
+    info = { ...info, message: "OK", success: true};
+
+    return { ...info };
+  }
 }

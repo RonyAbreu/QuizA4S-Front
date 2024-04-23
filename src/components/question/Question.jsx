@@ -22,7 +22,7 @@ const Question = ({
             <li
               key={alternative.id}
               value={alternative.correct}
-              onClick={onAnswerClick}
+              onClick={(e) => onAnswerClick(e, alternative.id)}
             >
               {alternative.text}
             </li>
