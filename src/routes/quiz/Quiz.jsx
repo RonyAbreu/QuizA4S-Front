@@ -22,8 +22,7 @@ const Quiz = () => {
 
   const navigate = useNavigate();
 
-  const { uuid } = JSON.parse(localStorage.getItem("user"));
-  const [questionId, setQuestionId] = useState(0);
+  const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const Quiz = () => {
     getQuestionsByThemeId();
   }, []);
 
-  function handleAnswerClick(event, alternativeId) {
+  function handleAnswerClick(event, alternativeId, questionId) {
     const alternatives = document.querySelectorAll("li");
 
     alternatives.forEach((alt) => {
@@ -64,7 +63,6 @@ const Quiz = () => {
       }
 
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      setQuestionId(questions[currentQuestionIndex].id)
 
       if (isAlternativeCorrect(event)) {
         setScore(score + 1);
@@ -72,7 +70,7 @@ const Quiz = () => {
     }, 500);
 
     if(token){
-      postResponse(uuid, questionId, alternativeId);
+      postResponse(user.uuid, questionId, alternativeId);
     }
     
   }
@@ -120,6 +118,7 @@ const Quiz = () => {
       {questions.length > 0 && (
         <Question
           title={questions[currentQuestionIndex].title}
+          questionId={questions[currentQuestionIndex].id}
           alternatives={questions[currentQuestionIndex].alternatives}
           onAnswerClick={handleAnswerClick}
           currentQuestion={currentQuestionIndex + 1}
