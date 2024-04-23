@@ -71,11 +71,8 @@ const Profile = () => {
 
     promisse.then((response) => {
       if (!response.success) {
-        setInformationData((prevData) => {
-          return { ...prevData, text: response.message };
-        });
+        activeInformationBox(true, response.message)
         setLoading(false);
-        setInformationBox(true);
         return;
       }
 
@@ -84,6 +81,8 @@ const Profile = () => {
         JSON.stringify({ uuid: uuid, name: userUpdate.name, email: email })
       );
       setLoading(false);
+
+      activeInformationBox(false, "Nome atualizado com sucesso!");
 
       setUpdateBox(false);
     });
@@ -102,6 +101,20 @@ const Profile = () => {
         return;
       }
     });
+  }
+
+  function activeInformationBox(isFail, message){
+    if(isFail){
+      setInformationData((prevData) => {
+        return { ...prevData, text: message };
+      });
+      setInformationBox(true);
+    } else {
+      setInformationData((prevData) => {
+        return { ...prevData, text: message, icon: "check", color: "green" };
+      });
+      setInformationBox(true);
+    }
   }
 
   function showConfirmationBox() {
