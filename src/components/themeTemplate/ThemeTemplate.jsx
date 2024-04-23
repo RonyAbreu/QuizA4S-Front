@@ -27,7 +27,7 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
   useEffect(() => {
     setLoading(true);
 
-    const promisse = apiFetch.getPagesWithToken(
+    const promisse = apiFetch.getPages(
       `${url}?page=${currentPage}`,
       "Tema não encontrado"
     );

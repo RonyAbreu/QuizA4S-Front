@@ -14,7 +14,7 @@ const SearchComponent = ({ title, url, placeholder, setData }) => {
 
     setName(inputName);
     setLoading(true);
-    const promisse = apiFetch.getPagesWithToken(
+    const promisse = apiFetch.getPages(
       `${url}${inputName}`,
       "Nenhum tema encontrado!"
     );
