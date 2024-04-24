@@ -56,3 +56,61 @@
 .profile:hover{
     color: rgb(76, 76, 250);
 }
+
+.menu-mobile{
+    font-size: 2.2em;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    display: none;
+}
+
+.menu-mobile:hover{
+    color: blue;
+}
+
+@media(max-width: 1250px){
+    .header{
+        padding: 15px;
+    }
+
+    .title{
+        margin: 0;
+        font-size: 2.1em;
+    }
+
+    .nav-bar{
+        gap: 1.5em;
+    }
+
+    .nav-item{
+        font-size: 1em;
+    }
+}
+
+@media(max-width: 1000px){
+    .title{
+        justify-content: center;
+    }
+
+    .nav-bar{
+        display: none;
+    }
+
+    .menu-mobile{
+        display: block;
+    }
+}
+
+@media(max-width: 500px){
+    .logo{
+        width: 60px;
+    }
+
+    .title{
+        font-size: 1.9em;
+    }
+
+    .menu-mobile{
+        font-size: 2.1em;
+    }
+}
