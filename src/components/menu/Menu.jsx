@@ -55,7 +55,7 @@ const Menu = ({ setMenu, isAuth }) => {
       {!isAuth && (
         <div className="container-btns">
           <button type="button" onClick={() => handleButtonClick(() => navigate("/"))}>
-            Início
+            Jogar
           </button>
           <button type="button" onClick={() => handleButtonClick(() => navigate("/register"))}>
             Cadastrar-se

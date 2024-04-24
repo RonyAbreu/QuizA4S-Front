@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import InformationBox from "../informationBox/InformationBox";
 import { URL_BASE } from "../../App";
-
-import "./FormTemplate.css";
 import Loading from "../loading/Loading";
 import { AuthenticationContext } from "../../context/AutenticationContext";
+
+import "./FormTemplate.css";
 
 const FormTemplate = ({
   title,

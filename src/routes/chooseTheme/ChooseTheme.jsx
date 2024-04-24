@@ -1,16 +1,16 @@
-import ThemeTemplate from '../../components/themeTemplate/ThemeTemplate'
+import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const ChooseTheme = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function startQuiz(id) {
     navigate(`/theme/quiz/${id}`);
   }
 
   return (
-    <div>
+    <div className="container-choose-theme">
       <ThemeTemplate url="/theme" onClickFunction={startQuiz} />
     </div>
   );
