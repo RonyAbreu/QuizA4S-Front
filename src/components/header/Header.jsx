@@ -50,14 +50,16 @@ const Header = ({ isAuth }) => {
           </NavLink>
         )}
 
-        {isAuth && (
+      </ul>
+      {isAuth && (
           <i className="bi bi-list profile" onClick={() => setMenu(true)}></i>
         )}
-      </ul>
 
-      <i className="bi bi-list menu-mobile"></i>
+      {!isAuth && (
+        <i className="bi bi-list menu-mobile" onClick={() => setMenu(true)}></i>
+      )}
 
-      {menu && <Menu setMenu={setMenu} />}
+      {menu && <Menu setMenu={setMenu} isAuth={isAuth}/>}
     </header>
   );
 };

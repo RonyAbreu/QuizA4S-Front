@@ -59,3 +59,11 @@
 .container-btns button:hover{
     background-color: #3498dbb5;
 }
+
+@media(max-width: 450px){
+    .menu{
+        width: 100%;
+        border-bottom-left-radius: 0px;
+        border-top-left-radius: 0px;
+    }
+}
