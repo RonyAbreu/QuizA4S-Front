@@ -4,7 +4,15 @@ import Loading from "../loading/Loading";
 
 import "./SearchComponent.css";
 
-const SearchComponent = ({ title, url, placeholder, setData }) => {
+const SearchComponent = ({
+  title,
+  url,
+  placeholder,
+  onSearch,
+  setData,
+  setTotalPages,
+  setCurrentPage,
+}) => {
   const apiFetch = new ApiFetch();
   const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
@@ -12,14 +20,26 @@ const SearchComponent = ({ title, url, placeholder, setData }) => {
   function searchDataName(value) {
     const inputName = value;
 
+    if(onSearch){
+      onSearch(inputName);
+    } 
+
     setName(inputName);
+
+    setCurrentPage(0);
     setLoading(true);
     const promisse = apiFetch.getPages(
       `${url}${inputName}`,
       "Nenhum tema encontrado!"
     );
+
     promisse.then((response) => {
+      if (!response.success) {
+        setLoading(false);
+      }
+
       setLoading(false);
+      setTotalPages(response.totalPages);
       setData(response.data);
     });
   }

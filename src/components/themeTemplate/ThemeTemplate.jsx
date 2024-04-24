@@ -20,26 +20,29 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
 
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [isNotFound, setNotFound] = useState(false);
+
+  const [themeName, setThemeName] = useState("");
 
   const token = localStorage.getItem("token");
+
+  function changeName(propsThemeName){
+    setThemeName(propsThemeName);
+  }
 
   useEffect(() => {
     setLoading(true);
 
     const promisse = apiFetch.getPages(
-      `${url}?page=${currentPage}`,
+      `${url}?page=${currentPage}&name=${themeName}`,
       "Tema não encontrado"
     );
 
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);
-        setNotFound(true);
         return;
       }
 
-      setNotFound(false);
       setLoading(false);
       setTotalPages(response.totalPages);
       setThemes(response.data);
@@ -50,9 +53,12 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
     <div className="container-theme outlet">
       <SearchComponent
         title="Escolha o tema do seu Quiz"
-        url={`/theme/search?page=${currentPage}&name=`}
+        url={`/theme?page=${currentPage}&name=`}
         placeholder="Digite o nome de um tema"
+        onSearch={changeName}
+        setCurrentPage={setCurrentPage}
         setData={setThemes}
+        setTotalPages={setTotalPages}
       />
 
       <div className="container-theme-data">
@@ -70,6 +76,10 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
               <p>{theme.name}</p>
             </div>
           ))}
+
+        {!loading && themes.length == 0 && (
+          <NotFoundComponent title="Tema não encontrado!" />
+        )}
       </div>
 
       <Pagination
@@ -79,7 +89,6 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
       />
 
       {loading && <Loading />}
-      {isNotFound && <NotFoundComponent title="Tema não encontrado!" />}
     </div>
   );
 };
