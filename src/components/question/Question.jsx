@@ -3,6 +3,7 @@ import "./Question.css";
 const Question = ({
   title,
   questionId,
+  creatorId,
   alternatives,
   onAnswerClick,
   currentQuestion,
@@ -23,7 +24,7 @@ const Question = ({
             <li
               key={alternative.id}
               value={alternative.correct}
-              onClick={(e) => onAnswerClick(e, alternative.id, questionId)}
+              onClick={(e) => onAnswerClick(e, alternative.id, questionId, creatorId)}
             >
               {alternative.text}
             </li>

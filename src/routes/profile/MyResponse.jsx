@@ -1,8 +1,10 @@
 import "./MyResponse.css"
 
 const MyResponse = () => {
+
   return (
-    <div>MyResponse</div>
+    <div className="container-my-response">
+    </div>
   )
 }
 

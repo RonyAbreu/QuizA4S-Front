@@ -48,7 +48,7 @@ const Quiz = () => {
     getQuestionsByThemeId();
   }, []);
 
-  function handleAnswerClick(event, alternativeId, questionId) {
+  function handleAnswerClick(event, alternativeId, questionId, creatorId) {
     const alternatives = document.querySelectorAll("li");
 
     alternatives.forEach((alt) => {
@@ -69,7 +69,7 @@ const Quiz = () => {
       }
     }, 500);
 
-    if(token){
+    if(token && (user.uuid !== creatorId)){
       postResponse(user.uuid, questionId, alternativeId);
     }
     
@@ -88,10 +88,7 @@ const Quiz = () => {
       if(!response.success){
         console.log(response.message)
       }
-
-      console.log(response.message)
     })
-
   }
 
   function restart(){
@@ -119,6 +116,7 @@ const Quiz = () => {
         <Question
           title={questions[currentQuestionIndex].title}
           questionId={questions[currentQuestionIndex].id}
+          creatorId={questions[currentQuestionIndex].creatorId}
           alternatives={questions[currentQuestionIndex].alternatives}
           onAnswerClick={handleAnswerClick}
           currentQuestion={currentQuestionIndex + 1}
