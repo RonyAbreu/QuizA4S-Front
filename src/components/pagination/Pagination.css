@@ -5,6 +5,7 @@
     justify-content: center;
     gap: 2em;
     margin-bottom: 2em;
+    padding: 0px 5px;
 }
 
 .container-pagination button{
@@ -19,4 +20,11 @@
 
 .container-pagination button:hover{
     background-color: #ffffffc1;
+}
+
+@media(max-width: 450px){
+    .container-pagination button{
+        width: 50%;
+        font-size: 1em;
+    }
 }
