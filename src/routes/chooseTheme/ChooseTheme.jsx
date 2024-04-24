@@ -10,9 +10,7 @@ const ChooseTheme = () => {
   }
 
   return (
-    <div className="container-choose-theme">
-      <ThemeTemplate url="/theme" onClickFunction={startQuiz} />
-    </div>
+    <ThemeTemplate url="/theme" onClickFunction={startQuiz} />
   );
 };
 

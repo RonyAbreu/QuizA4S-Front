@@ -1,12 +1,13 @@
 // Components
 import { useEffect, useState } from "react";
 import Loading from "../loading/Loading";
-
-//Css
-import "./ThemeTemplate.css";
 import SearchComponent from "../searchComponent/SearchComponent";
 import NotFoundComponent from "../notFound/NotFoundComponent";
 import { ApiFetch } from "../../util/ApiFetch";
+import Pagination from "../pagination/Pagination";
+
+//Css
+import "./ThemeTemplate.css";
 
 const defaultImgUrl =
   "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
@@ -18,8 +19,7 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
   const [loading, setLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [isFirstPage, setIsFirstPage] = useState(true);
-  const [isLastPage, setIsLastPage] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
   const [isNotFound, setNotFound] = useState(false);
 
   const token = localStorage.getItem("token");
@@ -41,67 +41,45 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
 
       setNotFound(false);
       setLoading(false);
+      setTotalPages(response.totalPages);
       setThemes(response.data);
-      setIsFirstPage(currentPage === 0);
-      setIsLastPage(currentPage === response.totalPages - 1);
     });
   }, [currentPage]);
 
-  function alterPage(direction) {
-    if (direction === "prev" && !isFirstPage) {
-      setCurrentPage(currentPage - 1);
-    } else if (direction === "next" && !isLastPage) {
-      setCurrentPage(currentPage + 1);
-    }
-  }
-
   return (
     <div className="container-theme outlet">
+      <SearchComponent
+        title="Escolha o tema do seu Quiz"
+        url={`/theme/search?page=${currentPage}&name=`}
+        placeholder="Digite o nome de um tema"
+        setData={setThemes}
+      />
+
       <div className="container-theme-data">
-        <SearchComponent
-          title="Escolha o tema do seu Quiz"
-          url={`/theme/search?page=${currentPage}&name=`}
-          placeholder="Digite o nome de um tema"
-          setData={setThemes}
-        />
-
-        <div className="container-all-themes">
-          {themes &&
-            themes.map((theme) => (
-              <div
-                className="theme"
-                key={theme.id}
-                onClick={() => onClickFunction(theme.id)}
-              >
-                <img
-                  src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
-                  alt="theme-image"
-                />
-                <p>{theme.name}</p>
-              </div>
-            ))}
-
-          {isNotFound && <NotFoundComponent title="Tema não encontrado!" />}
-          <div className="container-info">{loading && <Loading />}</div>
-        </div>
+        {themes &&
+          themes.map((theme) => (
+            <div
+              className="theme"
+              key={theme.id}
+              onClick={() => onClickFunction(theme.id)}
+            >
+              <img
+                src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
+                alt="theme-image"
+              />
+              <p>{theme.name}</p>
+            </div>
+          ))}
       </div>
 
-      <div className="pagination-buttons">
-        <button
-          type="button"
-          onClick={() => alterPage("prev")}
-          disabled={isFirstPage}
-        >
-          Anterior
-        </button>
-        <button
-          type="button"
-          onClick={() => alterPage("next")}
-          disabled={isLastPage}
-        >
-          Próximo
-        </button>
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
+
+      {loading && <Loading />}
+      {isNotFound && <NotFoundComponent title="Tema não encontrado!" />}
     </div>
   );
 };
