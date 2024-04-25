@@ -25,13 +25,7 @@ const Quiz = () => {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    let themeId;
-
-    if (path.includes("myquiz")) {
-      themeId = path.substring("/myquiz/quiz/".length);
-    } else {
-      themeId = path.substring("/theme/quiz/".length);
-    }
+    let themeId = path.substring("/theme/quiz/".length)
 
     async function getQuestionsByThemeId() {
       const url = `${URL_BASE}/question/quiz/${themeId}`;
@@ -112,6 +106,7 @@ const Quiz = () => {
           <Question
             title={questions[currentQuestionIndex].title}
             questionId={questions[currentQuestionIndex].id}
+            questionImg={questions[currentQuestionIndex].imageUrl}
             creatorId={questions[currentQuestionIndex].creatorId}
             alternatives={questions[currentQuestionIndex].alternatives}
             onAnswerClick={handleAnswerClick}

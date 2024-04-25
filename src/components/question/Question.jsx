@@ -1,8 +1,11 @@
+import { DEFAULT_IMG } from "../../App";
+
 import "./Question.css";
 
 const Question = ({
   title,
   questionId,
+  questionImg,
   creatorId,
   alternatives,
   onAnswerClick,
@@ -16,6 +19,13 @@ const Question = ({
           Questão {currentQuestion} de {lastQuestion}
         </p>
         <h1 className="question-title">{title}</h1>
+        <img
+          src={
+            questionImg == null || questionImg == "" ? DEFAULT_IMG : questionImg
+          }
+          alt="image"
+          className="question-image"
+        />
       </div>
 
       <ul className="alternatives">
@@ -24,7 +34,9 @@ const Question = ({
             <li
               key={alternative.id}
               value={alternative.correct}
-              onClick={(e) => onAnswerClick(e, alternative.id, questionId, creatorId)}
+              onClick={(e) =>
+                onAnswerClick(e, alternative.id, questionId, creatorId)
+              }
             >
               {alternative.text}
             </li>

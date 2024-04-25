@@ -4,12 +4,10 @@ import UpdateBox from "../updateBox/UpdateBox";
 import { ApiFetch } from "../../util/ApiFetch";
 import Loading from "../loading/Loading";
 import InformationBox from "../informationBox/InformationBox";
+import { DEFAULT_IMG } from "../../App";
 
 import "./Theme.css";
 import { useNavigate } from "react-router-dom";
-
-const defaultImgUrl =
-  "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
 const Theme = ({ themes, setThemes, setCallBack }) => {
   const apiFetch = new ApiFetch();
@@ -145,7 +143,7 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
         themes.map((theme) => (
           <div key={theme.id} className="theme-data">
             <img
-              src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
+              src={theme.imageUrl == null ? DEFAULT_IMG : theme.imageUrl}
               alt="image"
             />
             <div className="theme-questions">

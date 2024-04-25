@@ -7,12 +7,10 @@ import InformationBox from "../../components/informationBox/InformationBox";
 import ConfirmBox from "../../components/confirmBox/ConfirmBox";
 import UpdateBox from "../../components/updateBox/UpdateBox";
 import NotFoundComponent from "../../components/notFound/NotFoundComponent";
+import MyAlternative from "./MyAlternative";
+import { DEFAULT_IMG } from "../../App";
 
 import "./MyQuestion.css";
-import MyAlternative from "./MyAlternative";
-
-const defaultImgUrl =
-  "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
 const MyQuestion = () => {
   const apiFetch = new ApiFetch();
@@ -200,7 +198,7 @@ const MyQuestion = () => {
                   <img
                     src={
                       question.imageUrl == null || question.imageUrl == ""
-                        ? defaultImgUrl
+                        ? DEFAULT_IMG
                         : question.imageUrl
                     }
                     alt="image-question"

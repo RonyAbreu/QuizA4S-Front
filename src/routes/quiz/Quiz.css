@@ -7,13 +7,13 @@
     background-image: url("../../assets//background-question.jpg");
     background-size: cover;
     margin-top: -2em;
-    margin-bottom: -2em;
+    padding: 50px 0px;
 }
 
 .container-quiz{
     width: 80%;
-    min-height: 600px;
+    height: 100%;
     display: flex;
-    align-items: start;
+    align-items: center;
     justify-content: center;
 }

@@ -5,12 +5,10 @@ import SearchComponent from "../searchComponent/SearchComponent";
 import NotFoundComponent from "../notFound/NotFoundComponent";
 import { ApiFetch } from "../../util/ApiFetch";
 import Pagination from "../pagination/Pagination";
+import { DEFAULT_IMG } from "../../App";
 
 //Css
 import "./ThemeTemplate.css";
-
-const defaultImgUrl =
-  "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
 
 const ThemeTemplate = ({ url, onClickFunction }) => {
   const apiFetch = new ApiFetch();
@@ -68,7 +66,7 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
               onClick={() => onClickFunction(theme.id)}
             >
               <img
-                src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
+                src={theme.imageUrl == null ? DEFAULT_IMG : theme.imageUrl}
                 alt="theme-image"
               />
               <p>{theme.name}</p>
