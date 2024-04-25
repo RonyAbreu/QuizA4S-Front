@@ -46,8 +46,8 @@ const Quiz = () => {
 
     alternatives.forEach((alt) => {
       if (alt.getAttribute("value") === "true")
-        alt.style.backgroundColor = "green";
-      else alt.style.backgroundColor = "red";
+        alt.style.backgroundColor = "#5bcebf";
+      else alt.style.backgroundColor = "#d9434f";
     });
 
     setTimeout(() => {
