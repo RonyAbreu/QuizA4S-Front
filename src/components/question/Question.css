@@ -41,18 +41,18 @@
 }
 
 .alternatives li{
+    max-width: 100%;
     width: 47%;
     min-height: 60px;
     background-color: rebeccapurple;
     border-radius: 15px;
-    text-align: center;
-    padding: 10px;
+    text-align: start;
+    padding: 10px 20px;
     font-size: 1.3em;
     font-weight: bold;
     color: #fff;
     cursor: pointer;
-    display: flex;
-    align-items: center;
+    word-wrap: break-word;
 }
 
 .alternatives li:hover{

@@ -9,7 +9,6 @@ import { URL_BASE } from "../../App";
 //Css
 import "./Quiz.css";
 
-
 const Quiz = () => {
   const apiFetch = new ApiFetch();
 
@@ -28,12 +27,12 @@ const Quiz = () => {
   useEffect(() => {
     let themeId;
 
-    if(path.includes("myquiz")){
-      themeId = path.substring("/myquiz/quiz/".length)
+    if (path.includes("myquiz")) {
+      themeId = path.substring("/myquiz/quiz/".length);
     } else {
-      themeId = path.substring("/theme/quiz/".length)
+      themeId = path.substring("/theme/quiz/".length);
     }
-    
+
     async function getQuestionsByThemeId() {
       const url = `${URL_BASE}/question/quiz/${themeId}`;
 
@@ -52,7 +51,8 @@ const Quiz = () => {
     const alternatives = document.querySelectorAll("li");
 
     alternatives.forEach((alt) => {
-      if (alt.getAttribute("value") === "true") alt.style.backgroundColor = "green";
+      if (alt.getAttribute("value") === "true")
+        alt.style.backgroundColor = "green";
       else alt.style.backgroundColor = "red";
     });
 
@@ -69,60 +69,61 @@ const Quiz = () => {
       }
     }, 500);
 
-    if(token && (user.uuid !== creatorId)){
+    if (token && user.uuid !== creatorId) {
       postResponse(user.uuid, questionId, alternativeId);
     }
-    
   }
 
   function isAlternativeCorrect(event) {
     return event.target.getAttribute("value") === "true";
   }
 
-  function postResponse(uuid, questionId, alternativeId){
+  function postResponse(uuid, questionId, alternativeId) {
     const basePath = `/response/${uuid}/${questionId}/${alternativeId}`;
 
     const promisse = apiFetch.postResponse(basePath);
 
-    promisse.then((response) =>{
-      if(!response.success){
-        console.log(response.message)
+    promisse.then((response) => {
+      if (!response.success) {
+        console.log(response.message);
       }
-    })
+    });
   }
 
-  function restart(){
-    if(path.includes("myquiz")){
-      navigate("/myquiz")
+  function restart() {
+    if (path.includes("myquiz")) {
+      navigate("/myquiz");
     } else {
-      navigate("/theme")
+      navigate("/theme");
     }
   }
 
   return (
-    <div className="container-quiz">
-      {loading && <Loading />}
+    <div className="container-quiz-external">
+      <div className="container-quiz">
+        {loading && <Loading />}
 
-      {informationBox && (
-        <InformationBox
-          text={`Você acertou ${score + 1} de ${questions.length} questões!`}
-          closeBox={restart}
-          icon="check"
-          color="green"
-        />
-      )}
+        {informationBox && (
+          <InformationBox
+            text={`Você acertou ${score + 1} de ${questions.length} questões!`}
+            closeBox={restart}
+            icon="check"
+            color="green"
+          />
+        )}
 
-      {questions.length > 0 && (
-        <Question
-          title={questions[currentQuestionIndex].title}
-          questionId={questions[currentQuestionIndex].id}
-          creatorId={questions[currentQuestionIndex].creatorId}
-          alternatives={questions[currentQuestionIndex].alternatives}
-          onAnswerClick={handleAnswerClick}
-          currentQuestion={currentQuestionIndex + 1}
-          lastQuestion={questions.length}
-        />
-      )}
+        {questions.length > 0 && (
+          <Question
+            title={questions[currentQuestionIndex].title}
+            questionId={questions[currentQuestionIndex].id}
+            creatorId={questions[currentQuestionIndex].creatorId}
+            alternatives={questions[currentQuestionIndex].alternatives}
+            onAnswerClick={handleAnswerClick}
+            currentQuestion={currentQuestionIndex + 1}
+            lastQuestion={questions.length}
+          />
+        )}
+      </div>
     </div>
   );
 };

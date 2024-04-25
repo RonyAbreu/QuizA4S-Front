@@ -1,12 +1,19 @@
+.container-quiz-external{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../../assets//background-question.jpg");
+    margin-top: -2em;
+    margin-bottom: -2em;
+}
+
 .container-quiz{
     width: 80%;
-    padding: 40px;
-    background-color: #ffffffc0;
-    box-shadow: 0px 0px 5px #000;
-    margin: 40px;
+    margin-top: 40px;
     border-radius: 20px;
     min-height: 600px;
     display: flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
 }

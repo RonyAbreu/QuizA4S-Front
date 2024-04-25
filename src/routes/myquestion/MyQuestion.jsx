@@ -27,8 +27,6 @@ const MyQuestion = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [questions, setQuestions] = useState([]);
 
-  const basePath = `/question/creator/theme/${themeId}?page=${currentPage}&title=`;
-
   const [loading, setLoading] = useState(false);
   const [isConfirmBox, setConfirmBox] = useState(false);
   const [isUpdateBox, setUpdateBox] = useState(false);
@@ -42,16 +40,22 @@ const MyQuestion = () => {
     color: "red",
   });
 
+  const [questionTitle, setQuestionTitle] = useState("");
+
+  function changeName(propsQuestionTitle){
+    setQuestionTitle(propsQuestionTitle);
+  }
+
   useEffect(() => {
     setLoading(true);
     const promisse = apiFetch.getPages(
-      basePath,
+      `/question/creator/theme/${themeId}?page=${currentPage}&title=${questionTitle}`,
       "Questões não encontradas ou não cadastradas"
     );
 
     promisse.then((response) => {
       if (!response.success) {
-        activeInformationBox(true, response.message)
+        activeInformationBox(true, response.message);
         setLoading(false);
       }
 
@@ -183,7 +187,10 @@ const MyQuestion = () => {
           <SearchComponent
             placeholder="Digite o título de uma questão"
             setData={setQuestions}
-            url={basePath}
+            url={`/question/creator/theme/${themeId}?page=${currentPage}&title=`}
+            setCurrentPage={setCurrentPage}
+            setTotalPages={setTotalPages}
+            onSearch={changeName}
           />
 
           <div className="my-question-data">
@@ -232,12 +239,12 @@ const MyQuestion = () => {
                   </div>
                 </div>
               ))}
+
+            {!loading && questions.length == 0 && (
+              <NotFoundComponent title="Questão não encontrada" />
+            )}
           </div>
-
-          {!loading && questions.length == 0 && (
-            <NotFoundComponent title="Questão não encontrada" />
-          )}
-
+          
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
