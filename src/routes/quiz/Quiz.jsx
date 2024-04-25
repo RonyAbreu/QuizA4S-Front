@@ -91,11 +91,7 @@ const Quiz = () => {
   }
 
   function restart() {
-    if (path.includes("myquiz")) {
-      navigate("/myquiz");
-    } else {
-      navigate("/theme");
-    }
+    navigate("/theme");
   }
 
   return (
