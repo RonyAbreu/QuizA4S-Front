@@ -14,7 +14,7 @@
 .confirm-box{
     width: 400px;
     height: 250px;
-    background-color: #3498db;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,7 +25,7 @@
 .confirm-box-title{
     max-width: 90%;
     word-wrap: break-word;
-    color: #fff;
+    color: #000;
     text-align: center;
 }
 
@@ -50,9 +50,8 @@
     transition: .3s ease-in-out;
 }
 
-.bi-question-circle-fill{
+.bi-question-circle{
     font-size: 45px;
-    color: #eee;
 }
 
 .confirm-box-buttons button:nth-child(1){
@@ -60,8 +59,7 @@
 }
 
 .confirm-box-buttons button:nth-child(1):hover{
-    background-color: #fff;
-    color: rgb(0, 170, 20);
+    background-color: rgba(0, 170, 20, 0.486);
 }
 
 .confirm-box-buttons button:nth-child(2){
@@ -69,6 +67,15 @@
 }
 
 .confirm-box-buttons button:nth-child(2):hover{
-    background-color: #fff;
-    color: red;
+    background-color: rgba(255, 0, 0, 0.507);
+}
+
+@media(max-width: 450px){
+    .confirm-box{
+        width: 90%;
+    }
+
+    .confirm-box-title{
+        font-size: 1.4em;
+    }
 }

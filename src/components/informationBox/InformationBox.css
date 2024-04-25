@@ -50,3 +50,15 @@
   background-color: #fff;
   color: #000;
 }
+
+@media(max-width: 550px){
+  .box {
+    width: 90%;
+  }
+}
+
+@media(max-width: 450px){
+  .text {
+    font-size: 1.3em;
+  }
+}

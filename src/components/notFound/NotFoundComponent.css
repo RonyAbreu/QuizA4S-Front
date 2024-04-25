@@ -8,6 +8,8 @@
 }
 
 .title-not-found{
+    text-align: center;
+    word-wrap: break-word;
     font-size: 2em;
     color: #2d2d2d;
 
