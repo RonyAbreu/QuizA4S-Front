@@ -23,8 +23,6 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
 
   const [themeName, setThemeName] = useState("");
 
-  const token = localStorage.getItem("token");
-
   function changeName(propsThemeName){
     setThemeName(propsThemeName);
   }

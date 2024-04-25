@@ -40,9 +40,6 @@ const Menu = ({ setMenu, isAuth }) => {
           <button type="button" onClick={() => handleButtonClick(() => navigate("/profile"))}>
             Meu Perfil
           </button>
-          <button type="button" onClick={() => handleButtonClick(() => navigate("/myquiz"))}>
-            Meus Quizzes
-          </button>
           <button type="button" onClick={() => handleButtonClick(createQuiz)}>
             Criar Quiz
           </button>

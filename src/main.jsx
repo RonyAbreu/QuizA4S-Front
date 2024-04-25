@@ -12,7 +12,6 @@ import Quiz from "./routes/quiz/Quiz.jsx";
 import { AuthenticationProvider } from "./context/AutenticationContext.jsx";
 import CreateQuiz from "./routes/createQuiz/CreateQuiz.jsx";
 import Profile from "./routes/profile/Profile.jsx";
-import MyQuiz from "./routes/quiz/MyQuiz.jsx";
 import MyQuestion from "./routes/myquestion/MyQuestion.jsx";
 
 const router = createBrowserRouter([
@@ -52,10 +51,6 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />
-      },
-      {
-        path: "/myquiz",
-        element: <MyQuiz />
       },
       {
         path: "/myquiz/quiz/:id",
