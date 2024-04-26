@@ -11,17 +11,13 @@ import NotFoundComponent from "../notFound/NotFoundComponent";
 import { ApiFetch } from "../../util/ApiFetch";
 import Pagination from "../pagination/Pagination";
 import { DEFAULT_IMG } from "../../App";
-import { useLocation, useNavigate } from "react-router-dom";
 
 //Css
 import "./ThemeTemplate.css";
 import { AuthenticationContext } from "../../context/AutenticationContext";
 
-const ThemeTemplate = ({ url, onClickFunction }) => {
+const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
   const apiFetch = new ApiFetch();
-  const navigate = useNavigate();
-
-  const path = useLocation();
 
   const { isAuthenticated } = useContext(AuthenticationContext);
 
@@ -41,7 +37,7 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
     setLoading(true);
 
     const promisse = apiFetch.getPages(
-      `${url}?page=${currentPage}&name=${themeName}`,
+      `${baseUrl}?page=${currentPage}&name=${themeName}`,
       "Tema não encontrado"
     );
 
@@ -55,14 +51,14 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
       setTotalPages(response.totalPages);
       setThemes(response.data);
     });
-  }, [currentPage]);
+  }, [currentPage, baseUrl]);
 
   useEffect(() => {
     const btnAllThemes = document.getElementById("btn-all-themes");
     const btnMyThemes = document.getElementById("btn-my-themes");
 
     if (btnAllThemes && btnMyThemes) {
-      if (!path.pathname.includes("user")) {
+      if (!baseUrl.includes("creator")) {
         btnMyThemes.classList.remove("selected-btn");
         btnAllThemes.classList.add("selected-btn");
       } else {
@@ -70,13 +66,13 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
         btnMyThemes.classList.add("selected-btn");
       }
     }
-  }, [path.pathname]);
+  }, [baseUrl]);
 
   return (
     <div className="container-theme outlet">
       <SearchComponent
         title="Escolha o tema do seu Quiz"
-        url={`${url}?page=${currentPage}&name=`}
+        url={`${baseUrl}?page=${currentPage}&name=`}
         placeholder="Digite o nome de um tema"
         onSearch={changeName}
         setCurrentPage={setCurrentPage}
@@ -87,14 +83,14 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
       {isAuthenticated && (
         <div className="container-theme-buttons">
           <button
-            onClick={() => navigate("/theme")}
+            onClick={() => setBaseUrl("/theme")}
             className="theme-buttons"
             id="btn-all-themes"
           >
             Todos os temas
           </button>
           <button
-            onClick={() => navigate("/theme/user")}
+            onClick={() => setBaseUrl("/theme/creator")}
             className="theme-buttons"
             id="btn-my-themes"
           >

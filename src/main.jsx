@@ -17,7 +17,6 @@ import { AuthenticationProvider } from "./context/AutenticationContext.jsx";
 import CreateQuiz from "./routes/createQuiz/CreateQuiz.jsx";
 import Profile from "./routes/profile/Profile.jsx";
 import MyQuestion from "./routes/myquestion/MyQuestion.jsx";
-import ChooseMyTheme from "./routes/chooseTheme/ChooseMyTheme.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -29,7 +28,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/login" element={<Login />}/>
             <Route path="/register" element={<Register />}/>
             <Route path="/theme" element={<ChooseTheme />}/>
-            <Route path="/theme/user" element={<ChooseMyTheme />}/>
             <Route path="/theme/quiz/:id" element={<Quiz />}/>
             <Route path="/create/quiz" element={<CreateQuiz />}/>
             <Route path="/profile" element={<Profile />}/>
