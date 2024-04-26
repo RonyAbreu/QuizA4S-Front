@@ -12,7 +12,7 @@
 
 .my-alternatives{
     width: 900px;
-    height: 400px;
+    min-height: 400px;
     background-color: #3498db;
     border-radius: 30px;
     padding: 20px;
@@ -46,6 +46,7 @@
 
 .alternatives-body{
     width: 100%;
+    min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -55,7 +56,7 @@
 
 .alternatives-data{
     width: 47%;
-    height: 65px;
+    height: 75px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -87,4 +88,46 @@
     color: #3498db;
     font-size: 22px;
     cursor: pointer;
+}
+
+@media(max-width: 1000px){
+    .my-alternatives{
+        width: 95%;
+        height: 450px;
+    }
+}
+
+@media(max-width: 900px){
+    .alternatives-body{
+        flex-direction: column;
+    }
+
+    .alternatives-data{
+        height: 65px;
+        width: 90%;
+    }
+}
+
+@media(max-width: 550px){
+    .my-alternatives span{
+        top: 13px;
+        right: 18px;
+        font-size: 1.5em;
+    }
+
+    .my-alternatives h2{
+        font-size: 1.7em;
+    }
+
+    .alternatives-data{
+        gap: .5em;
+        width: 100%;
+    }
+
+    .alternative-text{
+        width: 90%;
+        font-size: .9em;
+        overflow-x: scroll;
+        text-wrap: nowrap;
+    }
 }

@@ -29,16 +29,17 @@
 
 .theme-info{
     text-align: center;
-    width: 140px;
-    position: fixed;
-    left: 0;
-    top: 120px;
+    width: 150px;
+    position: absolute;
+    left: 0px;
+    top: -1.5em;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     gap: .5em;
     color: #fff;
+    text-align: center;
 }
 
 .theme-info p{
@@ -145,4 +146,54 @@
 
 .question-action i:nth-child(2){
     color: blue;
+}
+
+@media(max-width: 1000px){
+    .theme-info{
+        width: 120px;
+        left: 5px;
+    }
+
+    .theme-info p{
+        font-size: 1.3em;
+    }
+
+    .theme-info img{
+        width: 80px;
+        height: 80px;
+    }
+}
+
+@media(max-width: 650px){
+    .theme-info{
+        display: none;
+    }
+}
+
+@media(max-width: 750px){
+    .my-question-body{
+        width: 95%;
+    }
+
+    .question-data{
+        height: 100%;
+        flex-direction: column;
+    }
+
+    .question-data img{
+        width: 85px;
+        height: 85px;
+    }
+
+    .question-info{
+        width: 100%;
+    }
+
+    .question-info p{
+        font-size: 1em;
+    }
+
+    .question-action{
+        flex-direction: row;
+    }
 }
