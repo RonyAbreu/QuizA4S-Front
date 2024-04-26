@@ -6,7 +6,7 @@ import { useState } from "react";
 import ThemeMenu from "../../components/menu/ThemeMenu";
 
 const SelectTheme = ({ currentComponent, setCurrentComponent }) => {
-  const url = `/theme`;
+  const [baseUrl, setBaseUrl] = useState("/theme");
 
   const [isThemeMenu, setThemeMenu] = useState(false);
 
@@ -26,7 +26,7 @@ const SelectTheme = ({ currentComponent, setCurrentComponent }) => {
         ></i>
       </div>
 
-      <ThemeTemplate url={url} onClickFunction={showCreateQuestion} />
+      <ThemeTemplate baseUrl={baseUrl} onClickFunction={showCreateQuestion} setBaseUrl={setBaseUrl} />
 
       {isThemeMenu && <ThemeMenu setThemeMenu={setThemeMenu} />}
     </div>
