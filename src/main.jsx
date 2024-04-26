@@ -13,6 +13,7 @@ import { AuthenticationProvider } from "./context/AutenticationContext.jsx";
 import CreateQuiz from "./routes/createQuiz/CreateQuiz.jsx";
 import Profile from "./routes/profile/Profile.jsx";
 import MyQuestion from "./routes/myquestion/MyQuestion.jsx";
+import ChooseMyTheme from "./routes/chooseTheme/ChooseMyTheme.jsx";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "/theme",
         element: <ChooseTheme />,
+      },
+      {
+        path: "/theme/user",
+        element: <ChooseMyTheme />,
       },
       {
         path: "/theme/quiz/:id",
