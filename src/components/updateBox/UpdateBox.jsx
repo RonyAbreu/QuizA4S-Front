@@ -25,7 +25,6 @@ const UpdateBox = ({ title, inputs, onChange, onClickSave, onClickCancel }) => {
                 placeholder={input.placeholder}
                 value={input.value}
                 onChange={(e) => onChange(e.target.value, input.label)}
-                required
               />
             </label>
           ))}

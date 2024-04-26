@@ -112,7 +112,7 @@ const ThemeTemplate = ({ url, onClickFunction }) => {
               onClick={() => onClickFunction(theme.id)}
             >
               <img
-                src={theme.imageUrl == null ? DEFAULT_IMG : theme.imageUrl}
+                src={theme.imageUrl == null || theme.imageUrl == "" ? DEFAULT_IMG : theme.imageUrl}
                 alt="theme-image"
               />
               <p>{theme.name}</p>

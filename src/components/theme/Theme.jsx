@@ -9,7 +9,7 @@ import { DEFAULT_IMG } from "../../App";
 import "./Theme.css";
 import { useNavigate } from "react-router-dom";
 
-const Theme = ({ themes, setThemes, setCallBack }) => {
+const Theme = ({ themes, setCurrentPage }) => {
   const apiFetch = new ApiFetch();
 
   const navigate = useNavigate();
@@ -61,6 +61,7 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
 
   function removeTheme() {
     setLoading(true);
+
     const promisse = apiFetch.delete(`/theme/${themeId}`, false);
 
     promisse.then((response) => {
@@ -71,7 +72,7 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
       }
 
       activeInformationBox(false, "Tema removido com sucesso!");
-      setThemes(themes.filter((theme) => themeId !== theme.id));
+      setCurrentPage(0)
       setLoading(false);
       setConfirmBox(false);
     });
@@ -143,7 +144,7 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
         themes.map((theme) => (
           <div key={theme.id} className="theme-data">
             <img
-              src={theme.imageUrl == null ? DEFAULT_IMG : theme.imageUrl}
+              src={theme.imageUrl == null || theme.imageUrl == "" ? DEFAULT_IMG : theme.imageUrl}
               alt="image"
             />
             <div className="theme-questions">

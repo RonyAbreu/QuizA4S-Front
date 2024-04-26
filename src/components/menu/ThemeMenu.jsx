@@ -96,7 +96,6 @@ const ThemeMenu = ({ setThemeMenu }) => {
             placeholder="Digite a URL da imagem"
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
-            required
           />
         </label>
 

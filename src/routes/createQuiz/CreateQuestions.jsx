@@ -164,7 +164,6 @@ const CreateQuestions = () => {
               placeholder="Insira a url da imagem"
               value={question.imageUrl}
               onChange={(e) => changeQuestion("imageUrl", e.target.value)}
-              required
             />
           </label>
         </div>

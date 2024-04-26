@@ -122,7 +122,7 @@ const MyQuestion = () => {
       }
 
       activeInformationBox(false, "Questão removida com sucesso!");
-      setQuestions(questions.filter((quest) => questionId !== quest.id));
+      setCallBack({})
       setLoading(false);
       setConfirmBox(false);
     });
@@ -270,7 +270,7 @@ const MyQuestion = () => {
       )}
       {isUpdateBox && (
         <UpdateBox
-          title="Atualizar Tema"
+          title="Atualizar Questão"
           inputs={inputs}
           onChange={changeValue}
           onClickSave={updateQuestion}

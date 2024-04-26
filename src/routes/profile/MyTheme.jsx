@@ -55,7 +55,7 @@ const MyTheme = () => {
         onSearch={changeName}
       />
 
-      <Theme themes={themes} setThemes={setThemes} setCallBack={setCallBack} />
+      <Theme themes={themes} setCurrentPage={setCurrentPage} />
 
       {!loading && themes.length == 0 && (
         <NotFoundComponent title="Tema não encontrado"/>
