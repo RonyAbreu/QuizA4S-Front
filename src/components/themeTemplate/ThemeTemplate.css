@@ -72,6 +72,10 @@
 }
 
 @media(max-width: 850px){
+    .container-theme-buttons{
+        width: 95%;
+    }
+
     .container-theme-data{
         width: 97%;
         height: 100%;
@@ -80,6 +84,10 @@
 }
 
 @media(max-width: 625px){
+    .theme-buttons {
+        font-size: 1em;
+    }
+
     .container-theme-data{
         padding: 30px;
     }

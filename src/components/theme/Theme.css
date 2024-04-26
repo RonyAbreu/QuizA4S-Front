@@ -76,3 +76,30 @@
 .theme-action i:nth-child(2){
     color: blue;
 }
+
+@media(max-width: 1150px){
+    .theme-data{
+        width: 95%;
+        min-width: 0px;
+    }
+}
+
+@media(max-width: 500px){
+    .theme-questions p{
+        font-size: 1em;
+    }
+
+    .theme-data img{
+        width: 80px;
+        height: 80px;
+    }
+
+    .theme-questions button{
+        width: 100px;
+        font-size: .9em;
+    }
+
+    .theme-action i{
+        font-size: 20px;
+    }
+}
