@@ -2,7 +2,11 @@ import "./index.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
 import ErrorPage from "./routes/erroPage/ErrorPage.jsx";
 import Home from "./routes/home/Home.jsx";
 import Login from "./routes/user/Login.jsx";
@@ -15,64 +19,25 @@ import Profile from "./routes/profile/Profile.jsx";
 import MyQuestion from "./routes/myquestion/MyQuestion.jsx";
 import ChooseMyTheme from "./routes/chooseTheme/ChooseMyTheme.jsx";
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
-      },
-      {
-        path: "/theme",
-        element: <ChooseTheme />,
-      },
-      {
-        path: "/theme/user",
-        element: <ChooseMyTheme />,
-      },
-      {
-        path: "/theme/quiz/:id",
-        element: <Quiz />,
-      },
-      {
-        path: "/create/quiz",
-        element: <CreateQuiz />
-      },
-      {
-        path: "/create/quiz/:id",
-        element: <CreateQuiz />
-      },
-      {
-        path: "/profile",
-        element: <Profile />
-      },
-      {
-        path: "/myquiz/quiz/:id",
-        element: <Quiz />
-      },
-      {
-        path: "/profile/theme/:id/question",
-        element: <MyQuestion />
-      },
-    ],
-  },
-]);
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthenticationProvider>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App/>}>
+            <Route index path="/" element={<Home />}/>
+            <Route path="/login" element={<Login />}/>
+            <Route path="/register" element={<Register />}/>
+            <Route path="/theme" element={<ChooseTheme />}/>
+            <Route path="/theme/user" element={<ChooseMyTheme />}/>
+            <Route path="/theme/quiz/:id" element={<Quiz />}/>
+            <Route path="/create/quiz" element={<CreateQuiz />}/>
+            <Route path="/profile" element={<Profile />}/>
+            <Route path="/profile/theme/:id/question" element={<MyQuestion />}/>
+            <Route path="*" element={<ErrorPage />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </AuthenticationProvider>
   </React.StrictMode>
 );
