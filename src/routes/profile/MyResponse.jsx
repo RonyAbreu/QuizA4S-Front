@@ -11,7 +11,6 @@ const MyResponse = () => {
   const apiFetch = new ApiFetch();
 
   const [responses, setResponses] = useState([]);
-  console.log(responses);
 
   const [loading, setLoading] = useState(false);
 
@@ -56,8 +55,35 @@ const MyResponse = () => {
         setCurrentPage={setCurrentPage}
         setTotalPages={setTotalPages}
       />
+      <div className="container-table">
+        <table className="response-table">
+          <thead className="table-head">
+            <tr>
+              <th>ID da Questão</th>
+              <th>Questão</th>
+              <th>Usuário</th>
+              <th>Respondeu</th>
+              <th>Acertou</th>
+            </tr>
+          </thead>
+          <tbody className="table-body">
+            {responses &&
+              responses.map((response) => (
+                <tr key={response.id}>
+                  <td>{response.question.id}</td>
+                  <td>{response.question.title}</td>
+                  <td>{response.user.name}</td>
+                  <td>{response.alternative.text}</td>
+                  <td>{response.alternative.correct ? "Sim" : "Não"}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
 
-      <div className="my-response-data"></div>
+      {!loading && responses.length == 0 && (
+        <NotFoundComponent title="Nenhuma resposta encontrada" />
+      )}
 
       <Pagination
         currentPage={currentPage}
@@ -66,9 +92,6 @@ const MyResponse = () => {
       />
 
       {loading && <Loading />}
-      {!loading && responses.length == 0 && (
-        <NotFoundComponent title="Nenhuma resposta encontrada" />
-      )}
     </div>
   );
 };

@@ -1,11 +1,12 @@
 .filter-container{
-    width: 750px;
+    width: 100%;
     border-radius: 5px;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.423);
     display: flex;
     align-items: center;
-    background-color: #fff;
+    background-color: #ffffffef;
     padding: 10px;
+    margin-bottom: 1em;
 }
 
 .filter-body{
@@ -13,11 +14,19 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    gap: 2.5em;
 }
 
-.filter-body p{
+.container-filter-input{
+    width: 75%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+.container-filter-input p{
     font-size: 1.2em;
+    margin-left: -20px;
 }
 
 .filter-body button{
@@ -26,7 +35,7 @@
     cursor: pointer;
     background-color: #3498db;
     border: none;
-    border-radius: 12px;
+    border-radius: 7px;
     font-size: 1.1em;
     font-weight: bold;
     color: #fff;
@@ -43,9 +52,100 @@
 }
 
 .filter-input input{
-    width: 170px;
+    width: 200px;
     height: 25px;
     outline: none;
     padding: 5px;
     font-size: 1em;
+}
+
+.bi-search{
+    width: 30px;
+    height: 30px;
+    background-color: #3498db;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    display: none;
+}
+
+@media(max-width: 900px){
+    .filter-body{
+        justify-content: space-between;
+        gap: 1.5em;
+    }
+
+    .container-filter-input p{
+        margin: 0;
+        font-size: 1em;
+    }
+
+    .filter-input{
+        font-size: .9em;
+    }
+
+    .filter-input input{
+        width: 150px;
+    }
+}
+
+@media(max-width: 650px){
+    .filter-body{
+        justify-content: space-around;
+        gap: .5em;
+    }
+
+    .container-filter-input{
+        width: 85%;
+    }
+
+    .container-filter-input p{
+        width: 50px;
+    }
+    .bi-search{
+        display: flex;
+    }
+
+    .filter-body button{
+        display: none;
+    }
+}
+
+@media(max-width: 520px){
+    .filter-body{
+        flex-direction: column;
+    }
+
+    .filter-body button{
+        width: 150px;
+        display: block;
+        margin-top: 1em;
+    }
+
+    .filter-body i{
+        display: none;
+    }
+
+    .filter-input{
+        width: 100%;
+    }
+
+    .filter-input input{
+        width: 100%;
+    }
+
+    .container-filter-input{
+        flex-direction: column;
+        width: 90%;
+    }
+
+    .container-filter-input p{
+        width: 100%;
+        font-size: 1.2em;
+        text-align: center;
+    } 
 }

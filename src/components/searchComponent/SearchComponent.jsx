@@ -26,7 +26,6 @@ const SearchComponent = ({
 
     setName(inputName);
 
-    setCurrentPage(0);
     setLoading(true);
     const promisse = apiFetch.getPages(
       `${url}${inputName}`,
@@ -36,6 +35,10 @@ const SearchComponent = ({
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);
+        setData([])
+        setTotalPages(0);
+        setCurrentPage(0);
+        return;
       }
 
       setLoading(false);
