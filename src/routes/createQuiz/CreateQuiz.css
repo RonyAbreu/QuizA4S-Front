@@ -5,15 +5,73 @@
   display: flex;
   align-items: start;
   justify-content: center;
+  background-image: url("../../assets//background-create-quiz.jpg");
+  background-size: cover;
+  margin-top: -2em;
 }
 
 .container-create {
   width: 80%;
   min-height: 600px;
   display: flex;
-  justify-content: center;
-  background-color: #fff;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
   padding: 30px;
   border-radius: 20px;
   margin-bottom: 2em;
+}
+
+.container-create-header{
+  text-align: center;
+  margin-bottom: 150px;
+}
+
+.container-create-header h2{
+  font-size: 2.3em;
+  background-color: #ffffff37;
+  padding: 10px 30px;
+  border-radius: 15px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  color: #fff;
+  margin-top: 1em;
+}
+
+.container-create-buttons{
+  width: 750px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 100px;
+}
+
+.create-btn{
+  width: 50%;
+  height: 300px;
+  text-align: center;
+  border-radius: 15px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  position: relative;
+}
+
+.create-btn:hover{
+  transform: scale(1.1);
+}
+
+.create-btn:nth-child(1){
+  background-image: url("../../assets/create-theme-btn.jpg");
+  background-size: cover;
+}
+
+.create-btn:nth-child(2){
+  background-image: url("../../assets/select-theme-btn.jpg");
+  background-size: cover;
+}
+
+.create-btn h2{
+  margin-top: -2em;
+  color: #fff;
 }

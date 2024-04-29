@@ -1,23 +1,32 @@
-import SelectTheme from "./SelectTheme";
+import { useState } from "react";
+import ThemeMenu from "../../components/menu/ThemeMenu";
 
 //Css
 import "./CreateQuiz.css";
-import CreateTheme from "./CreateTheme";
 
 const CreateQuiz = () => {
 
-  const quizComponents = [<CreateTheme />, <SelectTheme />];
+  const [activeThemeMenu, setThemeMenu] = useState(false);
 
   return (
     <div className="container-create-quiz">
       <div className="container-create">
-        <div>
-          <button type="button">Criar Tema</button>
+        <div className="container-create-header">
+          <h2>Crie ou Selecione um Tema</h2>
         </div>
-        <div>
-          <button type="button">Escolhar Tema</button>
+
+        <div className="container-create-buttons">
+          <div className="create-btn" onClick={() => setThemeMenu(true)}>
+            <h2>Criar Tema</h2>
+          </div>
+
+          <div className="create-btn">
+            <h2>Selecionar Tema</h2>
+          </div>
         </div>
       </div>
+
+      {activeThemeMenu && <ThemeMenu setThemeMenu={setThemeMenu}/>}
     </div>
   );
 };
