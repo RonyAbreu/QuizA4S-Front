@@ -17,6 +17,7 @@ import { AuthenticationProvider } from "./context/AutenticationContext.jsx";
 import CreateQuiz from "./routes/createQuiz/CreateQuiz.jsx";
 import Profile from "./routes/profile/Profile.jsx";
 import MyQuestion from "./routes/myquestion/MyQuestion.jsx";
+import PrivateRoute from "./components/privateRoute/PrivateRoute.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -29,10 +30,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="/register" element={<Register />}/>
             <Route path="/theme" element={<ChooseTheme />}/>
             <Route path="/theme/quiz/:id" element={<Quiz />}/>
-            <Route path="/create/quiz" element={<CreateQuiz />}/>
-            <Route path="/create/quiz/:id" element={<CreateQuiz />}/>
-            <Route path="/profile" element={<Profile />}/>
-            <Route path="/profile/theme/:id/question" element={<MyQuestion />}/>
+            <Route path="/create/quiz" element={<PrivateRoute><CreateQuiz /></PrivateRoute>}/>
+            <Route path="/create/quiz/:id" element={<PrivateRoute><CreateQuiz /></PrivateRoute>}/>
+            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>}/>
+            <Route path="/profile/theme/:id/question" element={<PrivateRoute><MyQuestion /></PrivateRoute>}/>
             <Route path="*" element={<ErrorPage />} />
           </Route>
         </Routes>
