@@ -110,6 +110,7 @@ const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
               <img
                 src={theme.imageUrl == null || theme.imageUrl == "" ? DEFAULT_IMG : theme.imageUrl}
                 alt="theme-image"
+                loading="lazy"
               />
               <p>{theme.name}</p>
             </div>

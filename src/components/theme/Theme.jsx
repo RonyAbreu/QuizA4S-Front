@@ -146,6 +146,7 @@ const Theme = ({ themes, setCurrentPage }) => {
             <img
               src={theme.imageUrl == null || theme.imageUrl == "" ? DEFAULT_IMG : theme.imageUrl}
               alt="image"
+              loading="lazy"
             />
             <div className="theme-questions">
               <p>{theme.name}</p>

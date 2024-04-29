@@ -25,6 +25,7 @@ const Question = ({
           }
           alt="image"
           className="question-image"
+          loading="lazy"
         />
       </div>
 
