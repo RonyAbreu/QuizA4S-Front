@@ -98,7 +98,7 @@ const FormTemplate = ({
   };
 
   return (
-    <div className="container outlet">
+    <div className="container">
       <form onSubmit={handleSubmit} className="form">
         <h1>{title}</h1>
 
