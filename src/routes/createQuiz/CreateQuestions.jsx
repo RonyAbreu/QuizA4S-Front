@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { URL_BASE } from "../../App";
-import { useLocation } from "react-router-dom";
 import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
 
@@ -19,8 +18,8 @@ const CreateQuestions = () => {
     icon: "exclamation",
   });
 
-  const path = useLocation().pathname;
-  const idTheme = Number(path.substring("/create/quiz/".length));
+  const idTheme = localStorage.getItem("themeId");
+  console.log(idTheme)
 
   const [question, setQuestion] = useState({
     title: "",

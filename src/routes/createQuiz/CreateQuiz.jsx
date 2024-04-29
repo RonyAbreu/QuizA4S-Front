@@ -1,19 +1,22 @@
-import { useState } from "react";
-import CreateQuestions from "./CreateQuestions";
 import SelectTheme from "./SelectTheme";
 
 //Css
 import "./CreateQuiz.css";
+import CreateTheme from "./CreateTheme";
 
 const CreateQuiz = () => {
-  const [currentComponent, setCurrentComponent] = useState(0);
 
-  const quizComponents = [<SelectTheme currentComponent={currentComponent} setCurrentComponent={setCurrentComponent} />, <CreateQuestions />];
+  const quizComponents = [<CreateTheme />, <SelectTheme />];
 
   return (
-    <div className="container-create-quiz outlet">
+    <div className="container-create-quiz">
       <div className="container-create">
-        {quizComponents[currentComponent]}
+        <div>
+          <button type="button">Criar Tema</button>
+        </div>
+        <div>
+          <button type="button">Escolhar Tema</button>
+        </div>
       </div>
     </div>
   );
