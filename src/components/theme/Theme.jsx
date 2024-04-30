@@ -9,7 +9,7 @@ import { DEFAULT_IMG } from "../../App";
 import "./Theme.css";
 import { useNavigate } from "react-router-dom";
 
-const Theme = ({ themes, setCurrentPage }) => {
+const Theme = ({ themes, setCurrentPage, setCallBack }) => {
   const apiFetch = new ApiFetch();
 
   const navigate = useNavigate();
@@ -22,8 +22,8 @@ const Theme = ({ themes, setCurrentPage }) => {
 
   const [informationData, setInformationData] = useState({
     text: "",
-    icon: "exclamation",
-    color: "red",
+    icon: "",
+    color: "",
   });
 
   const [themeId, setThemeId] = useState(0);
@@ -71,9 +71,10 @@ const Theme = ({ themes, setCurrentPage }) => {
         return;
       }
 
-      activeInformationBox(false, "Tema removido com sucesso!");
-      setCurrentPage(0)
       setLoading(false);
+      setCallBack({});
+      setCurrentPage(0);
+      activeInformationBox(false, "Tema removido com sucesso!");
       setConfirmBox(false);
     });
   }
@@ -94,9 +95,9 @@ const Theme = ({ themes, setCurrentPage }) => {
         return;
       }
 
+      setLoading(false);
       activeInformationBox(false, "Tema atualizado com sucesso");
       setCallBack({});
-      setLoading(false);
       setUpdateBox(false);
     });
   }
@@ -104,7 +105,7 @@ const Theme = ({ themes, setCurrentPage }) => {
   function activeInformationBox(isFail, message) {
     if (isFail) {
       setInformationData((prevData) => {
-        return { ...prevData, text: message };
+        return { ...prevData, text: message, color: "red", icon: "exclamation"  };
       });
       setInformationBox(true);
     } else {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { URL_BASE } from "../../App";
 import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
@@ -18,8 +18,7 @@ const CreateQuestions = () => {
     icon: "exclamation",
   });
 
-  const idTheme = localStorage.getItem("themeId");
-  console.log(idTheme)
+  const idTheme = JSON.parse(localStorage.getItem("theme")).id;
 
   const [question, setQuestion] = useState({
     title: "",

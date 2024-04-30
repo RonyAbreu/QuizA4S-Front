@@ -1,5 +1,7 @@
 .container-create-questions {
   width: 100%;
+  min-height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,7 +110,7 @@
 }
 
 .btn-create-question {
-  width: 50%;
+  width: 450px;
   height: 50px;
   margin-bottom: 1em;
   border-radius: 50px;

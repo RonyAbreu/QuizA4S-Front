@@ -8,9 +8,9 @@ const SelectTheme = () => {
   const [baseUrl, setBaseUrl] = useState("/theme");
   const navigate = useNavigate();
 
-  function showCreateQuestion(id) {
-    localStorage.setItem("themeId", id);
-    navigate(`/create/quiz/${id}/question`)
+  function showCreateQuestion(theme) {
+    localStorage.setItem("theme", JSON.stringify(theme));
+    navigate(`/create/quiz/${theme.id}/question`)
   }
 
   return (

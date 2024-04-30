@@ -105,7 +105,7 @@ const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
             <div
               className="theme"
               key={theme.id}
-              onClick={() => onClickFunction(theme.id)}
+              onClick={() => onClickFunction(theme)}
             >
               <img
                 src={theme.imageUrl == null || theme.imageUrl == "" ? DEFAULT_IMG : theme.imageUrl}

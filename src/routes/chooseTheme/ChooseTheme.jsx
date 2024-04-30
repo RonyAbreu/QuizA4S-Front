@@ -8,8 +8,8 @@ const ChooseTheme = () => {
 
   const [baseUrl, setBaseUrl] = useState("/theme")
 
-  function startQuiz(id) {
-    navigate(`/theme/quiz/${id}`);
+  function startQuiz(theme) {
+    navigate(`/theme/quiz/${theme.id}`);
   }
 
   return (

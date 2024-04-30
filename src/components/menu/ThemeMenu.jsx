@@ -49,7 +49,7 @@ const ThemeMenu = ({ setThemeMenu }) => {
         if (res.status === 201) {
           activeInformationBox(false, "Tema criado com sucesso");
           setThemeRequest({themeName: "", imageUrl: ""})
-          return res.json().then((data) => navigateCreateQuestion(data.id))
+          return res.json().then((data) => navigateCreateQuestion(data))
         } else if (res.status === 400) {
           return res.json().then((data) => {
             activeInformationBox(true, data.message);
@@ -82,9 +82,9 @@ const ThemeMenu = ({ setThemeMenu }) => {
     }
   }
 
-  function navigateCreateQuestion(themeId){
-    localStorage.setItem("themeId", themeId);
-    navigate(`/create/quiz/${themeId}/question`)
+  function navigateCreateQuestion(theme){
+    localStorage.setItem("theme", JSON.stringify(theme));
+    navigate(`/create/quiz/${theme.id}/question`)
   }
 
   function changeTheme(name, value){
