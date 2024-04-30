@@ -1,4 +1,4 @@
-import ImgNotFound from "../../assets/data-not-found.jpg";
+import ImgNotFound from "../../assets/data-not-found.webp";
 
 import "./NotFoundComponent.css";
 

@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from "../../assets/logo-a4s.png";
+import logo from "../../assets/logo-a4s.webp";
 
 import "./Header.css";
 import { useState } from "react";
@@ -11,7 +11,7 @@ const Header = ({ isAuth }) => {
   return (
     <header className="header">
       <Link to="/">
-        <img src={logo} alt="Logo Apps4Society" className="logo" />
+        <img src={logo} alt="Logo Apps4Society" className="logo" width="80" height="80"/>
       </Link>
 
       <h1 className="title">Quiz A4S</h1>

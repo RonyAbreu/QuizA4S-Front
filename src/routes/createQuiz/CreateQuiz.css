@@ -5,7 +5,7 @@
   display: flex;
   align-items: start;
   justify-content: center;
-  background-image: url("../../assets//background-create-quiz.jpg");
+  background-image: url("../../assets/background-create-quiz.webp");
   background-size: cover;
   margin-top: -2em;
 }
@@ -62,13 +62,13 @@
 }
 
 .create-btn:nth-child(1){
-  background-image: url("../../assets/create-theme-btn.jpg");
+  background-image: url("../../assets/create-theme-btn.webp");
   background-size: cover;
   background-position: center;
 }
 
 .create-btn:nth-child(2){
-  background-image: url("../../assets/select-theme-btn.jpg");
+  background-image: url("../../assets/select-theme-btn.webp");
   background-size: cover;
   background-position: center;
 }
