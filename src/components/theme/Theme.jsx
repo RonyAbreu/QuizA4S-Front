@@ -4,14 +4,15 @@ import UpdateBox from "../updateBox/UpdateBox";
 import { ApiFetch } from "../../util/ApiFetch";
 import Loading from "../loading/Loading";
 import InformationBox from "../informationBox/InformationBox";
+import { DEFAULT_IMG } from "../../App";
 
 import "./Theme.css";
+import { useNavigate } from "react-router-dom";
 
-const defaultImgUrl =
-  "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
-
-const Theme = ({ themes, setThemes, setCallBack }) => {
+const Theme = ({ themes, setCurrentPage, setCallBack }) => {
   const apiFetch = new ApiFetch();
+
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -21,8 +22,8 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
 
   const [informationData, setInformationData] = useState({
     text: "",
-    icon: "exclamation",
-    color: "red",
+    icon: "",
+    color: "",
   });
 
   const [themeId, setThemeId] = useState(0);
@@ -60,6 +61,7 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
 
   function removeTheme() {
     setLoading(true);
+
     const promisse = apiFetch.delete(`/theme/${themeId}`, false);
 
     promisse.then((response) => {
@@ -69,9 +71,10 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
         return;
       }
 
-      activeInformationBox(false, "Tema removido com sucesso!");
-      setThemes(themes.filter((theme) => themeId !== theme.id));
       setLoading(false);
+      setCallBack({});
+      setCurrentPage(0);
+      activeInformationBox(false, "Tema removido com sucesso!");
       setConfirmBox(false);
     });
   }
@@ -92,9 +95,9 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
         return;
       }
 
+      setLoading(false);
       activeInformationBox(false, "Tema atualizado com sucesso");
       setCallBack({});
-      setLoading(false);
       setUpdateBox(false);
     });
   }
@@ -102,7 +105,7 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
   function activeInformationBox(isFail, message) {
     if (isFail) {
       setInformationData((prevData) => {
-        return { ...prevData, text: message };
+        return { ...prevData, text: message, color: "red", icon: "exclamation"  };
       });
       setInformationBox(true);
     } else {
@@ -126,18 +129,29 @@ const Theme = ({ themes, setThemes, setCallBack }) => {
     }
   }
 
+  function showQuestions(id, name, imageUrl){
+    const theme = {
+      id,
+      name,
+      imageUrl,
+    }
+    localStorage.setItem("theme", JSON.stringify(theme));
+    navigate(`/profile/theme/${id}/question`)
+  }
+
   return (
     <div className="my-theme-list">
       {themes &&
         themes.map((theme) => (
           <div key={theme.id} className="theme-data">
             <img
-              src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
+              src={theme.imageUrl == null || theme.imageUrl == "" ? DEFAULT_IMG : theme.imageUrl}
               alt="image"
+              loading="lazy"
             />
             <div className="theme-questions">
               <p>{theme.name}</p>
-              <button type="button">Questões</button>
+              <button type="button" onClick={() => showQuestions(theme.id, theme.name, theme.imageUrl)}>Questões</button>
             </div>
             <div className="theme-action">
               <i

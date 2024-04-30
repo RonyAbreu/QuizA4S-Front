@@ -42,7 +42,7 @@ export class ApiFetch {
   async patch(basePath, data) {
     let info = {
       message: "",
-      success: false
+      success: false,
     };
 
     const token = localStorage.getItem("token");
@@ -66,17 +66,62 @@ export class ApiFetch {
       return info;
     }
 
-    info = { ...info, message: "OK", success: true};
+    info = { ...info, message: "OK", success: true };
 
     return { ...info };
   }
 
-  async getPagesWithToken(basePath, messageNotFound) {
+  async getPages(basePath, messageNotFound) {
     let info = {
       message: "",
       success: false,
       data: [],
       totalPages: 0,
+    };
+
+    const token = localStorage.getItem("token");
+
+    let response;
+
+    if (token) {
+      response = await fetch(`${URL_BASE}${basePath}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } else {
+      response = await fetch(`${URL_BASE}${basePath}`);
+    }
+
+    if ([403, 500].includes(response.status)) {
+      info.message = "Erro ao buscar dados. Tente novamente!";
+      return info;
+    }
+
+    if (response.status === 404) {
+      info.message = messageNotFound;
+      return info;
+    }
+
+    const responseJson = await response.json();
+    const responsePage = responseJson.content;
+    const totalPages = responseJson.totalPages;
+
+    info = {
+      ...info,
+      message: "OK",
+      success: true,
+      data: responsePage,
+      totalPages: totalPages,
+    };
+
+    return { ...info };
+  }
+
+  async postResponse(basePath) {
+    let info = {
+      message: "",
+      success: false,
     };
 
     const token = localStorage.getItem("token");
@@ -87,26 +132,18 @@ export class ApiFetch {
     }
 
     const response = await fetch(`${URL_BASE}${basePath}`, {
+      method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
     if ([403, 500].includes(response.status)) {
-      info.message = "Erro ao buscar dados. Tente novamente!";
+      info.message = "Erro ao cadastrar resposta!";
       return info;
     }
 
-    if(response.status === 404){
-      info.message = messageNotFound;
-      return info;
-    }
-
-    const responseJson = await response.json();
-    const responsePage = responseJson.content;
-    const totalPages = responseJson.totalPages
-
-    info = { ...info, message: "OK", success: true, data: responsePage, totalPages: totalPages };
+    info = { ...info, message: "OK", success: true };
 
     return { ...info };
   }

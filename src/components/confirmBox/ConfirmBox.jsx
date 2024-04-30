@@ -11,7 +11,7 @@ const ConfirmBox = ({
     <div className="container-confirm-box">
       <div className="confirm-box">
         <h2 className="confirm-box-title">{title}</h2>
-        <i className="bi bi-question-circle-fill"></i>
+        <i className="bi bi-question-circle"></i>
         <div className="confirm-box-buttons">
           <button type="button" onClick={onClickBtn1}>
             {textBtn1}

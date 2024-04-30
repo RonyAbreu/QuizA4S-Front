@@ -1,6 +1,5 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { URL_BASE } from "../../App";
-import { useLocation } from "react-router-dom";
 import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
 
@@ -19,8 +18,7 @@ const CreateQuestions = () => {
     icon: "exclamation",
   });
 
-  const path = useLocation().pathname;
-  const idTheme = Number(path.substring("/create/quiz/".length));
+  const idTheme = JSON.parse(localStorage.getItem("theme")).id;
 
   const [question, setQuestion] = useState({
     title: "",
@@ -68,7 +66,7 @@ const CreateQuestions = () => {
   }
 
   async function postAllAltervatives(idQuestion, token) {
-    setLoading(true)
+    setLoading(true);
     const alternativeResponse = await fetch(`${urlAlternative}/${idQuestion}`, {
       method: "POST",
       headers: {
@@ -77,40 +75,40 @@ const CreateQuestions = () => {
       },
       body: JSON.stringify(alternatives),
     });
-    setLoading(false)
+    setLoading(false);
 
     if (!alternativeResponse.ok) {
-      setInformationBox(true)
+      setInformationBox(true);
       removeQuestion(idQuestion, token);
-      setLoading(false)
+      setLoading(false);
       return;
     }
 
-    setInformationBoxData((prevData) =>{
+    setInformationBoxData((prevData) => {
       return {
         ...prevData,
         color: "green",
         text: "Questão criada com sucesso",
         icon: "check",
-      }
-    })
-    setInformationBox(true)
+      };
+    });
+    setInformationBox(true);
     clearForm();
   }
 
   async function removeQuestion(idQuestion, token) {
-    setLoading(true)
+    setLoading(true);
     const questionResponse = await fetch(`${urlQuestion}/${idQuestion}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setLoading(false)
+    setLoading(false);
 
     if (!questionResponse.ok) {
-      alert("Erro do servidor")
-      setLoading(false)
+      alert("Erro do servidor");
+      setLoading(false);
     }
   }
 
@@ -146,14 +144,13 @@ const CreateQuestions = () => {
         <div className="container-question">
           <label className="data-question">
             <span>Titulo:</span>
-            <input
-              type="text"
+            <textarea
               name="title"
               placeholder="Insira o título da questão"
               value={question.title}
               onChange={(e) => changeQuestion("title", e.target.value)}
               required
-            />
+            ></textarea>
           </label>
 
           <label className="data-question">
@@ -164,7 +161,6 @@ const CreateQuestions = () => {
               placeholder="Insira a url da imagem"
               value={question.imageUrl}
               onChange={(e) => changeQuestion("imageUrl", e.target.value)}
-              required
             />
           </label>
         </div>
@@ -175,8 +171,7 @@ const CreateQuestions = () => {
               <span>{`Alternativa ${index + 1}:`}</span>
 
               <label className="alternative-data">
-                <input
-                  type="text"
+                <textarea
                   placeholder="Digite o texto da alternativa"
                   value={alternative.text}
                   onChange={(e) =>
@@ -184,7 +179,7 @@ const CreateQuestions = () => {
                   }
                   className="input-alternative-text"
                   required
-                />
+                ></textarea>
                 <input
                   type="radio"
                   name="alternative"

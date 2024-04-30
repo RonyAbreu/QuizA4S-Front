@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { URL_BASE } from "../../App";
 import Question from "../../components/question/Question";
+import InformationBox from "../../components/informationBox/InformationBox";
+import Loading from "../../components/loading/Loading";
+import { ApiFetch } from "../../util/ApiFetch";
+import { URL_BASE } from "../../App";
 
 //Css
 import "./Quiz.css";
-import InformationBox from "../../components/informationBox/InformationBox";
-import Loading from "../../components/loading/Loading";
 
 const Quiz = () => {
+  const apiFetch = new ApiFetch();
+
   const path = useLocation().pathname;
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,22 +19,26 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [informationBox, setInformationBox] = useState(false);
 
+  const [informationAlert, setInformationAlert] = useState(false);
+
   const navigate = useNavigate();
 
-  useEffect(() => {
-    let themeId;
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
 
-    if(path.includes("myquiz")){
-      themeId = path.substring("/myquiz/quiz/".length)
-    } else {
-      themeId = path.substring("/theme/quiz/".length)
-    }
-    
+  useEffect(() => {
+    let themeId = path.substring("/theme/quiz/".length);
+
     async function getQuestionsByThemeId() {
       const url = `${URL_BASE}/question/quiz/${themeId}`;
 
       setLoading(true);
       const response = await fetch(url);
+
+      if (response.status === 404) {
+        setInformationAlert(true);
+      }
+
       const questionsJson = await response.json();
       setLoading(false);
 
@@ -41,63 +48,89 @@ const Quiz = () => {
     getQuestionsByThemeId();
   }, []);
 
-  function handleAnswerClick(alternative) {
+  function handleAnswerClick(event, alternativeId, questionId, creatorId) {
     const alternatives = document.querySelectorAll("li");
 
     alternatives.forEach((alt) => {
       if (alt.getAttribute("value") === "true")
-        alt.style.backgroundColor = "green";
-      else alt.style.backgroundColor = "red";
+        alt.style.backgroundColor = "#5bcebf";
+      else alt.style.backgroundColor = "#d9434f";
     });
 
     setTimeout(() => {
+      if (isAlternativeCorrect(event)) {
+        setScore(score + 1);
+      }
+
       if (currentQuestionIndex === questions.length - 1) {
         setInformationBox(true);
         return;
       }
 
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-
-      if (isAlternativeCorrect(alternative)) {
-        setScore(score + 1);
-      }
     }, 500);
-  }
 
-  function isAlternativeCorrect(alternative) {
-    return alternative.target.getAttribute("value") === "true";
-  }
-
-  function restart(){
-    if(path.includes("myquiz")){
-      navigate("/myquiz")
-    } else {
-      navigate("/theme")
+    if (token && user.uuid !== creatorId) {
+      postResponse(user.uuid, questionId, alternativeId);
     }
   }
 
+  function isAlternativeCorrect(event) {
+    return event.target.getAttribute("value") === "true";
+  }
+
+  function postResponse(uuid, questionId, alternativeId) {
+    const basePath = `/response/${uuid}/${questionId}/${alternativeId}`;
+
+    const promisse = apiFetch.postResponse(basePath);
+
+    promisse.then((response) => {
+      if (!response.success) {
+        console.log(response.message);
+      }
+    });
+  }
+
+  function restart() {
+    navigate("/theme");
+  }
+
   return (
-    <div className="container-quiz">
-      {loading && <Loading />}
+    <div className="container-quiz-external">
+      <div className="container-quiz">
+        {loading && <Loading />}
 
-      {informationBox && (
-        <InformationBox
-          text={`Você acertou ${score + 1} de ${questions.length} questões!`}
-          closeBox={restart}
-          icon="check"
-          color="green"
-        />
-      )}
+        {informationBox && (
+          <InformationBox
+            text={`Você acertou ${score} de ${questions.length} questões!`}
+            closeBox={restart}
+            icon="check"
+            color="green"
+          />
+        )}
 
-      {questions.length > 0 && (
-        <Question
-          title={questions[currentQuestionIndex].title}
-          alternatives={questions[currentQuestionIndex].alternatives}
-          onAnswerClick={handleAnswerClick}
-          currentQuestion={currentQuestionIndex + 1}
-          lastQuestion={questions.length}
-        />
-      )}
+        {informationAlert && (
+          <InformationBox
+            text="Nenhuma questão cadastrada!"
+            closeBox={() => navigate("/theme")}
+            icon="exclamation"
+            color="red"
+          />
+        )}
+
+        {questions.length > 0 && (
+          <Question
+            title={questions[currentQuestionIndex].title}
+            questionId={questions[currentQuestionIndex].id}
+            questionImg={questions[currentQuestionIndex].imageUrl}
+            creatorId={questions[currentQuestionIndex].creatorId}
+            alternatives={questions[currentQuestionIndex].alternatives}
+            onAnswerClick={handleAnswerClick}
+            currentQuestion={currentQuestionIndex + 1}
+            lastQuestion={questions.length}
+          />
+        )}
+      </div>
     </div>
   );
 };

@@ -12,8 +12,8 @@
     align-items: center;
     flex-direction: column;
     text-align: center;
-    gap: .6em;
-    padding: 5px;
+    gap: .7em;
+    padding: 10px;
     padding-top: 20px;
     border: 1px solid white;
     border-radius: 10px;
@@ -34,7 +34,7 @@
 
 .user-profile button{
     margin-top: .8em;
-    width: 60%;
+    width: 75%;
     height: 30px;
     font-size: 1em;
     color: #fff;
@@ -101,4 +101,24 @@
 .selected-btn{
     background-color: #fff;
     color: #3498db;
+}
+
+@media(max-width: 1000px){
+    .container-profile{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .user-profile{
+        width: 90%;
+        margin-bottom: 1em;
+    }
+
+    .user-profile button{
+        width: 50%;
+    }
+
+    .container-user-itens{
+        width: 90%;
+    }
 }

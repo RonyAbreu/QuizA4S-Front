@@ -6,7 +6,6 @@ import { useState } from "react";
 import Menu from "../menu/Menu";
 
 const Header = ({ isAuth }) => {
-
   const [menu, setMenu] = useState(false);
 
   return (
@@ -51,12 +50,16 @@ const Header = ({ isAuth }) => {
           </NavLink>
         )}
 
-        {isAuth && (
+      </ul>
+      {isAuth && (
           <i className="bi bi-list profile" onClick={() => setMenu(true)}></i>
         )}
-      </ul>
 
-      {menu && <Menu setMenu={setMenu} />}
+      {!isAuth && (
+        <i className="bi bi-list menu-mobile" onClick={() => setMenu(true)}></i>
+      )}
+
+      {menu && <Menu setMenu={setMenu} isAuth={isAuth}/>}
     </header>
   );
 };

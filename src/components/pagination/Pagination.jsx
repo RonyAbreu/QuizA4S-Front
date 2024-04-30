@@ -30,7 +30,7 @@ const Pagination = ({ totalPages, currentPage, setCurrentPage }) => {
       <button
         type="button"
         onClick={() => alterPage("next")}
-        disabled={isLastPage || currentPage === totalPages -1}
+        disabled={isLastPage || totalPages === 0}
       >
         Próximo
       </button>

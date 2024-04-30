@@ -9,22 +9,9 @@
   padding: 30px;
   gap: 1.1em;
   margin-top: 2em;
+  text-align: center;
 }
 
-.footer-button {
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s ease-in-out;
-}
-
-.footer-button a{
-    text-decoration: none;
-    color: #000;
-}
-
-.footer-button:hover{
-    background-color: #777777;
+.footer img{
+  width: 150px;
 }

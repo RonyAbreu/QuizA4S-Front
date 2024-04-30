@@ -1,27 +1,24 @@
 import { useState } from "react";
-import "./ThemeMenu.css";
 import { URL_BASE } from "../../App";
 import Loading from "../loading/Loading";
 import InformationBox from "../informationBox/InformationBox";
+import { useNavigate } from "react-router-dom";
+
+import "./ThemeMenu.css";
 
 const url = `${URL_BASE}/theme`;
 
 const ThemeMenu = ({ setThemeMenu }) => {
-  const [themeName, setThemeName] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
   const [loadin, setLoading] = useState(false);
   const [informationBox, setInformationBox] = useState(false);
 
-  const [informationData, setData] = useState({
-    text: "Dados inválidos",
-    color: "red",
-    icon: "exclamation",
-  });
+  const navigate = useNavigate();
 
-  const theme = {
-    name: themeName,
-    imageUrl: imageUrl,
-  };
+  const [informationData, setData] = useState({
+    text: "",
+    color: "",
+    icon: "",
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -33,35 +30,67 @@ const ThemeMenu = ({ setThemeMenu }) => {
     postTheme(token);
   }
 
+  const [themeRequest, setThemeRequest] = useState({
+    name: "",
+    imageUrl: "",
+  })
+
   async function postTheme(token) {
     setLoading(true);
-    const response = await fetch(url, {
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(theme),
-    });
-    setLoading(false);
+      body: JSON.stringify(themeRequest),
+    })
+      .then((res) => {
+        if (res.status === 201) {
+          activeInformationBox(false, "Tema criado com sucesso");
+          setThemeRequest({themeName: "", imageUrl: ""})
+          return res.json().then((data) => navigateCreateQuestion(data))
+        } else if (res.status === 400) {
+          return res.json().then((data) => {
+            activeInformationBox(true, data.message);
+          });
+        }
+      })
+      .catch((erro) => console.error(erro));
 
-    if (!response.ok) {
+    setTimeout(() => {
+      setLoading(false);
+    }, 150);
+  }
+
+  function activeInformationBox(isFail, message) {
+    if (isFail) {
+      setData((prevData) => {
+        return {
+          ...prevData,
+          text: message,
+          color: "red",
+          icon: "exclamation",
+        };
+      });
       setInformationBox(true);
-      return;
+    } else {
+      setData((prevData) => {
+        return { ...prevData, text: message, color: "green", icon: "check" };
+      });
+      setInformationBox(true);
     }
+  }
 
-    setThemeName("");
-    setImageUrl("");
+  function navigateCreateQuestion(theme){
+    localStorage.setItem("theme", JSON.stringify(theme));
+    navigate(`/create/quiz/${theme.id}/question`)
+  }
 
-    setData((prevData) => {
-      return {
-        ...prevData,
-        color: "green",
-        text: "Tema criado com sucesso",
-        icon: "check",
-      };
-    });
-    setInformationBox(true);
+  function changeTheme(name, value){
+    setThemeRequest((prevTheme) =>{
+      return {...prevTheme, [name]: value}
+    })
   }
 
   return (
@@ -82,8 +111,8 @@ const ThemeMenu = ({ setThemeMenu }) => {
             type="text"
             name="name"
             placeholder="Digite o nome do seu tema"
-            value={themeName}
-            onChange={(e) => setThemeName(e.target.value)}
+            value={themeRequest.name}
+            onChange={(e) => changeTheme("name",e.target.value)}
             required
           />
         </label>
@@ -94,9 +123,8 @@ const ThemeMenu = ({ setThemeMenu }) => {
             type="text"
             name="imageUrl"
             placeholder="Digite a URL da imagem"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            required
+            value={themeRequest.imageUrl}
+            onChange={(e) => changeTheme("imageUrl", e.target.value)}
           />
         </label>
 

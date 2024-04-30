@@ -1,34 +1,23 @@
-import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate";
 import { useNavigate } from "react-router-dom";
+import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate";
 
 import "./SelectTheme.css";
 import { useState } from "react";
-import ThemeMenu from "../../components/menu/ThemeMenu";
 
-const SelectTheme = ({ currentComponent, setCurrentComponent }) => {
-  const url = `/theme`;
-
-  const [isThemeMenu, setThemeMenu] = useState(false);
-
+const SelectTheme = () => {
+  const [baseUrl, setBaseUrl] = useState("/theme");
   const navigate = useNavigate();
 
-  function showCreateQuestion(id) {
-    setCurrentComponent(currentComponent + 1);
-    navigate(`/create/quiz/${id}`);
+  function showCreateQuestion(theme) {
+    localStorage.setItem("theme", JSON.stringify(theme));
+    navigate(`/create/quiz/${theme.id}/question`)
   }
 
   return (
     <div className="container-select-theme">
-      <div className="add-theme-btn">
-        <i
-          className="bi bi-plus-circle-fill"
-          onClick={() => setThemeMenu(true)}
-        ></i>
-      </div>
 
-      <ThemeTemplate url={url} onClickFunction={showCreateQuestion} />
+      <ThemeTemplate baseUrl={baseUrl} onClickFunction={showCreateQuestion} setBaseUrl={setBaseUrl} />
 
-      {isThemeMenu && <ThemeMenu setThemeMenu={setThemeMenu} />}
     </div>
   );
 };

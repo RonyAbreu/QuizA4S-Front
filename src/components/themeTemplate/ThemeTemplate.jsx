@@ -1,107 +1,138 @@
 // Components
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import Loading from "../loading/Loading";
-
-//Css
-import "./ThemeTemplate.css";
 import SearchComponent from "../searchComponent/SearchComponent";
 import NotFoundComponent from "../notFound/NotFoundComponent";
 import { ApiFetch } from "../../util/ApiFetch";
+import Pagination from "../pagination/Pagination";
+import { DEFAULT_IMG } from "../../App";
 
-const defaultImgUrl =
-  "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
+//Css
+import "./ThemeTemplate.css";
+import { AuthenticationContext } from "../../context/AutenticationContext";
 
-const ThemeTemplate = ({ url, onClickFunction }) => {
+const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
   const apiFetch = new ApiFetch();
+
+  const { isAuthenticated } = useContext(AuthenticationContext);
 
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(0);
-  const [isFirstPage, setIsFirstPage] = useState(true);
-  const [isLastPage, setIsLastPage] = useState(false);
-  const [isNotFound, setNotFound] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
 
-  const token = localStorage.getItem("token");
+  const [themeName, setThemeName] = useState("");
 
-  useEffect(() => {
+  function changeName(propsThemeName) {
+    setThemeName(propsThemeName);
+  }
+
+  useLayoutEffect(() => {
     setLoading(true);
 
-    const promisse = apiFetch.getPagesWithToken(
-      `${url}?page=${currentPage}`,
+    const promisse = apiFetch.getPages(
+      `${baseUrl}?page=${currentPage}&name=${themeName}`,
       "Tema não encontrado"
     );
 
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);
-        setNotFound(true);
         return;
       }
 
-      setNotFound(false);
       setLoading(false);
+      setTotalPages(response.totalPages);
       setThemes(response.data);
-      setIsFirstPage(currentPage === 0);
-      setIsLastPage(currentPage === response.totalPages - 1);
     });
-  }, [currentPage]);
+  }, [currentPage, baseUrl]);
 
-  function alterPage(direction) {
-    if (direction === "prev" && !isFirstPage) {
-      setCurrentPage(currentPage - 1);
-    } else if (direction === "next" && !isLastPage) {
-      setCurrentPage(currentPage + 1);
+  useEffect(() => {
+    const btnAllThemes = document.getElementById("btn-all-themes");
+    const btnMyThemes = document.getElementById("btn-my-themes");
+
+    if (btnAllThemes && btnMyThemes) {
+      if (!baseUrl.includes("creator")) {
+        btnMyThemes.classList.remove("selected-btn");
+        btnAllThemes.classList.add("selected-btn");
+      } else {
+        btnAllThemes.classList.remove("selected-btn");
+        btnMyThemes.classList.add("selected-btn");
+      }
     }
-  }
+  }, [baseUrl]);
 
   return (
     <div className="container-theme outlet">
-      <div className="container-theme-data">
-        <SearchComponent
-          title="Escolha o tema do seu Quiz"
-          url={`/theme/search?page=${currentPage}&name=`}
-          placeholder="Digite o nome de um tema"
-          setData={setThemes}
-        />
+      <SearchComponent
+        title="Escolha o tema do seu Quiz"
+        url={`${baseUrl}?page=${currentPage}&name=`}
+        placeholder="Digite o nome de um tema"
+        onSearch={changeName}
+        setCurrentPage={setCurrentPage}
+        setData={setThemes}
+        setTotalPages={setTotalPages}
+      />
 
-        <div className="container-all-themes">
-          {themes &&
-            themes.map((theme) => (
-              <div
-                className="theme"
-                key={theme.id}
-                onClick={() => onClickFunction(theme.id)}
-              >
-                <img
-                  src={theme.imageUrl == null ? defaultImgUrl : theme.imageUrl}
-                  alt="theme-image"
-                />
-                <p>{theme.name}</p>
-              </div>
-            ))}
-
-          {isNotFound && <NotFoundComponent title="Tema não encontrado!" />}
-          <div className="container-info">{loading && <Loading />}</div>
+      {isAuthenticated && (
+        <div className="container-theme-buttons">
+          <button
+            onClick={() => {
+              setBaseUrl("/theme");
+              setCurrentPage(0);
+            }}
+            className="theme-buttons"
+            id="btn-all-themes"
+          >
+            Todos os temas
+          </button>
+          <button
+            onClick={() => {
+              setBaseUrl("/theme/creator");
+              setCurrentPage(0);
+            }}
+            className="theme-buttons"
+            id="btn-my-themes"
+          >
+            Meus temas
+          </button>
         </div>
+      )}
+
+      <div className="container-theme-data">
+        {themes &&
+          themes.map((theme) => (
+            <div
+              className="theme"
+              key={theme.id}
+              onClick={() => onClickFunction(theme)}
+            >
+              <img
+                src={
+                  theme.imageUrl == null || theme.imageUrl == ""
+                    ? DEFAULT_IMG
+                    : theme.imageUrl
+                }
+                alt="theme-image"
+                loading="lazy"
+              />
+              <p>{theme.name}</p>
+            </div>
+          ))}
+
+        {!loading && themes.length == 0 && (
+          <NotFoundComponent title="Tema não encontrado!" />
+        )}
       </div>
 
-      <div className="pagination-buttons">
-        <button
-          type="button"
-          onClick={() => alterPage("prev")}
-          disabled={isFirstPage}
-        >
-          Anterior
-        </button>
-        <button
-          type="button"
-          onClick={() => alterPage("next")}
-          disabled={isLastPage}
-        >
-          Próximo
-        </button>
-      </div>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
+
+      {loading && <Loading />}
     </div>
   );
 };

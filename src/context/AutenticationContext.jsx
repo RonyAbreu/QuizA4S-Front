@@ -20,7 +20,7 @@ export const AuthenticationProvider = ({ children }) => {
       });
 
       if (!response.ok) {
-        localStorage.removeItem("token");
+        localStorage.clear();
         setAuthenticated(false);
         setLoading(false);
         return;

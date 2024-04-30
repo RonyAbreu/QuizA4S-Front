@@ -1,18 +1,19 @@
-import ThemeTemplate from '../../components/themeTemplate/ThemeTemplate'
+import { useState } from "react";
+import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate";
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const ChooseTheme = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  function startQuiz(id) {
-    navigate(`/theme/quiz/${id}`);
+  const [baseUrl, setBaseUrl] = useState("/theme")
+
+  function startQuiz(theme) {
+    navigate(`/theme/quiz/${theme.id}`);
   }
 
   return (
-    <div>
-      <ThemeTemplate url="/theme" onClickFunction={startQuiz} />
-    </div>
+    <ThemeTemplate baseUrl={baseUrl} setBaseUrl={setBaseUrl} onClickFunction={startQuiz} />
   );
 };
 
