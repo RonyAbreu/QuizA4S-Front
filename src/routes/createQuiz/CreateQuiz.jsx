@@ -3,10 +3,12 @@ import ThemeMenu from "../../components/menu/ThemeMenu";
 
 //Css
 import "./CreateQuiz.css";
+import { useNavigate } from "react-router-dom";
 
 const CreateQuiz = () => {
 
   const [activeThemeMenu, setThemeMenu] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="container-create-quiz">
@@ -20,7 +22,7 @@ const CreateQuiz = () => {
             <h2>Criar Tema</h2>
           </div>
 
-          <div className="create-btn">
+          <div className="create-btn" onClick={() => navigate("/create/quiz/theme")}>
             <h2>Selecionar Tema</h2>
           </div>
         </div>
