@@ -35,14 +35,14 @@ jobs:
       run: docker push ${{secrets.DOCKER_USERNAME}}/frontend-quiz
     
     - name: Connecting and Deploying to the SSH Server
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_SECRET_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          script: |
-            cd Quiz-A4S
-            docker rm -f container-front-quiz
-            docker pull a4sufpb/frontend-quiz
-            docker compose up -d
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.SSH_SECRET_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          cd Quiz-A4S
+          docker rm -f container-front-quiz
+          docker pull a4sufpb/frontend-quiz
+          docker compose up -d
