@@ -19,19 +19,26 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [informationBox, setInformationBox] = useState(false);
 
+  const [informationAlert, setInformationAlert] = useState(false);
+
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    let themeId = path.substring("/theme/quiz/".length)
+    let themeId = path.substring("/theme/quiz/".length);
 
     async function getQuestionsByThemeId() {
       const url = `${URL_BASE}/question/quiz/${themeId}`;
 
       setLoading(true);
       const response = await fetch(url);
+
+      if (response.status === 404) {
+        setInformationAlert(true);
+      }
+
       const questionsJson = await response.json();
       setLoading(false);
 
@@ -51,16 +58,16 @@ const Quiz = () => {
     });
 
     setTimeout(() => {
+      if (isAlternativeCorrect(event)) {
+        setScore(score + 1);
+      }
+
       if (currentQuestionIndex === questions.length - 1) {
         setInformationBox(true);
         return;
       }
 
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-
-      if (isAlternativeCorrect(event)) {
-        setScore(score + 1);
-      }
     }, 500);
 
     if (token && user.uuid !== creatorId) {
@@ -95,10 +102,19 @@ const Quiz = () => {
 
         {informationBox && (
           <InformationBox
-            text={`Você acertou ${score + 1} de ${questions.length} questões!`}
+            text={`Você acertou ${score} de ${questions.length} questões!`}
             closeBox={restart}
             icon="check"
             color="green"
+          />
+        )}
+
+        {informationAlert && (
+          <InformationBox
+            text="Nenhuma questão cadastrada!"
+            closeBox={() => navigate("/theme")}
+            icon="exclamation"
+            color="red"
           />
         )}
 

@@ -1,10 +1,5 @@
 // Components
-import {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
+import { useContext, useEffect, useLayoutEffect, useState } from "react";
 import Loading from "../loading/Loading";
 import SearchComponent from "../searchComponent/SearchComponent";
 import NotFoundComponent from "../notFound/NotFoundComponent";
@@ -83,14 +78,20 @@ const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
       {isAuthenticated && (
         <div className="container-theme-buttons">
           <button
-            onClick={() => setBaseUrl("/theme")}
+            onClick={() => {
+              setBaseUrl("/theme");
+              setCurrentPage(0);
+            }}
             className="theme-buttons"
             id="btn-all-themes"
           >
             Todos os temas
           </button>
           <button
-            onClick={() => setBaseUrl("/theme/creator")}
+            onClick={() => {
+              setBaseUrl("/theme/creator");
+              setCurrentPage(0);
+            }}
             className="theme-buttons"
             id="btn-my-themes"
           >
@@ -108,7 +109,11 @@ const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
               onClick={() => onClickFunction(theme)}
             >
               <img
-                src={theme.imageUrl == null || theme.imageUrl == "" ? DEFAULT_IMG : theme.imageUrl}
+                src={
+                  theme.imageUrl == null || theme.imageUrl == ""
+                    ? DEFAULT_IMG
+                    : theme.imageUrl
+                }
                 alt="theme-image"
                 loading="lazy"
               />

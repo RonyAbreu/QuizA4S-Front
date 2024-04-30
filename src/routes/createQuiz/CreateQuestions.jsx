@@ -66,7 +66,7 @@ const CreateQuestions = () => {
   }
 
   async function postAllAltervatives(idQuestion, token) {
-    setLoading(true)
+    setLoading(true);
     const alternativeResponse = await fetch(`${urlAlternative}/${idQuestion}`, {
       method: "POST",
       headers: {
@@ -75,40 +75,40 @@ const CreateQuestions = () => {
       },
       body: JSON.stringify(alternatives),
     });
-    setLoading(false)
+    setLoading(false);
 
     if (!alternativeResponse.ok) {
-      setInformationBox(true)
+      setInformationBox(true);
       removeQuestion(idQuestion, token);
-      setLoading(false)
+      setLoading(false);
       return;
     }
 
-    setInformationBoxData((prevData) =>{
+    setInformationBoxData((prevData) => {
       return {
         ...prevData,
         color: "green",
         text: "Questão criada com sucesso",
         icon: "check",
-      }
-    })
-    setInformationBox(true)
+      };
+    });
+    setInformationBox(true);
     clearForm();
   }
 
   async function removeQuestion(idQuestion, token) {
-    setLoading(true)
+    setLoading(true);
     const questionResponse = await fetch(`${urlQuestion}/${idQuestion}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    setLoading(false)
+    setLoading(false);
 
     if (!questionResponse.ok) {
-      alert("Erro do servidor")
-      setLoading(false)
+      alert("Erro do servidor");
+      setLoading(false);
     }
   }
 
@@ -144,14 +144,13 @@ const CreateQuestions = () => {
         <div className="container-question">
           <label className="data-question">
             <span>Titulo:</span>
-            <input
-              type="text"
+            <textarea
               name="title"
               placeholder="Insira o título da questão"
               value={question.title}
               onChange={(e) => changeQuestion("title", e.target.value)}
               required
-            />
+            ></textarea>
           </label>
 
           <label className="data-question">
@@ -172,8 +171,7 @@ const CreateQuestions = () => {
               <span>{`Alternativa ${index + 1}:`}</span>
 
               <label className="alternative-data">
-                <input
-                  type="text"
+                <textarea
                   placeholder="Digite o texto da alternativa"
                   value={alternative.text}
                   onChange={(e) =>
@@ -181,7 +179,7 @@ const CreateQuestions = () => {
                   }
                   className="input-alternative-text"
                   required
-                />
+                ></textarea>
                 <input
                   type="radio"
                   name="alternative"

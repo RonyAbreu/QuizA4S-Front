@@ -48,10 +48,21 @@
   font-size: 1.1em;
 }
 
-.data-question input {
-  width: 90%;
+.data-question textarea{
+  resize: none;
+  width: 70%;
+  height: 80px;
+  border-radius: 15px;
+  border: 3px solid #3498db;
+  padding: 10px 30px;
+  font-size: 1.1em;
+  outline: none;
+}
+
+.data-question input{
+  width: 70%;
   height: 50px;
-  border-radius: 50px;
+  border-radius: 15px;
   border: 3px solid #3498db;
   padding: 10px;
   font-size: 0.9em;
@@ -63,8 +74,9 @@
 }
 
 .container-alternatives {
-  width: 100%;
+  width: 70%;
   display: flex;
+  justify-content: space-between;
   flex-wrap: wrap;
 }
 
@@ -89,11 +101,12 @@
 }
 
 .input-alternative-text {
+  resize: none;
   width: 80%;
   height: 60px;
   border-radius: 20px;
   border: 3px solid #3498db;
-  padding: 10px;
+  padding: 10px 30px;
   font-size: 0.9em;
   outline: none;
 }

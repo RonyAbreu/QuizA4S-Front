@@ -64,14 +64,84 @@
 .create-btn:nth-child(1){
   background-image: url("../../assets/create-theme-btn.jpg");
   background-size: cover;
+  background-position: center;
 }
 
 .create-btn:nth-child(2){
   background-image: url("../../assets/select-theme-btn.jpg");
   background-size: cover;
+  background-position: center;
 }
 
 .create-btn h2{
   margin-top: -2em;
   color: #fff;
+}
+
+@media(max-width: 850px){
+  .container-create{
+    width: 100%;
+  }
+
+  .container-create-header h2{
+    font-size: 2.1em;
+  }
+
+  .container-create-buttons{
+    gap: 0;
+    width: 100%;
+  }
+
+  .create-btn{
+    width: 250px;
+    height: 250px;
+  }
+
+  .create-btn h2{
+    font-size: 1.4em;
+  }
+}
+
+@media(max-width: 650px){
+  .container-create{
+    padding: 15px;
+  }
+
+  .container-create-header{
+    margin-bottom: 120px;
+  }
+
+  .container-create-header h2{
+    font-size: 1.9em;
+  }
+
+  .create-btn{
+    width: 200px;
+    height: 200px;
+  }
+
+  .create-btn:nth-child(2) h2{
+    font-size: 1.3em;
+  }
+}
+
+@media(max-width: 500px){
+  .container-create-header{
+    margin-bottom: 80px;
+  }
+
+  .container-create-header h2{
+    font-size: 1.6em;
+  }
+
+  .container-create-buttons{
+    flex-direction: column;
+    gap: 65px;
+  }
+}
+
+@media(max-width: 400px){
+  .container-create-header h2{
+    font-size: 1.35em;
+  }
 }
