@@ -28,7 +28,7 @@
     gap: .2em;
 }
 
-.container-input span{
+.container-input-label{
     font-size: 1.3em;
 }
 
@@ -42,6 +42,15 @@
 
 .container-input input:focus{
     border: 2px solid blue;
+}
+
+.span-error-message{
+    max-width: 100%;
+    word-wrap: break-word;
+    text-align: left;
+    font-size: .9em;
+    color: rgb(194, 0, 0);
+    font-weight: bold;
 }
 
 .btn{

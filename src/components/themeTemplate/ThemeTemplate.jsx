@@ -39,6 +39,8 @@ const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);
+        setTotalPages(0);
+        setThemes([])
         return;
       }
 

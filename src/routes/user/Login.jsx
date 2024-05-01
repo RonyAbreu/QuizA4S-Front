@@ -12,7 +12,8 @@ const Login = () => {
       buttonText="Entrar"
       redirectText="Ainda não possui uma conta? Clique aqui!"
       redirectLink="/register"
-      onSubmit={{ url: "/user/login", fields }}
+      fields={fields}
+      baseUrl="/user/login"
     />
   );
 };
