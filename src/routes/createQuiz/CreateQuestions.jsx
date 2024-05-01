@@ -149,6 +149,7 @@ const CreateQuestions = () => {
               placeholder="Insira o título da questão"
               value={question.title}
               onChange={(e) => changeQuestion("title", e.target.value)}
+              maxLength={170}
               required
             ></textarea>
           </label>
@@ -161,6 +162,7 @@ const CreateQuestions = () => {
               placeholder="Insira a url da imagem"
               value={question.imageUrl}
               onChange={(e) => changeQuestion("imageUrl", e.target.value)}
+              maxLength={255}
             />
           </label>
         </div>
@@ -178,6 +180,7 @@ const CreateQuestions = () => {
                     changeAlternative(index, "text", e.target.value)
                   }
                   className="input-alternative-text"
+                  maxLength={100}
                   required
                 ></textarea>
                 <input
