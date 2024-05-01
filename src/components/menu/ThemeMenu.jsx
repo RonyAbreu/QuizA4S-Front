@@ -3,6 +3,9 @@ import { URL_BASE } from "../../App";
 import Loading from "../loading/Loading";
 import InformationBox from "../informationBox/InformationBox";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { object, string } from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import "./ThemeMenu.css";
 
@@ -20,22 +23,15 @@ const ThemeMenu = ({ setThemeMenu }) => {
     icon: "",
   });
 
-  function handleSubmit(e) {
-    e.preventDefault();
-
+  function handleSubmit(themeRequest) {
     const token = localStorage.getItem("token");
 
     if (!token) return;
 
-    postTheme(token);
+    postTheme(token, themeRequest);
   }
 
-  const [themeRequest, setThemeRequest] = useState({
-    name: "",
-    imageUrl: "",
-  })
-
-  async function postTheme(token) {
+  async function postTheme(token, themeRequest) {
     setLoading(true);
     fetch(url, {
       method: "POST",
@@ -48,8 +44,7 @@ const ThemeMenu = ({ setThemeMenu }) => {
       .then((res) => {
         if (res.status === 201) {
           activeInformationBox(false, "Tema criado com sucesso");
-          setThemeRequest({themeName: "", imageUrl: ""})
-          return res.json().then((data) => navigateCreateQuestion(data))
+          return res.json().then((data) => navigateCreateQuestion(data));
         } else if (res.status === 400) {
           return res.json().then((data) => {
             activeInformationBox(true, data.message);
@@ -82,20 +77,28 @@ const ThemeMenu = ({ setThemeMenu }) => {
     }
   }
 
-  function navigateCreateQuestion(theme){
+  function navigateCreateQuestion(theme) {
     localStorage.setItem("theme", JSON.stringify(theme));
-    navigate(`/create/quiz/${theme.id}/question`)
+    navigate(`/create/quiz/${theme.id}/question`);
   }
 
-  function changeTheme(name, value){
-    setThemeRequest((prevTheme) =>{
-      return {...prevTheme, [name]: value}
-    })
-  }
+  const schema = object().shape({
+    name: string()
+      .required("Campo obrigatório")
+      .min(3, "Mínimo de 3 caracteres")
+      .max(20, "Máximo de 20 caracteres"),
+    imageUrl: string().url("URL inválida"),
+  });
+
+  const {
+    register,
+    handleSubmit: onSubmit,
+    formState: { errors },
+  } = useForm({resolver: yupResolver(schema)});
 
   return (
     <div className="theme-menu">
-      <form onSubmit={handleSubmit} className="form-menu">
+      <form onSubmit={onSubmit(handleSubmit)} className="form-menu">
         <div className="theme-menu-close">
           <i
             className="bi bi-x-circle-fill"
@@ -106,26 +109,23 @@ const ThemeMenu = ({ setThemeMenu }) => {
         <h2 className="theme-menu-title">Criar tema</h2>
 
         <label className="theme-menu-input">
-          <span>Nome:</span>
+          <p>Nome:</p>
           <input
             type="text"
-            name="name"
             placeholder="Digite o nome do seu tema"
-            value={themeRequest.name}
-            onChange={(e) => changeTheme("name",e.target.value)}
-            required
+            {...register("name")}
           />
+          <span className="span-error-message">{errors?.name?.message}</span>
         </label>
 
         <label className="theme-menu-input">
-          <span>Imagem:</span>
+          <p>Imagem:</p>
           <input
             type="text"
-            name="imageUrl"
             placeholder="Digite a URL da imagem"
-            value={themeRequest.imageUrl}
-            onChange={(e) => changeTheme("imageUrl", e.target.value)}
+            {...register("imageUrl")}
           />
+          <span className="span-error-message">{errors?.imageUrl?.message}</span>
         </label>
 
         <button type="submit" className="theme-menu-btn">
