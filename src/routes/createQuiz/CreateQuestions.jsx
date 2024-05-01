@@ -137,9 +137,20 @@ const CreateQuestions = () => {
     });
   };
 
+  const { name: themeName, imageUrl: themeUrl } = JSON.parse(
+    localStorage.getItem("theme")
+  );
+
   return (
     <div className="container-create-questions">
-      <h2 className="create-questions-title">Crie as Questões do seu Quiz</h2>
+      <div className="container-create-questions-header">
+        <div className="container-create-theme-info">
+          <img src={themeUrl} alt="image-theme" loading="lazy" />
+          <span>{themeName}</span>
+        </div>
+        <h2 className="create-questions-title">Crie as Questões do seu Quiz</h2>
+      </div>
+
       <form onSubmit={handleSubmit} className="create-questions-form" id="form">
         <div className="container-question">
           <label className="data-question">
