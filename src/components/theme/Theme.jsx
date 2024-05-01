@@ -36,12 +36,16 @@ const Theme = ({ themes, setCurrentPage, setCallBack }) => {
       type: "text",
       placeholder: "Digite o nome do tema",
       value: newName,
+      maxLength: 20,
+      minLength: 3,
     },
     {
       label: "URL da Imagem",
       type: "text",
       placeholder: "Digite a url da imagem",
       value: newUrl,
+      maxLength: 255,
+      minLength: 0,
     },
   ];
 
