@@ -109,7 +109,8 @@
   outline: none;
 }
 
-.data-question input:focus {
+.data-question textarea:focus,
+ .data-question input:focus {
   border: 3px solid blue;
 }
 

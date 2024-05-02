@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "../../assets/logo-a4s.webp";
 
 import "./Header.css";
@@ -7,6 +7,7 @@ import Menu from "../menu/Menu";
 
 const Header = ({ isAuth }) => {
   const [menu, setMenu] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header className="header">
@@ -14,7 +15,7 @@ const Header = ({ isAuth }) => {
         <img src={logo} alt="Logo Apps4Society" className="logo" width="80" height="80"/>
       </Link>
 
-      <h1 className="title">Quiz A4S</h1>
+      <h1 className="title" onClick={() => navigate("/")}>Quiz A4S</h1>
 
       <ul className="nav-bar">
         {!isAuth && (
@@ -49,17 +50,16 @@ const Header = ({ isAuth }) => {
             Login
           </NavLink>
         )}
-
       </ul>
       {isAuth && (
-          <i className="bi bi-list profile" onClick={() => setMenu(true)}></i>
-        )}
+        <i className="bi bi-list profile" onClick={() => setMenu(true)}></i>
+      )}
 
       {!isAuth && (
         <i className="bi bi-list menu-mobile" onClick={() => setMenu(true)}></i>
       )}
 
-      {menu && <Menu setMenu={setMenu} isAuth={isAuth}/>}
+      {menu && <Menu setMenu={setMenu} isAuth={isAuth} />}
     </header>
   );
 };
