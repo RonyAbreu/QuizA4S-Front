@@ -52,9 +52,13 @@ const Quiz = () => {
     const alternatives = document.querySelectorAll("li");
 
     alternatives.forEach((alt) => {
-      if (alt.getAttribute("value") === "true")
+      if (alt.getAttribute("value") === "true") {
         alt.style.backgroundColor = "#5bcebf";
-      else alt.style.backgroundColor = "#d9434f";
+        alt.style.color = "#fff"
+      } else {
+        alt.style.backgroundColor = "#d9434f";
+        alt.style.color = "#fff"
+      }
     });
 
     setTimeout(() => {
@@ -68,7 +72,7 @@ const Quiz = () => {
       }
 
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }, 500);
+    }, 1500);
 
     if (token && user.uuid !== creatorId) {
       postResponse(user.uuid, questionId, alternativeId);

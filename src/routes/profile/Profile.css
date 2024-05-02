@@ -77,10 +77,10 @@
 }
 
 .select-user-btn{
-    width: 180px;
+    width: 200px;
     height: 35px;
     border-radius: 4px;
-    background-color: #3498db;
+    background-color: rgb(1, 65, 106);
     font-size: 1em;
     color: #fff;
     font-weight: bold;

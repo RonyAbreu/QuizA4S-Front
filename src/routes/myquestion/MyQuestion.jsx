@@ -178,7 +178,7 @@ const MyQuestion = () => {
         <div className="my-question-header">
           <div className="theme-info">
             <p>Tema:</p>
-            <img src={themeUrl} alt="image-theme" loading="lazy"/>
+            <img src={themeUrl == null || themeUrl == "" ? DEFAULT_IMG : themeUrl} alt="image-theme" loading="lazy"/>
             <span>{themeName}</span>
           </div>
 

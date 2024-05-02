@@ -19,7 +19,7 @@
 
 .question-number {
   background-color: #fff;
-  color: #2e97b7;
+  color: rgb(1, 65, 106);
   border-radius: 5px;
   padding: 5px 10px;
   font-size: 1.2em;
@@ -59,9 +59,9 @@
   border-radius: 15px;
   text-align: start;
   padding: 10px 20px;
-  font-size: 1.3em;
+  font-size: 1.4em;
   font-weight: bold;
-  color: rgb(0, 131, 212);
+  color: rgb(1, 65, 106);
   cursor: pointer;
   word-wrap: break-word;
 }

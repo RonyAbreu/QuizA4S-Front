@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { URL_BASE } from "../../App";
+import { DEFAULT_IMG } from "../../App";
 import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
 
@@ -145,7 +146,7 @@ const CreateQuestions = () => {
     <div className="container-create-questions">
       <div className="container-create-questions-header">
         <div className="container-create-theme-info">
-          <img src={themeUrl} alt="image-theme" loading="lazy" />
+          <img src={themeUrl == null || themeUrl == "" ? DEFAULT_IMG : themeUrl} alt="image-theme" loading="lazy" />
           <span>{themeName}</span>
         </div>
         <h2 className="create-questions-title">Crie as Questões do seu Quiz</h2>

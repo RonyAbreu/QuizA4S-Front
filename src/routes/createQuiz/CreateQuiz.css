@@ -88,7 +88,7 @@
   }
 
   .container-create-buttons{
-    gap: 0;
+    gap: .5em;
     width: 100%;
   }
 
@@ -116,8 +116,8 @@
   }
 
   .create-btn{
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
   }
 
   .create-btn:nth-child(2) h2{
