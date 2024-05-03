@@ -58,23 +58,27 @@ const Quiz = () => {
     const isCorrect = isAlternativeCorrect(event);
     const alternatives = event.currentTarget.parentNode.childNodes;
 
+    const green = "#5bcebf";
+    const red = "#d9434f";
+    const white = "#fff";
+
     alternatives.forEach((alt) => {
-      alt.classList.remove('correct-answer', 'wrong-answer');
+      alt.classList.remove("correct-answer", "wrong-answer");
 
       if (alt.getAttribute("value") === "true") {
-        alt.style.backgroundColor = "#5bcebf";
-        alt.style.color = "#fff";
+        alt.style.backgroundColor = green;
+        alt.style.color = white;
       } else {
-        alt.style.backgroundColor = "#d9434f";
-        alt.style.color = "#fff";
+        alt.style.backgroundColor = red;
+        alt.style.color = white;
       }
     });
 
     if (isCorrect) {
-      event.currentTarget.classList.add('correct-answer');
+      event.currentTarget.classList.add("correct-answer");
       setScore(score + 1);
     } else {
-      event.currentTarget.classList.add('wrong-answer');
+      event.currentTarget.classList.add("wrong-answer");
     }
 
     setTimeout(() => {
@@ -89,8 +93,7 @@ const Quiz = () => {
     if (token && user.uuid !== creatorId) {
       postResponse(user.uuid, questionId, alternativeId);
     }
-}
-
+  }
 
   function postResponse(uuid, questionId, alternativeId) {
     const basePath = `/response/${uuid}/${questionId}/${alternativeId}`;
