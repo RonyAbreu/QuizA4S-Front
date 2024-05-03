@@ -9,7 +9,7 @@ import { DEFAULT_IMG } from "../../App";
 import "./Theme.css";
 import { useNavigate } from "react-router-dom";
 
-const Theme = ({ themes, setCurrentPage, setCallBack }) => {
+const Theme = ({ themes, setThemes, setCurrentPage, setCallBack }) => {
   const apiFetch = new ApiFetch();
 
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ const Theme = ({ themes, setCurrentPage, setCallBack }) => {
       }
 
       setLoading(false);
-      setCallBack({});
+      setThemes(themes.filter((theme) => themeId !== theme.id))
       setCurrentPage(0);
       activeInformationBox(false, "Tema removido com sucesso!");
       setConfirmBox(false);
