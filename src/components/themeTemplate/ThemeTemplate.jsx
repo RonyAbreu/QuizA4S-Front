@@ -1,5 +1,5 @@
 // Components
-import { useContext, useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import Loading from "../loading/Loading";
 import SearchComponent from "../searchComponent/SearchComponent";
 import NotFoundComponent from "../notFound/NotFoundComponent";
@@ -9,12 +9,10 @@ import { DEFAULT_IMG } from "../../App";
 
 //Css
 import "./ThemeTemplate.css";
-import { AuthenticationContext } from "../../context/AutenticationContext";
 
-const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
+const ThemeTemplate = ({ baseUrl, onClickFunction }) => {
   const apiFetch = new ApiFetch();
 
-  const { isAuthenticated } = useContext(AuthenticationContext);
 
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -48,22 +46,7 @@ const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
       setTotalPages(response.totalPages);
       setThemes(response.data);
     });
-  }, [currentPage, baseUrl]);
-
-  useEffect(() => {
-    const btnAllThemes = document.getElementById("btn-all-themes");
-    const btnMyThemes = document.getElementById("btn-my-themes");
-
-    if (btnAllThemes && btnMyThemes) {
-      if (!baseUrl.includes("creator")) {
-        btnMyThemes.classList.remove("selected-btn");
-        btnAllThemes.classList.add("selected-btn");
-      } else {
-        btnAllThemes.classList.remove("selected-btn");
-        btnMyThemes.classList.add("selected-btn");
-      }
-    }
-  }, [baseUrl]);
+  }, [currentPage]);
 
   return (
     <div className="container-theme outlet">
@@ -76,31 +59,6 @@ const ThemeTemplate = ({ baseUrl, setBaseUrl, onClickFunction }) => {
         setData={setThemes}
         setTotalPages={setTotalPages}
       />
-
-      {isAuthenticated && (
-        <div className="container-theme-buttons">
-          <button
-            onClick={() => {
-              setBaseUrl("/theme");
-              setCurrentPage(0);
-            }}
-            className="theme-buttons"
-            id="btn-all-themes"
-          >
-            Todos os temas
-          </button>
-          <button
-            onClick={() => {
-              setBaseUrl("/theme/creator");
-              setCurrentPage(0);
-            }}
-            className="theme-buttons"
-            id="btn-my-themes"
-          >
-            Meus temas
-          </button>
-        </div>
-      )}
 
       <div className="container-theme-data">
         {themes &&
