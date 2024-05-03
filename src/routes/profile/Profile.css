@@ -56,12 +56,12 @@
 }
 
 #user-profile-btn-delete{
-    background-color: red;
+    background-color: rgb(191, 1, 1);
 }
 
 #user-profile-btn-delete:hover{
     background-color: #fff;
-    color: red;
+    color: rgb(191, 1, 1);
 }
 
 .container-user-itens{
@@ -80,7 +80,7 @@
     width: 200px;
     height: 35px;
     border-radius: 4px;
-    background-color: rgb(1, 65, 106);
+    background-color: rgb(1, 80, 130);
     font-size: 1em;
     color: #fff;
     font-weight: bold;
@@ -89,18 +89,13 @@
     border: none;
 }
 
-.select-user-btn:hover{
+.selected-btn{
     background-color: #fff;
-    color: #3498db;
+    color: rgb(1, 80, 130);
 }
 
 .user-itens{
     margin-top: .3em;
-}
-
-.selected-btn{
-    background-color: #fff;
-    color: #3498db;
 }
 
 @media(max-width: 1000px){

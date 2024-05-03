@@ -19,6 +19,8 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [informationBox, setInformationBox] = useState(false);
 
+  const [resultMessage, setResultMessage] = useState("");
+
   const [informationAlert, setInformationAlert] = useState(false);
 
   const navigate = useNavigate();
@@ -48,16 +50,26 @@ const Quiz = () => {
     getQuestionsByThemeId();
   }, []);
 
+  const [resultInPercentagem, setResult] = useState(0);
+
+  useEffect(() => {
+    setResult((score / questions.length) * 100);
+  }, [questions.length, score]);
+
+  function isAlternativeCorrect(event) {
+    return event.target.getAttribute("value") === "true";
+  }
+
   function handleAnswerClick(event, alternativeId, questionId, creatorId) {
     const alternatives = document.querySelectorAll("li");
 
     alternatives.forEach((alt) => {
       if (alt.getAttribute("value") === "true") {
         alt.style.backgroundColor = "#5bcebf";
-        alt.style.color = "#fff"
+        alt.style.color = "#fff";
       } else {
         alt.style.backgroundColor = "#d9434f";
-        alt.style.color = "#fff"
+        alt.style.color = "#fff";
       }
     });
 
@@ -67,20 +79,40 @@ const Quiz = () => {
       }
 
       if (currentQuestionIndex === questions.length - 1) {
-        setInformationBox(true);
+        showResult();
         return;
       }
 
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }, 1500);
+    }, 100);
 
     if (token && user.uuid !== creatorId) {
       postResponse(user.uuid, questionId, alternativeId);
     }
   }
 
-  function isAlternativeCorrect(event) {
-    return event.target.getAttribute("value") === "true";
+  function showResult() {
+    if (resultInPercentagem >= 0 && resultInPercentagem <= 30) {
+      setResultMessage(
+        "Não desanime! Cada erro é uma oportunidade de aprender algo novo."
+      );
+      setInformationBox(true);
+    } else if (resultInPercentagem > 30 && resultInPercentagem <= 60) {
+      setResultMessage(
+        "Você está indo bem! Com um pouco mais de prática, vai dominar este quiz!"
+      );
+      setInformationBox(true);
+    } else if (resultInPercentagem > 60 && resultInPercentagem <= 90) {
+      setResultMessage(
+        "Impressionante! Você está quase lá, apenas mais um passo para a perfeição!"
+      );
+      setInformationBox(true);
+    } else if (score == 10) {
+      setResultMessage(
+        "Uau! Pontuação máxima! Você é um verdadeiro mestre neste assunto!"
+      );
+      setInformationBox(true);
+    }
   }
 
   function postResponse(uuid, questionId, alternativeId) {
@@ -106,7 +138,9 @@ const Quiz = () => {
 
         {informationBox && (
           <InformationBox
-            text={`Você acertou ${score} de ${questions.length} questões!`}
+            text={`${
+              (score / questions.length) * 100
+            }% de acertividade! ${resultMessage}`}
             closeBox={restart}
             icon="check"
             color="green"
