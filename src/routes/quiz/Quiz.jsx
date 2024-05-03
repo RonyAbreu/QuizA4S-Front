@@ -5,6 +5,7 @@ import InformationBox from "../../components/informationBox/InformationBox";
 import Loading from "../../components/loading/Loading";
 import { ApiFetch } from "../../util/ApiFetch";
 import { URL_BASE } from "../../App";
+import QuestionFinished from "../../components/quizFinished/QuizFinished";
 
 //Css
 import "./Quiz.css";
@@ -17,9 +18,6 @@ const Quiz = () => {
   const [loading, setLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [informationBox, setInformationBox] = useState(false);
-
-  const [resultMessage, setResultMessage] = useState("");
 
   const [informationAlert, setInformationAlert] = useState(false);
 
@@ -27,6 +25,8 @@ const Quiz = () => {
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
+
+  const [quizFinished, setQuizFinished] = useState(false);
 
   useEffect(() => {
     let themeId = path.substring("/theme/quiz/".length);
@@ -49,12 +49,6 @@ const Quiz = () => {
 
     getQuestionsByThemeId();
   }, []);
-
-  const [resultInPercentagem, setResult] = useState(0);
-
-  useEffect(() => {
-    setResult((score / questions.length) * 100);
-  }, [questions.length, score]);
 
   function isAlternativeCorrect(event) {
     return event.target.getAttribute("value") === "true";
@@ -79,39 +73,15 @@ const Quiz = () => {
       }
 
       if (currentQuestionIndex === questions.length - 1) {
-        showResult();
+        setQuizFinished(true);
         return;
       }
 
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }, 100);
+    }, 1500);
 
     if (token && user.uuid !== creatorId) {
       postResponse(user.uuid, questionId, alternativeId);
-    }
-  }
-
-  function showResult() {
-    if (resultInPercentagem >= 0 && resultInPercentagem <= 30) {
-      setResultMessage(
-        "Não desanime! Cada erro é uma oportunidade de aprender algo novo."
-      );
-      setInformationBox(true);
-    } else if (resultInPercentagem > 30 && resultInPercentagem <= 60) {
-      setResultMessage(
-        "Você está indo bem! Com um pouco mais de prática, vai dominar este quiz!"
-      );
-      setInformationBox(true);
-    } else if (resultInPercentagem > 60 && resultInPercentagem <= 90) {
-      setResultMessage(
-        "Impressionante! Você está quase lá, apenas mais um passo para a perfeição!"
-      );
-      setInformationBox(true);
-    } else if (score == 10) {
-      setResultMessage(
-        "Uau! Pontuação máxima! Você é um verdadeiro mestre neste assunto!"
-      );
-      setInformationBox(true);
     }
   }
 
@@ -136,23 +106,20 @@ const Quiz = () => {
       <div className="container-quiz">
         {loading && <Loading />}
 
-        {informationBox && (
-          <InformationBox
-            text={`${
-              (score / questions.length) * 100
-            }% de acertividade! ${resultMessage}`}
-            closeBox={restart}
-            icon="check"
-            color="green"
-          />
-        )}
-
         {informationAlert && (
           <InformationBox
             text="Nenhuma questão cadastrada!"
             closeBox={() => navigate("/theme")}
             icon="exclamation"
             color="red"
+          />
+        )}
+
+        {quizFinished && (
+          <QuestionFinished
+            score={score}
+            questionLength={questions.length}
+            restart={restart}
           />
         )}
 
