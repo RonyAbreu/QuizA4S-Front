@@ -1,31 +1,26 @@
 import "./QuizFinished.css";
 
 const QuizFinished = ({ score, questionLength, restart }) => {
-  const red = "rgb(174, 2, 2)";
-  const orange = "rgb(182, 120, 5)";
-  const yellow = "rgb(152, 152, 2)";
-  const green = "green";
-
   return (
     <div className="container-quiz-finished">
       <div className="quiz-finished">
         <h2 className="quiz-finished-title">Quiz Finalizado!</h2>
         {score >= 0 && score <= 3 && (
           <div className="quiz-finished-score">
-            <span style={{ color: red }}>{`${
+            <span>{`${
               (score / questionLength) * 100
             }% de acertividade!`}</span>
-            <p style={{ color: red }}>
+            <p>
               Não desanime! Cada erro é uma oportunidade de aprender algo novo.
             </p>
           </div>
         )}
         {score > 3 && score <= 6 && (
           <div className="quiz-finished-score">
-            <span style={{ color: yellow }}>{`${
+            <span>{`${
               (score / questionLength) * 100
             }% de acertividade!`}</span>
-            <p style={{ color: yellow }}>
+            <p>
               Você está indo bem! Com um pouco mais de prática, vai dominar este
               quiz!
             </p>
@@ -33,8 +28,8 @@ const QuizFinished = ({ score, questionLength, restart }) => {
         )}
         {score > 6 && score <= 9 && (
           <div className="quiz-finished-score">
-            <span style={{color: orange}}>{`${(score / questionLength) * 100}% de acertividade!`}</span>
-            <p style={{color: orange}}>
+            <span>{`${(score / questionLength) * 100}% de acertividade!`}</span>
+            <p>
               Impressionante! Você está quase lá, apenas mais um passo para a
               perfeição!
             </p>
@@ -42,8 +37,8 @@ const QuizFinished = ({ score, questionLength, restart }) => {
         )}
         {score === 10 && (
           <div className="quiz-finished-score">
-            <span style={{color: green}}>{`${(score / questionLength) * 100}% de acertividade!`}</span>
-            <p style={{color: green}}>
+            <span>{`${(score / questionLength) * 100}% de acertividade!`}</span>
+            <p>
               Uau! Pontuação máxima! Você é um verdadeiro mestre neste assunto!
             </p>
           </div>
