@@ -57,10 +57,6 @@ const Quiz = () => {
     getQuestionsByThemeId();
   }, []);
 
-  function isAlternativeCorrect(event) {
-    return event.target.getAttribute("value") === "true";
-  }
-
   function handleAnswerClick(event, alternativeId, questionId, creatorId) {
     const isCorrect = isAlternativeCorrect(event);
     const alternatives = event.currentTarget.parentNode.childNodes;
@@ -102,6 +98,10 @@ const Quiz = () => {
     }
   }
 
+  function isAlternativeCorrect(event) {
+    return event.target.getAttribute("value") === "true";
+  }
+
   function postResponse(uuid, questionId, alternativeId) {
     const basePath = `/response/${uuid}/${questionId}/${alternativeId}`;
 
@@ -126,7 +126,7 @@ const Quiz = () => {
         {informationAlert && (
           <InformationBox
             text={textAlert}
-            closeBox={() => navigate("/theme")}
+            closeBox={restart}
             icon="exclamation"
             color="red"
           />
