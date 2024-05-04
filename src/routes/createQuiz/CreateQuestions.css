@@ -50,6 +50,26 @@
   text-align: center;
 }
 
+.container-question-info{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.container-question-info p{
+  background-color: #004878;
+  padding: 6px 20px;
+  color: #fff;
+  border-radius: 50px;
+  margin-top: -0.5em;
+  text-align: center;
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
 .create-questions-title {
   font-size: 2.3em;
   color: #fff;

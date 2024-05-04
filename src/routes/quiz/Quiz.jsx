@@ -20,6 +20,7 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
 
   const [informationAlert, setInformationAlert] = useState(false);
+  const [textAlert, setTextAlert] = useState("");
 
   const navigate = useNavigate();
 
@@ -38,6 +39,7 @@ const Quiz = () => {
       const response = await fetch(url);
 
       if (response.status === 404) {
+        setTextAlert("Nenhuma questão cadastrada");
         setInformationAlert(true);
       }
 
@@ -45,6 +47,11 @@ const Quiz = () => {
       setLoading(false);
 
       setQuestions(questionsJson);
+
+      if (questionsJson.length < 5) {
+        setTextAlert("Cadastre no mínimo 5 questões para jogar esse quiz");
+        setInformationAlert(true);
+      }
     }
 
     getQuestionsByThemeId();
@@ -118,7 +125,7 @@ const Quiz = () => {
 
         {informationAlert && (
           <InformationBox
-            text="Nenhuma questão cadastrada!"
+            text={textAlert}
             closeBox={() => navigate("/theme")}
             icon="exclamation"
             color="red"
@@ -127,8 +134,7 @@ const Quiz = () => {
 
         {quizFinished && (
           <QuestionFinished
-            score={score}
-            questionLength={questions.length}
+            percentage={((score / questions.length) * 100).toFixed(0)}
             restart={restart}
           />
         )}

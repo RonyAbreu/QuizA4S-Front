@@ -146,10 +146,19 @@ const CreateQuestions = () => {
     <div className="container-create-questions">
       <div className="container-create-questions-header">
         <div className="container-create-theme-info">
-          <img src={themeUrl == null || themeUrl == "" ? DEFAULT_IMG : themeUrl} alt="image-theme" loading="lazy" />
+          <img
+            src={themeUrl == null || themeUrl == "" ? DEFAULT_IMG : themeUrl}
+            alt="image-theme"
+            loading="lazy"
+          />
           <span>{themeName}</span>
         </div>
-        <h2 className="create-questions-title">Crie as Questões do seu Quiz</h2>
+        <div className="container-question-info">
+          <p>Crie no mínimo 5 questões para o seu Quiz</p>
+          <h2 className="create-questions-title">
+            Crie as Questões do seu Quiz
+          </h2>
+        </div>
       </div>
 
       <form onSubmit={handleSubmit} className="create-questions-form" id="form">

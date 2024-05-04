@@ -1,43 +1,39 @@
 import "./QuizFinished.css";
 
-const QuizFinished = ({ score, questionLength, restart }) => {
+const QuizFinished = ({ percentage, restart }) => {
   return (
     <div className="container-quiz-finished">
       <div className="quiz-finished">
         <h2 className="quiz-finished-title">Quiz Finalizado!</h2>
-        {score >= 0 && score <= 3 && (
+        {percentage >= 0 && percentage <= 30 && (
           <div className="quiz-finished-score">
-            <span>{`${
-              (score / questionLength) * 100
-            }% de acertividade!`}</span>
+            <span>{`${percentage}% de acertividade!`}</span>
             <p>
               Não desanime! Cada erro é uma oportunidade de aprender algo novo.
             </p>
           </div>
         )}
-        {score > 3 && score <= 6 && (
+        {percentage > 30 && percentage <= 60 && (
           <div className="quiz-finished-score">
-            <span>{`${
-              (score / questionLength) * 100
-            }% de acertividade!`}</span>
+            <span>{`${percentage}% de acertividade!`}</span>
             <p>
               Você está indo bem! Com um pouco mais de prática, vai dominar este
               quiz!
             </p>
           </div>
         )}
-        {score > 6 && score <= 9 && (
+        {percentage > 60 && percentage <= 90 && (
           <div className="quiz-finished-score">
-            <span>{`${(score / questionLength) * 100}% de acertividade!`}</span>
+            <span>{`${percentage}% de acertividade!`}</span>
             <p>
               Impressionante! Você está quase lá, apenas mais um passo para a
               perfeição!
             </p>
           </div>
         )}
-        {score === 10 && (
+        {percentage === 100 && (
           <div className="quiz-finished-score">
-            <span>{`${(score / questionLength) * 100}% de acertividade!`}</span>
+            <span>{`${percentage}% de acertividade!`}</span>
             <p>
               Uau! Pontuação máxima! Você é um verdadeiro mestre neste assunto!
             </p>

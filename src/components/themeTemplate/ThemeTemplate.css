@@ -70,6 +70,10 @@
     background-color: #fff;
 }
 
+.theme p{
+    font-size: 1.1em;
+}
+
 .theme img:hover{
     transform: scale(1.1);
 }
