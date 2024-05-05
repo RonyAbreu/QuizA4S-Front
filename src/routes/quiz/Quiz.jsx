@@ -99,7 +99,7 @@ const Quiz = () => {
   }
 
   function isAlternativeCorrect(event) {
-    return event.target.getAttribute("value") === "true";
+    return event.currentTarget.getAttribute("value") === "true";
   }
 
   function postResponse(uuid, questionId, alternativeId) {
