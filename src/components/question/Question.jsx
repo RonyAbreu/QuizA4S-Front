@@ -12,6 +12,9 @@ const Question = ({
   currentQuestion,
   lastQuestion,
 }) => {
+
+  const alternativeList = ["A", "B", "C", "D"];
+
   return (
     <div className="question">
       <div className="question-header">
@@ -31,7 +34,7 @@ const Question = ({
 
       <ul className="alternatives">
         {alternatives &&
-          alternatives.map((alternative) => (
+          alternatives.map((alternative, index) => (
             <li
               key={alternative.id}
               value={alternative.correct}
@@ -39,7 +42,9 @@ const Question = ({
                 onAnswerClick(e, alternative.id, questionId, creatorId)
               }
             >
-              {alternative.text}
+              <span>{alternativeList[index]}</span>
+              <p>{alternative.text}</p>
+              
             </li>
           ))}
       </ul>
