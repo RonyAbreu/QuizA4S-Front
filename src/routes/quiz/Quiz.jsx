@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Question from "../../components/question/Question";
 import InformationBox from "../../components/informationBox/InformationBox";
 import Loading from "../../components/loading/Loading";
@@ -12,8 +12,7 @@ import "./Quiz.css";
 
 const Quiz = () => {
   const apiFetch = new ApiFetch();
-
-  const path = useLocation().pathname;
+  
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -29,9 +28,9 @@ const Quiz = () => {
 
   const [quizFinished, setQuizFinished] = useState(false);
 
-  useEffect(() => {
-    let themeId = path.substring("/theme/quiz/".length);
+  const {id : themeId} = JSON.parse(localStorage.getItem("theme"));
 
+  useEffect(() => {
     async function getQuestionsByThemeId() {
       const url = `${URL_BASE}/question/quiz/${themeId}`;
 
@@ -118,26 +117,20 @@ const Quiz = () => {
     navigate("/theme");
   }
 
+  const [time, setTime] = useState(0);
+
+  function incrementTime(){
+    setTimeout(() => {
+      setTime(time + 1);
+    }, 1000);
+  }
+
   return (
     <div className="container-quiz-external">
       <div className="container-quiz">
-        {loading && <Loading />}
-
-        {informationAlert && (
-          <InformationBox
-            text={textAlert}
-            closeBox={restart}
-            icon="exclamation"
-            color="red"
-          />
-        )}
-
-        {quizFinished && (
-          <QuestionFinished
-            percentage={((score / questions.length) * 100).toFixed(0)}
-            restart={restart}
-          />
-        )}
+        <div className="timer">
+          <p>{time}s</p>
+        </div>
 
         {questions.length > 0 && (
           <Question
@@ -152,6 +145,29 @@ const Quiz = () => {
           />
         )}
       </div>
+
+      {loading && <Loading />}
+
+      {informationAlert && (
+        <InformationBox
+          text={textAlert}
+          closeBox={restart}
+          icon="exclamation"
+          color="red"
+        />
+      )}
+      
+      {!quizFinished && incrementTime()}
+
+      {quizFinished && (
+        <QuestionFinished
+          percentage={((score / questions.length) * 100).toFixed(0)}
+          restart={restart}
+          score={score}
+          time={time}
+          themeId={themeId}
+        />
+      )}
     </div>
   );
 };

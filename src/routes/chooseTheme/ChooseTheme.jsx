@@ -8,6 +8,7 @@ const ChooseTheme = () => {
   const baseUrl = "/theme";
 
   function startQuiz(theme) {
+    localStorage.setItem("theme", JSON.stringify(theme));
     navigate(`/theme/quiz/${theme.id}`);
   }
 
