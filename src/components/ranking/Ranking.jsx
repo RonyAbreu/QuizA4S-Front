@@ -20,7 +20,7 @@ const Ranking = () => {
 
   useEffect(() => {
     setLoading(true);
-    const promisse = apiFetch.getPages(`/score/${themeId}}`);
+    const promisse = apiFetch.getPages(`/score/${themeId}`);
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);
@@ -51,50 +51,13 @@ const Ranking = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
-              <tr>
-                <td>Rony</td>
-                <td>700</td>
-              </tr>
+              {ranking &&
+                ranking.map((score) => (
+                  <tr key={score.id}>
+                    <td>{score.user.name}</td>
+                    <td>{score.result}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

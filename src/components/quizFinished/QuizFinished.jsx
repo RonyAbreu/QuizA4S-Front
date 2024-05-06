@@ -1,19 +1,53 @@
 import { useState } from "react";
 import Loading from "../loading/Loading";
 import Ranking from "../ranking/Ranking";
+import ConfirmBox from "../confirmBox/ConfirmBox";
 import "./QuizFinished.css";
+import { ApiFetch } from "../../util/ApiFetch";
 
-const QuizFinished = ({ percentage, restart, score, time, themeId }) => {
+const QuizFinished = ({ percentage, restart, score, time }) => {
+  const apiFetch = new ApiFetch();
+
   const [loading, setLoading] = useState(false);
-  const isAuth  = localStorage.getItem("token");
+  const [confirmBox, setConfirmBox] = useState(false);
+  const isAuth = localStorage.getItem("token");
 
   const [activeRanking, setActiveRanking] = useState(false);
 
-  function calculateResult(){
-    const hitValue = 80.4;
-    const reduceValue = 1.5;
-    const result = (score * hitValue) - (time * reduceValue)
-    return result.toFixed(1);
+  function calculateResult() {
+    const hitValue = 87.45;
+    const reduceValue = 1.56;
+    const result = score * hitValue - time * reduceValue;
+    return result.toFixed(2);
+  }
+
+  const { uuid: userId } = JSON.parse(localStorage.getItem("user"));
+  const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
+
+  const scoreRequest = {
+    numberOfHits: score,
+    totalTime: time,
+  };
+
+  function saveResult() {
+    setConfirmBox(false);
+
+    setLoading(true);
+    const promisse = apiFetch.post(`/score/${userId}/${themeId}`, scoreRequest);
+    promisse.then((response) => {
+      if (!response.success) {
+        setLoading(false);
+        console.log("Not Save");
+        return;
+      }
+
+      setLoading(false);
+      console.log("Save");
+    });
+
+    setTimeout(() => {
+      setActiveRanking(true);
+    }, 500);
   }
 
   return (
@@ -21,7 +55,11 @@ const QuizFinished = ({ percentage, restart, score, time, themeId }) => {
       <div className="quiz-finished">
         <h2 className="quiz-finished-title">Quiz Finalizado!</h2>
 
-        {isAuth && <p className="quiz-finished-point">Sua pontuação: {calculateResult()}</p>}
+        {isAuth && (
+          <p className="quiz-finished-point">
+            Sua pontuação: {calculateResult()}
+          </p>
+        )}
 
         {percentage >= 0 && percentage <= 30 && (
           <div className="quiz-finished-score">
@@ -62,7 +100,10 @@ const QuizFinished = ({ percentage, restart, score, time, themeId }) => {
             Voltar
           </button>
           {isAuth && (
-            <button onClick={() => setActiveRanking(true)} className="quiz-finished-btn">
+            <button
+              onClick={() => setConfirmBox(true)}
+              className="quiz-finished-btn"
+            >
               Ranking
             </button>
           )}
@@ -72,6 +113,19 @@ const QuizFinished = ({ percentage, restart, score, time, themeId }) => {
       {activeRanking && <Ranking />}
 
       {loading && <Loading />}
+
+      {confirmBox && (
+        <ConfirmBox
+          title="Deseja salvar sua pontuação?"
+          textBtn1="Sim"
+          textBtn2="Não"
+          onClickBtn1={saveResult}
+          onClickBtn2={() => {
+            setConfirmBox(false);
+            setActiveRanking(true);
+          }}
+        />
+      )}
     </div>
   );
 };

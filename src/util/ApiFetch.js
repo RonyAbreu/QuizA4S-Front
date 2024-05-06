@@ -147,4 +147,36 @@ export class ApiFetch {
 
     return { ...info };
   }
+
+  async post(basePath, postData) {
+    let info = {
+      message: "",
+      success: false,
+      data: {}
+    };
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      info.message = "Token inválido";
+      return info;
+    }
+
+    const response = await fetch(`${URL_BASE}${basePath}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(postData)
+    });
+
+    if ([403, 500].includes(response.status)) {
+      info.message = "Erro ao cadastrar pontuação!";
+      return info;
+    }
+
+    info = { ...info, message: "OK", success: true};
+
+    return { ...info };
+  }
 }

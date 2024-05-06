@@ -56,7 +56,12 @@ const Quiz = () => {
     getQuestionsByThemeId();
   }, []);
 
+  const [clickEnabled, setClickEnabled] = useState(true);
+
   function handleAnswerClick(event, alternativeId, questionId, creatorId) {
+
+    setClickEnabled(false);
+
     const isCorrect = isAlternativeCorrect(event);
     const alternatives = event.currentTarget.parentNode.childNodes;
 
@@ -84,6 +89,8 @@ const Quiz = () => {
     }
 
     setTimeout(() => {
+      setClickEnabled(true);
+
       if (currentQuestionIndex === questions.length - 1) {
         setQuizFinished(true);
         return;
@@ -139,7 +146,7 @@ const Quiz = () => {
             questionImg={questions[currentQuestionIndex].imageUrl}
             creatorId={questions[currentQuestionIndex].creatorId}
             alternatives={questions[currentQuestionIndex].alternatives}
-            onAnswerClick={handleAnswerClick}
+            onAnswerClick={clickEnabled ? handleAnswerClick : () => console.log()}
             currentQuestion={currentQuestionIndex + 1}
             lastQuestion={questions.length}
           />
@@ -165,7 +172,6 @@ const Quiz = () => {
           restart={restart}
           score={score}
           time={time}
-          themeId={themeId}
         />
       )}
     </div>
