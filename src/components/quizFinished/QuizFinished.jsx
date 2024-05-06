@@ -31,7 +31,7 @@ const QuizFinished = ({ percentage, restart }) => {
             </p>
           </div>
         )}
-        {percentage === 100 && (
+        {percentage == 100 && (
           <div className="quiz-finished-score">
             <span>{`${percentage}% de acertividade!`}</span>
             <p>
