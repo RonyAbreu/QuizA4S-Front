@@ -16,8 +16,8 @@ const QuizFinished = ({ percentage, restart, score, time }) => {
 
   function calculateResult() {
     const hitValue = 87.45;
-    const reduceValue = 1.56;
-    const result = score * hitValue - time * reduceValue;
+    const reduceValue = 1.46;
+    const result = (score * hitValue) - (time * reduceValue);
     return result.toFixed(2);
   }
 

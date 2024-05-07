@@ -180,4 +180,42 @@ export class ApiFetch {
 
     return { ...info };
   }
+
+  async get(basePath, messageNotFound) {
+    let info = {
+      message: "",
+      success: false,
+      data: [],
+    };
+
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${URL_BASE}${basePath}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+
+    if ([403, 500].includes(response.status)) {
+      info.message = "Erro ao buscar dados. Tente novamente!";
+      return info;
+    }
+
+    if (response.status === 404) {
+      info.message = messageNotFound;
+      return info;
+    }
+
+    const responseJson = await response.json();
+
+    info = {
+      ...info,
+      message: "OK",
+      success: true,
+      data: responseJson,
+    };
+
+    return { ...info };
+  }
+  
 }

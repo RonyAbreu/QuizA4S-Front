@@ -18,7 +18,7 @@ const Ranking = ({ themeId }) => {
 
   useEffect(() => {
     setLoading(true);
-    const promisse = apiFetch.getPages(
+    const promisse = apiFetch.get(
       `/score/${themeId}`,
       "Nenhuma pontuação cadastrada"
     );
@@ -52,13 +52,12 @@ const Ranking = ({ themeId }) => {
               </tr>
             </thead>
             <tbody>
-              {ranking &&
-                ranking.map((score) => (
-                  <tr key={score.id}>
-                    <td>{score.user.name}</td>
-                    <td>{score.result}</td>
-                  </tr>
-                ))}
+              {ranking && ranking.map((score) => (
+                <tr key={score.id}>
+                  <td>{score.user.name}</td>
+                  <td>{score.result}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
