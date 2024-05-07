@@ -7,75 +7,77 @@
   justify-content: center;
   top: 0;
   left: 0;
-  background-color: #ffffff89;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 10;
 }
 
-.confirm-box{
-    width: 400px;
-    height: 250px;
-    background-color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    border-radius: 15px;
+.confirm-box {
+  width: 400px;
+  height: 250px;
+  background: linear-gradient(145deg, #0099ff, #0055cc);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
 }
 
-.confirm-box-title{
-    max-width: 90%;
-    word-wrap: break-word;
-    color: #000;
-    text-align: center;
+.confirm-box-title {
+  max-width: 90%;
+  word-wrap: break-word;
+  color: #fff;
+  text-align: center;
 }
 
-.confirm-box-buttons{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1em;
+.confirm-box-buttons {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
 }
 
-.confirm-box-buttons button{
-    width: 40%;
-    height: 35px;
-    font-size: 1em;
-    font-weight: bold;
-    word-wrap: break-word;
-    color: #fff;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: .3s ease-in-out;
+.confirm-box-buttons button {
+  width: 40%;
+  height: 35px;
+  font-size: 1em;
+  font-weight: bold;
+  word-wrap: break-word;
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
 }
 
-.bi-question-circle{
-    font-size: 45px;
+.bi-question-circle {
+  font-size: 45px;
+  color: #fff;
 }
 
-.confirm-box-buttons button:nth-child(1){
-    background-color: rgb(0, 170, 20);
+.confirm-box-buttons button:nth-child(1) {
+  background-color: #00aa14;
 }
 
-.confirm-box-buttons button:nth-child(1):hover{
-    background-color: rgba(0, 170, 20, 0.486);
+.confirm-box-buttons button:nth-child(1):hover {
+  background-color: rgba(0, 170, 20, 0.7);
 }
 
-.confirm-box-buttons button:nth-child(2){
-    background-color: red;
+.confirm-box-buttons button:nth-child(2) {
+  background-color: #ff0000;
 }
 
-.confirm-box-buttons button:nth-child(2):hover{
-    background-color: rgba(255, 0, 0, 0.507);
+.confirm-box-buttons button:nth-child(2):hover {
+  background-color: rgba(255, 0, 0, 0.7);
 }
 
-@media(max-width: 450px){
-    .confirm-box{
-        width: 90%;
-    }
+@media (max-width: 450px) {
+  .confirm-box {
+    width: 90%;
+  }
 
-    .confirm-box-title{
-        font-size: 1.4em;
-    }
+  .confirm-box-title {
+    font-size: 1.4em;
+  }
 }

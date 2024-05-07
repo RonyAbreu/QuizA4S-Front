@@ -36,7 +36,8 @@ const Register = () => {
       buttonText="Criar conta"
       redirectText="Já possui uma conta? Clique aqui!"
       redirectLink="/login"
-      onSubmit={{ url: "/user/register", fields }}
+      fields={fields}
+      baseUrl="/user/register"
     />
   );
 };

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { URL_BASE } from "../../App";
+import { DEFAULT_IMG } from "../../App";
 import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
 
@@ -137,9 +138,29 @@ const CreateQuestions = () => {
     });
   };
 
+  const { name: themeName, imageUrl: themeUrl } = JSON.parse(
+    localStorage.getItem("theme")
+  );
+
   return (
     <div className="container-create-questions">
-      <h2 className="create-questions-title">Crie as Questões do seu Quiz</h2>
+      <div className="container-create-questions-header">
+        <div className="container-create-theme-info">
+          <img
+            src={themeUrl == null || themeUrl == "" ? DEFAULT_IMG : themeUrl}
+            alt="image-theme"
+            loading="lazy"
+          />
+          <span>{themeName}</span>
+        </div>
+        <div className="container-question-info">
+          <p>Crie no mínimo 5 questões para o seu Quiz</p>
+          <h2 className="create-questions-title">
+            Crie as Questões do seu Quiz
+          </h2>
+        </div>
+      </div>
+
       <form onSubmit={handleSubmit} className="create-questions-form" id="form">
         <div className="container-question">
           <label className="data-question">
@@ -149,6 +170,7 @@ const CreateQuestions = () => {
               placeholder="Insira o título da questão"
               value={question.title}
               onChange={(e) => changeQuestion("title", e.target.value)}
+              maxLength={170}
               required
             ></textarea>
           </label>
@@ -161,6 +183,7 @@ const CreateQuestions = () => {
               placeholder="Insira a url da imagem"
               value={question.imageUrl}
               onChange={(e) => changeQuestion("imageUrl", e.target.value)}
+              maxLength={255}
             />
           </label>
         </div>
@@ -178,6 +201,7 @@ const CreateQuestions = () => {
                     changeAlternative(index, "text", e.target.value)
                   }
                   className="input-alternative-text"
+                  maxLength={100}
                   required
                 ></textarea>
                 <input

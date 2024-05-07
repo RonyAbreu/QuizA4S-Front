@@ -1,11 +1,11 @@
 .container-create-quiz {
   width: 100%;
   height: 100%;
-  min-height: 90vh;
+  min-height: 100vh;
   display: flex;
   align-items: start;
   justify-content: center;
-  background-image: url("../../assets//background-create-quiz.jpg");
+  background: linear-gradient(145deg, #0099ff, #0055cc);
   background-size: cover;
   margin-top: -2em;
 }
@@ -24,7 +24,7 @@
 
 .container-create-header{
   text-align: center;
-  margin-bottom: 150px;
+  margin-bottom: 120px;
 }
 
 .container-create-header h2{
@@ -46,37 +46,29 @@
 }
 
 .create-btn{
-  width: 50%;
-  height: 300px;
   text-align: center;
-  border-radius: 15px;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.3);
   padding: 5px 10px;
   cursor: pointer;
   transition: all .2s ease-in-out;
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: .5em;
+}
+
+.create-btn h2{
+  color: #fff;
+}
+
+.create-btn img{
+  border-radius: 15px;
 }
 
 .create-btn:hover{
   transform: scale(1.1);
 }
 
-.create-btn:nth-child(1){
-  background-image: url("../../assets/create-theme-btn.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
-.create-btn:nth-child(2){
-  background-image: url("../../assets/select-theme-btn.jpg");
-  background-size: cover;
-  background-position: center;
-}
-
-.create-btn h2{
-  margin-top: -2em;
-  color: #fff;
-}
 
 @media(max-width: 850px){
   .container-create{
@@ -88,11 +80,11 @@
   }
 
   .container-create-buttons{
-    gap: 0;
+    gap: .5em;
     width: 100%;
   }
 
-  .create-btn{
+  .create-btn img{
     width: 250px;
     height: 250px;
   }
@@ -107,6 +99,11 @@
     padding: 15px;
   }
 
+  .container-create-buttons{
+    justify-content: center;
+    gap: 0em;
+  }
+
   .container-create-header{
     margin-bottom: 120px;
   }
@@ -115,9 +112,10 @@
     font-size: 1.9em;
   }
 
-  .create-btn{
-    width: 200px;
-    height: 200px;
+
+  .create-btn img{
+    width: 220px;
+    height: 220px;
   }
 
   .create-btn:nth-child(2) h2{
@@ -136,7 +134,7 @@
 
   .container-create-buttons{
     flex-direction: column;
-    gap: 65px;
+    gap: 50px;
   }
 }
 

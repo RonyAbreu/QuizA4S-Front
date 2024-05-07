@@ -74,12 +74,16 @@ const MyQuestion = () => {
       type: "text",
       placeholder: "Digite o título da questão",
       value: newQuestion.title,
+      maxLength: 170,
+      minLength: 4,
     },
     {
       label: "URL da Imagem",
       type: "text",
       placeholder: "Digite a url da imagem",
       value: newQuestion.imageUrl,
+      maxLength: 255,
+      minLength: 0,
     },
   ];
 
@@ -173,8 +177,7 @@ const MyQuestion = () => {
       <div className="my-question">
         <div className="my-question-header">
           <div className="theme-info">
-            <p>Tema:</p>
-            <img src={themeUrl} alt="image-theme" loading="lazy"/>
+            <img src={themeUrl == null || themeUrl == "" ? DEFAULT_IMG : themeUrl} alt="image-theme" loading="lazy"/>
             <span>{themeName}</span>
           </div>
 

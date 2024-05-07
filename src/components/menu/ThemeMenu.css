@@ -1,18 +1,18 @@
-.theme-menu{
+.theme-menu {
     width: 100%;
     height: 100%;
-    background-color: rgba(240, 248, 255, 0.56);
+    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     top: 0%;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.form-menu{
+  }
+  
+  .form-menu {
     width: 400px;
-    background-color: #3498db;
+    background: linear-gradient(145deg, #0099ff, #0055cc);
     padding: 30px;
     display: flex;
     flex-direction: column;
@@ -20,79 +20,79 @@
     align-items: center;
     justify-content: center;
     border-radius: 10px;
-    box-shadow: 0px 0px 5px black;
-}
-
-.theme-menu-close{
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .theme-menu-close {
     width: 100%;
     display: flex;
-    justify-content: end;
-}
-
-.theme-menu-close i{
+    justify-content: flex-end;
+  }
+  
+  .theme-menu-close i {
     font-size: 2em;
     margin-top: -10px;
-    color: white;
+    color: #fff;
     cursor: pointer;
-    transition: all .2s ease-in-out;
-}
-
-.theme-menu-close i:hover{
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .theme-menu-close i:hover {
     color: red;
-}
-
-.theme-menu-title{
+  }
+  
+  .theme-menu-title {
     font-size: 2.1em;
     color: #fff;
-    margin-bottom: .4em;
-}
-
-.theme-menu-input{
+    margin-bottom: 0.4em;
+  }
+  
+  .theme-menu-input {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: .3em;
-}
-
-.theme-menu-input span{
+    gap: 0.3em;
+  }
+  
+  .theme-menu-input p {
     font-size: 1.2em;
     color: #fff;
-}
-
-.theme-menu-input input{
+  }
+  
+  .theme-menu-input input {
     height: 35px;
     padding: 5px;
-    font-size: .9em;
+    font-size: 0.9em;
     border-radius: 5px;
-    border: 2px solid #3498db;
+    border: 2px solid #0099ff;
     outline: none;
-}
-
-.theme-menu-input input:focus{
+  }
+  
+  .theme-menu-input input:focus {
     border: 2px solid blue;
-}
-
-.theme-menu-btn{
+  }
+  
+  .theme-menu-btn {
     width: 100%;
     margin-top: 1em;
     height: 40px;
     border-radius: 50px;
-    border: 2px solid #3498db;
+    border: 2px solid #0099ff;
     font-size: 1.2em;
     font-weight: bold;
     color: #fff;
-    background-color: rgb(42, 45, 252);
+    background-color: #0055cc;
     cursor: pointer;
-    transition: all .2s ease-in-out;
-}
-
-.theme-menu-btn:hover{
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .theme-menu-btn:hover {
     background-color: #fff;
-    color: #3498db;
-}
-
-@media(max-width: 450px){
-    .form-menu{
-        width: 90%;
+    color: #0055cc;
+  }
+  
+  @media (max-width: 450px) {
+    .form-menu {
+      width: 90%;
     }
-}
+  }

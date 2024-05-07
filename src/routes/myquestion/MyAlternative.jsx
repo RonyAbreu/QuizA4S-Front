@@ -24,6 +24,8 @@ const MyAlternative = ({ alternatives, setShowAlternatives, setCallBack }) => {
       type: "text",
       placeholder: "Digite sua resposta",
       value: newResponse,
+      maxLength: 100,
+      minLength: 1,
     },
   ];
 

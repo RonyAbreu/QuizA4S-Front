@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Question from "../../components/question/Question";
 import InformationBox from "../../components/informationBox/InformationBox";
 import Loading from "../../components/loading/Loading";
 import { ApiFetch } from "../../util/ApiFetch";
 import { URL_BASE } from "../../App";
+import QuestionFinished from "../../components/quizFinished/QuizFinished";
 
 //Css
 import "./Quiz.css";
@@ -12,23 +13,24 @@ import "./Quiz.css";
 const Quiz = () => {
   const apiFetch = new ApiFetch();
 
-  const path = useLocation().pathname;
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
-  const [informationBox, setInformationBox] = useState(false);
 
   const [informationAlert, setInformationAlert] = useState(false);
+  const [textAlert, setTextAlert] = useState("");
 
   const navigate = useNavigate();
 
   const user = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    let themeId = path.substring("/theme/quiz/".length);
+  const [quizFinished, setQuizFinished] = useState(false);
 
+  const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
+
+  useEffect(() => {
     async function getQuestionsByThemeId() {
       const url = `${URL_BASE}/question/quiz/${themeId}`;
 
@@ -36,6 +38,7 @@ const Quiz = () => {
       const response = await fetch(url);
 
       if (response.status === 404) {
+        setTextAlert("Nenhuma questão cadastrada");
         setInformationAlert(true);
       }
 
@@ -43,32 +46,57 @@ const Quiz = () => {
       setLoading(false);
 
       setQuestions(questionsJson);
+
+      if (questionsJson.length < 5) {
+        setTextAlert("Cadastre no mínimo 5 questões para jogar esse quiz");
+        setInformationAlert(true);
+      }
     }
 
     getQuestionsByThemeId();
   }, []);
 
+  const [clickEnabled, setClickEnabled] = useState(true);
+
   function handleAnswerClick(event, alternativeId, questionId, creatorId) {
-    const alternatives = document.querySelectorAll("li");
+    setClickEnabled(false);
+
+    const isCorrect = isAlternativeCorrect(event);
+    const alternatives = event.currentTarget.parentNode.childNodes;
+
+    const green = "#5bcebf";
+    const red = "#d9434f";
+    const white = "#fff";
 
     alternatives.forEach((alt) => {
-      if (alt.getAttribute("value") === "true")
-        alt.style.backgroundColor = "#5bcebf";
-      else alt.style.backgroundColor = "#d9434f";
+      alt.classList.remove("correct-answer", "wrong-answer");
+
+      if (alt.getAttribute("value") === "true") {
+        alt.style.backgroundColor = green;
+        alt.style.color = white;
+      } else {
+        alt.style.backgroundColor = red;
+        alt.style.color = white;
+      }
     });
 
+    if (isCorrect) {
+      event.currentTarget.classList.add("correct-answer");
+      setScore(score + 1);
+    } else {
+      event.currentTarget.classList.add("wrong-answer");
+    }
+
     setTimeout(() => {
-      if (isAlternativeCorrect(event)) {
-        setScore(score + 1);
-      }
+      setClickEnabled(true);
 
       if (currentQuestionIndex === questions.length - 1) {
-        setInformationBox(true);
+        setQuizFinished(true);
         return;
       }
 
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-    }, 500);
+    }, 1500);
 
     if (token && user.uuid !== creatorId) {
       postResponse(user.uuid, questionId, alternativeId);
@@ -76,7 +104,7 @@ const Quiz = () => {
   }
 
   function isAlternativeCorrect(event) {
-    return event.target.getAttribute("value") === "true";
+    return event.currentTarget.getAttribute("value") === "true";
   }
 
   function postResponse(uuid, questionId, alternativeId) {
@@ -95,28 +123,20 @@ const Quiz = () => {
     navigate("/theme");
   }
 
+  const [time, setTime] = useState(0);
+
+  function incrementTime() {
+    setTimeout(() => {
+      setTime(time + 1);
+    }, 1000);
+  }
+
   return (
     <div className="container-quiz-external">
       <div className="container-quiz">
-        {loading && <Loading />}
-
-        {informationBox && (
-          <InformationBox
-            text={`Você acertou ${score} de ${questions.length} questões!`}
-            closeBox={restart}
-            icon="check"
-            color="green"
-          />
-        )}
-
-        {informationAlert && (
-          <InformationBox
-            text="Nenhuma questão cadastrada!"
-            closeBox={() => navigate("/theme")}
-            icon="exclamation"
-            color="red"
-          />
-        )}
+        <div className="timer">
+          <p>{time}s</p>
+        </div>
 
         {questions.length > 0 && (
           <Question
@@ -125,12 +145,36 @@ const Quiz = () => {
             questionImg={questions[currentQuestionIndex].imageUrl}
             creatorId={questions[currentQuestionIndex].creatorId}
             alternatives={questions[currentQuestionIndex].alternatives}
-            onAnswerClick={handleAnswerClick}
+            onAnswerClick={
+              clickEnabled ? handleAnswerClick : () => console.log()
+            }
             currentQuestion={currentQuestionIndex + 1}
             lastQuestion={questions.length}
           />
         )}
       </div>
+
+      {loading && <Loading />}
+
+      {informationAlert && (
+        <InformationBox
+          text={textAlert}
+          closeBox={restart}
+          icon="exclamation"
+          color="red"
+        />
+      )}
+      
+      {!quizFinished && incrementTime()}
+
+      {quizFinished && (
+        <QuestionFinished
+          percentage={((score / questions.length) * 100).toFixed(0)}
+          restart={restart}
+          score={score}
+          time={time}
+        />
+      )}
     </div>
   );
 };

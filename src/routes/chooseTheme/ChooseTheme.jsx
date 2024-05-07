@@ -1,4 +1,3 @@
-import { useState } from "react";
 import ThemeTemplate from "../../components/themeTemplate/ThemeTemplate";
 
 import { useNavigate } from "react-router-dom";
@@ -6,14 +5,15 @@ import { useNavigate } from "react-router-dom";
 const ChooseTheme = () => {
   const navigate = useNavigate();
 
-  const [baseUrl, setBaseUrl] = useState("/theme")
+  const baseUrl = "/theme";
 
   function startQuiz(theme) {
+    localStorage.setItem("theme", JSON.stringify(theme));
     navigate(`/theme/quiz/${theme.id}`);
   }
 
   return (
-    <ThemeTemplate baseUrl={baseUrl} setBaseUrl={setBaseUrl} onClickFunction={startQuiz} />
+    <ThemeTemplate baseUrl={baseUrl} onClickFunction={startQuiz} />
   );
 };
 

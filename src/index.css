@@ -2,12 +2,21 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   list-style: none;
 }
 
 body{
-  background-image: url("./assets/background-quiz.jpg");
+  background-image: url("./assets/background-quiz.webp");
   background-size: cover;
   background-position: center;
+}
+
+.span-error-message{
+  max-width: 100%;
+  word-wrap: break-word;
+  text-align: left;
+  font-size: .9em;
+  color: rgb(194, 0, 0);
+  font-weight: bold;
 }

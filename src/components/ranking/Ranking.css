@@ -1,0 +1,128 @@
+.container-ranking {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+.ranking {
+  width: 500px;
+  height: 600px;
+  background: linear-gradient(145deg, #0099ff, #0055cc);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2em;
+}
+
+.ranking-header{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.2em;
+}
+
+.ranking-header h2{
+  font-size: 2.2em;
+  color: #fff;
+}
+
+.ranking-header p{
+  color: #fff;
+  background-color: #0055cc;
+  padding: 2px 10px;
+  border-radius: 5px;
+  font-size: 1.1em;
+}
+
+.table-ranking {
+  width: 100%;
+  overflow-y: auto;
+  border-radius: 15px;
+}
+
+.table-ranking table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #001635;
+}
+
+.table-ranking td{
+  font-size: 1.1em;
+}
+
+.table-ranking th:first-child{
+  width: 80%;
+  text-align: left;
+}
+
+.table-ranking th:last-child{
+  width: 20%;
+  border: none;
+}
+
+.table-ranking td:first-child{
+  text-align: left;
+}
+
+.table-ranking td:last-child{
+  text-align: center;
+  border: none;
+}
+
+.table-ranking th,
+.table-ranking td {
+  border-right: 1px solid #001635;
+  padding: 10px;
+}
+
+.table-ranking th {
+  background-color: #fff;
+}
+
+.table-ranking tr:nth-child(even) {
+  background-color: #eee;
+}
+
+.table-ranking tr:nth-child(odd) {
+  background-color: #dbdbdb;
+}
+
+.ranking button{
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
+  background-color: #fff;
+  font-size: 1em;
+  cursor: pointer;
+  font-weight: bold;
+  color: #0099ff;
+  transition: 0.3s ease-in-out;
+}
+
+.ranking button:hover{
+  background-color: #f0f0f0de;
+}
+
+@media(max-width: 550px){
+  .ranking {
+    width: 95%;
+  }
+
+  .table-ranking td{
+    font-size: 1em;
+  }
+}

@@ -24,7 +24,6 @@ const MyTheme = () => {
     setThemeName(propsThemeName);
   }
 
-
   useEffect(() => {
     setLoading(true);
     const promisse = apiFetch.getPages(
@@ -55,7 +54,7 @@ const MyTheme = () => {
         onSearch={changeName}
       />
 
-      <Theme themes={themes} setCurrentPage={setCurrentPage} setCallBack={setCallBack}/>
+      <Theme themes={themes} setThemes={setThemes} setCurrentPage={setCurrentPage} setCallBack={setCallBack}/>
 
       {!loading && themes.length == 0 && (
         <NotFoundComponent title="Tema não encontrado"/>

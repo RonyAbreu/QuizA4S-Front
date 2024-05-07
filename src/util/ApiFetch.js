@@ -147,4 +147,75 @@ export class ApiFetch {
 
     return { ...info };
   }
+
+  async post(basePath, postData) {
+    let info = {
+      message: "",
+      success: false,
+      data: {}
+    };
+
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      info.message = "Token inválido";
+      return info;
+    }
+
+    const response = await fetch(`${URL_BASE}${basePath}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+      body: JSON.stringify(postData)
+    });
+
+    if ([403, 500].includes(response.status)) {
+      info.message = "Erro ao cadastrar pontuação!";
+      return info;
+    }
+
+    info = { ...info, message: "OK", success: true};
+
+    return { ...info };
+  }
+
+  async get(basePath, messageNotFound) {
+    let info = {
+      message: "",
+      success: false,
+      data: [],
+    };
+
+    const token = localStorage.getItem("token");
+
+    const response = await fetch(`${URL_BASE}${basePath}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+
+    if ([403, 500].includes(response.status)) {
+      info.message = "Erro ao buscar dados. Tente novamente!";
+      return info;
+    }
+
+    if (response.status === 404) {
+      info.message = messageNotFound;
+      return info;
+    }
+
+    const responseJson = await response.json();
+
+    info = {
+      ...info,
+      message: "OK",
+      success: true,
+      data: responseJson,
+    };
+
+    return { ...info };
+  }
+  
 }

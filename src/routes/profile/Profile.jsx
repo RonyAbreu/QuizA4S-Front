@@ -57,6 +57,8 @@ const Profile = () => {
         type: "text",
         placeholder: "Digite seu novo nome",
         value: newName,
+        maxLength: 30,
+        minLength: 3,
       },
     ],
   };

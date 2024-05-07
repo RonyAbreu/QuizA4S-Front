@@ -8,6 +8,8 @@ import "./UpdateBox.css";
     type: "text",
     placeholder: "Digite seu nome",
     value: "Valor do input",
+    maxLength: 10,
+    minLength: 3,
   },
 ];
 */
@@ -25,6 +27,8 @@ const UpdateBox = ({ title, inputs, onChange, onClickSave, onClickCancel }) => {
                 placeholder={input.placeholder}
                 value={input.value}
                 onChange={(e) => onChange(e.target.value, input.label)}
+                maxLength={input.maxLength}
+                minLength={input.minLength}
               />
             </label>
           ))}
