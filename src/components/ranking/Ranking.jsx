@@ -5,14 +5,12 @@ import { ApiFetch } from "./../../util/ApiFetch";
 
 import "./Ranking.css";
 
-const Ranking = () => {
+const Ranking = ({ themeId }) => {
   const apiFetch = new ApiFetch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const { id: themeId, name: themeName } = JSON.parse(
-    localStorage.getItem("theme")
-  );
+  const { name: themeName } = JSON.parse(localStorage.getItem("theme"));
 
   const [ranking, setRanking] = useState([]);
 
@@ -20,7 +18,10 @@ const Ranking = () => {
 
   useEffect(() => {
     setLoading(true);
-    const promisse = apiFetch.getPages(`/score/${themeId}`);
+    const promisse = apiFetch.getPages(
+      `/score/${themeId}`,
+      "Nenhuma pontuação cadastrada"
+    );
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);
@@ -35,7 +36,7 @@ const Ranking = () => {
 
   return (
     <div className="container-ranking">
-      <did className="ranking">
+      <div className="ranking">
         <div className="ranking-header">
           <h2>Ranking</h2>
 
@@ -62,12 +63,12 @@ const Ranking = () => {
           </table>
         </div>
 
-        {/* {isNotFound && <h2>Nenhuma pontuação cadastrada</h2>} */}
+        {isNotFound && <h2>Nenhuma pontuação cadastrada</h2>}
 
         <button type="button" onClick={() => navigate("/theme")}>
           Voltar
         </button>
-      </did>
+      </div>
       {loading && <Loading />}
     </div>
   );

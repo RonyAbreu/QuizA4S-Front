@@ -37,17 +37,15 @@ const QuizFinished = ({ percentage, restart, score, time }) => {
     promisse.then((response) => {
       if (!response.success) {
         setLoading(false);
+        setActiveRanking(true);
         console.log("Not Save");
         return;
       }
 
       setLoading(false);
+      setActiveRanking(true);
       console.log("Save");
     });
-
-    setTimeout(() => {
-      setActiveRanking(true);
-    }, 500);
   }
 
   return (
@@ -110,7 +108,7 @@ const QuizFinished = ({ percentage, restart, score, time }) => {
         </div>
       </div>
 
-      {activeRanking && <Ranking />}
+      {activeRanking && <Ranking themeId={themeId}/>}
 
       {loading && <Loading />}
 

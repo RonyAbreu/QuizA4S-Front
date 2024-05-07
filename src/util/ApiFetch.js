@@ -165,7 +165,8 @@ export class ApiFetch {
     const response = await fetch(`${URL_BASE}${basePath}`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
       },
       body: JSON.stringify(postData)
     });
