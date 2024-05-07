@@ -12,7 +12,7 @@ import "./Quiz.css";
 
 const Quiz = () => {
   const apiFetch = new ApiFetch();
-  
+
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -28,7 +28,7 @@ const Quiz = () => {
 
   const [quizFinished, setQuizFinished] = useState(false);
 
-  const {id : themeId} = JSON.parse(localStorage.getItem("theme"));
+  const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
 
   useEffect(() => {
     async function getQuestionsByThemeId() {
@@ -59,7 +59,6 @@ const Quiz = () => {
   const [clickEnabled, setClickEnabled] = useState(true);
 
   function handleAnswerClick(event, alternativeId, questionId, creatorId) {
-
     setClickEnabled(false);
 
     const isCorrect = isAlternativeCorrect(event);
@@ -126,7 +125,7 @@ const Quiz = () => {
 
   const [time, setTime] = useState(0);
 
-  function incrementTime(){
+  function incrementTime() {
     setTimeout(() => {
       setTime(time + 1);
     }, 1000);
@@ -146,7 +145,9 @@ const Quiz = () => {
             questionImg={questions[currentQuestionIndex].imageUrl}
             creatorId={questions[currentQuestionIndex].creatorId}
             alternatives={questions[currentQuestionIndex].alternatives}
-            onAnswerClick={clickEnabled ? handleAnswerClick : () => console.log()}
+            onAnswerClick={
+              clickEnabled ? handleAnswerClick : () => console.log()
+            }
             currentQuestion={currentQuestionIndex + 1}
             lastQuestion={questions.length}
           />

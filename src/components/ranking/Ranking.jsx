@@ -5,7 +5,7 @@ import { ApiFetch } from "./../../util/ApiFetch";
 
 import "./Ranking.css";
 
-const Ranking = ({ themeId }) => {
+const Ranking = () => {
   const apiFetch = new ApiFetch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -18,6 +18,9 @@ const Ranking = ({ themeId }) => {
 
   useEffect(() => {
     setLoading(true);
+
+    const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
+
     const promisse = apiFetch.get(
       `/score/${themeId}`,
       "Nenhuma pontuação cadastrada"

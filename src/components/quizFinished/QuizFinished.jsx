@@ -15,14 +15,12 @@ const QuizFinished = ({ percentage, restart, score, time }) => {
   const [activeRanking, setActiveRanking] = useState(false);
 
   function calculateResult() {
-    const hitValue = 87.45;
-    const reduceValue = 1.46;
+    const hitValue = 97.45;
+    const reduceValue = 1.26;
     const result = (score * hitValue) - (time * reduceValue);
+    if(result < 0) return 0.0;
     return result.toFixed(2);
   }
-
-  const { uuid: userId } = JSON.parse(localStorage.getItem("user"));
-  const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
 
   const scoreRequest = {
     numberOfHits: score,
@@ -30,6 +28,9 @@ const QuizFinished = ({ percentage, restart, score, time }) => {
   };
 
   function saveResult() {
+    const { uuid: userId } = JSON.parse(localStorage.getItem("user"));
+    const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
+
     setConfirmBox(false);
 
     setLoading(true);
@@ -108,7 +109,7 @@ const QuizFinished = ({ percentage, restart, score, time }) => {
         </div>
       </div>
 
-      {activeRanking && <Ranking themeId={themeId}/>}
+      {activeRanking && <Ranking />}
 
       {loading && <Loading />}
 
