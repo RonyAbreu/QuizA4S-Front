@@ -1,16 +1,17 @@
 import { useState } from "react";
 import ConfirmBox from "../confirmBox/ConfirmBox";
 import UpdateBox from "../updateBox/UpdateBox";
-import { ApiFetch } from "../../util/ApiFetch";
 import Loading from "../loading/Loading";
 import InformationBox from "../informationBox/InformationBox";
 import { DEFAULT_IMG } from "../../App";
+import { useNavigate } from "react-router-dom";
+import { ThemeService } from "../../service/ThemeService";
 
 import "./Theme.css";
-import { useNavigate } from "react-router-dom";
 
 const Theme = ({ themes, setThemes, setCurrentPage, setCallBack }) => {
-  const apiFetch = new ApiFetch();
+
+  const themeService = new ThemeService();
 
   const navigate = useNavigate();
 
@@ -63,24 +64,20 @@ const Theme = ({ themes, setThemes, setCurrentPage, setCallBack }) => {
     setUpdateBox(true);
   }
 
-  function removeTheme() {
+  async function removeTheme() {
     setLoading(true);
+    const response = await themeService.removeTheme(themeId);
+    setLoading(false);
 
-    const promisse = apiFetch.delete(`/theme/${themeId}`, false);
+    if (!response.success) {
+      activeInformationBox(true, response.message);
+      return;
+    }
 
-    promisse.then((response) => {
-      if (!response.removed) {
-        activeInformationBox(true, response.message);
-        setLoading(false);
-        return;
-      }
-
-      setLoading(false);
-      setThemes(themes.filter((theme) => themeId !== theme.id))
-      setCurrentPage(0);
-      activeInformationBox(false, "Tema removido com sucesso!");
-      setConfirmBox(false);
-    });
+    setThemes(themes.filter((theme) => themeId !== theme.id))
+    setCurrentPage(0);
+    activeInformationBox(false, "Tema removido com sucesso!");
+    setConfirmBox(false);
   }
 
   const newTheme = {
@@ -88,22 +85,19 @@ const Theme = ({ themes, setThemes, setCurrentPage, setCallBack }) => {
     imageUrl: newUrl,
   };
 
-  function updateTheme() {
+  async function updateTheme() {
     setLoading(true);
-    const promisse = apiFetch.patch(`/theme/${themeId}`, newTheme);
+    const response = await themeService.updateTheme(themeId, newTheme);
+    setLoading(false);
 
-    promisse.then((response) => {
-      if (!response.success) {
-        activeInformationBox(true, response.message);
-        setLoading(false);
-        return;
-      }
+    if (!response.success) {
+      activeInformationBox(true, response.message);
+      return;
+    }
 
-      setLoading(false);
-      activeInformationBox(false, "Tema atualizado com sucesso");
-      setCallBack({});
-      setUpdateBox(false);
-    });
+    activeInformationBox(false, "Tema atualizado com sucesso");
+    setCallBack({});
+    setUpdateBox(false);
   }
 
   function activeInformationBox(isFail, message) {

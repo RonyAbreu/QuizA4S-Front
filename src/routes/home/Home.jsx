@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
+import qrCode from "../../assets/qr-code.png";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -18,6 +19,11 @@ const Home = () => {
         <button className="home-button" type="button" onClick={handleNavigate}>
           Jogar
         </button>
+        
+        <div className="qr-code">
+          <h3>Acesse o site pelo QR-Code abaixo</h3>
+          <img src={qrCode} alt="qr-code" width={120} height={120} />
+        </div>
       </div>
     </div>
   );

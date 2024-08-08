@@ -66,3 +66,17 @@
 .table-body tr:nth-child(odd) {
   background-color: #309dcb;
 }
+
+.correct-response,
+.fail-response {
+  font-size: 1.6em;
+}
+
+.correct-response {
+  color: rgb(53, 255, 53);
+}
+
+
+.fail-response {
+  color: rgb(255, 0, 0);
+}

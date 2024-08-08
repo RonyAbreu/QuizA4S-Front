@@ -42,7 +42,8 @@ jobs:
         key: ${{ secrets.SSH_SECRET_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
-          cd Quiz-A4S
-          docker rm -f container-front-quiz
-          docker pull a4sufpb/frontend-quiz
+          cd /
+          cd /docker/quizapp
+          docker rm -f quiz-front
+          docker rmi a4sufpb/frontend-quiz
           docker compose up -d

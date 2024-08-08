@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import Loading from "../loading/Loading";
 import { useEffect, useState } from "react";
-import { ApiFetch } from "./../../util/ApiFetch";
+import { ScoreService } from "./../../service/ScoreService";
 
 import "./Ranking.css";
 
 const Ranking = () => {
-  const apiFetch = new ApiFetch();
+  const scoreService = new ScoreService();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -17,24 +17,21 @@ const Ranking = () => {
   const [isNotFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
+    async function fetchData() {
+      const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
 
-    const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
+      setLoading(true);
+      const response = await scoreService.findRankingByTheme(themeId);
+      setLoading(false);
 
-    const promisse = apiFetch.get(
-      `/score/${themeId}`,
-      "Nenhuma pontuação cadastrada"
-    );
-    promisse.then((response) => {
       if (!response.success) {
-        setLoading(false);
         setNotFound(true);
         return;
       }
 
-      setLoading(false);
       setRanking(response.data);
-    });
+    }
+    fetchData();
   }, []);
 
   return (
@@ -55,12 +52,13 @@ const Ranking = () => {
               </tr>
             </thead>
             <tbody>
-              {ranking && ranking.map((score) => (
-                <tr key={score.id}>
-                  <td>{score.user.name}</td>
-                  <td>{score.result}</td>
-                </tr>
-              ))}
+              {ranking &&
+                ranking.map((score) => (
+                  <tr key={score.id}>
+                    <td>{score.user.name}</td>
+                    <td>{score.result}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

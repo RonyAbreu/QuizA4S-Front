@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthenticationContext } from "../../context/AutenticationContext";
+import { AuthenticationContext } from "../../context/AuthenticationContext";
 import { useNavigate } from "react-router-dom";
 
 import "./Menu.css";

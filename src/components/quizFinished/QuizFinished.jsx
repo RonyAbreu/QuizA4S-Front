@@ -3,10 +3,11 @@ import Loading from "../loading/Loading";
 import Ranking from "../ranking/Ranking";
 import ConfirmBox from "../confirmBox/ConfirmBox";
 import "./QuizFinished.css";
-import { ApiFetch } from "../../util/ApiFetch";
+import { ScoreService } from './../../service/ScoreService';
 
 const QuizFinished = ({ percentage, restart, score, time }) => {
-  const apiFetch = new ApiFetch();
+
+  const scoreService = new ScoreService();
 
   const [loading, setLoading] = useState(false);
   const [confirmBox, setConfirmBox] = useState(false);
@@ -34,19 +35,9 @@ const QuizFinished = ({ percentage, restart, score, time }) => {
     setConfirmBox(false);
 
     setLoading(true);
-    const promisse = apiFetch.post(`/score/${userId}/${themeId}`, scoreRequest);
-    promisse.then((response) => {
-      if (!response.success) {
-        setLoading(false);
-        setActiveRanking(true);
-        console.log("Not Save");
-        return;
-      }
-
-      setLoading(false);
-      setActiveRanking(true);
-      console.log("Save");
-    });
+    scoreService.insertScore(scoreRequest, userId, themeId);
+    setLoading(false);
+    setActiveRanking(true);
   }
 
   return (

@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Question from "../../components/question/Question";
 import InformationBox from "../../components/informationBox/InformationBox";
 import Loading from "../../components/loading/Loading";
-import { ApiFetch } from "../../util/ApiFetch";
-import { URL_BASE } from "../../App";
 import QuestionFinished from "../../components/quizFinished/QuizFinished";
+import { QuestionService } from "../../service/QuestionService";
+import { ResponseService } from "../../service/ResponseService";
 
 //Css
 import "./Quiz.css";
 
 const Quiz = () => {
-  const apiFetch = new ApiFetch();
+  const questionService = new QuestionService();
+  const responseService = new ResponseService();
 
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -28,37 +29,34 @@ const Quiz = () => {
 
   const [quizFinished, setQuizFinished] = useState(false);
 
-  const { id: themeId } = JSON.parse(localStorage.getItem("theme"));
+  const { id: themeId } = useParams();
 
   useEffect(() => {
-    async function getQuestionsByThemeId() {
-      const url = `${URL_BASE}/question/quiz/${themeId}`;
+    setLoading(true);
 
-      setLoading(true);
-      const response = await fetch(url);
+    const questionResponse = questionService.find10QuestionsByThemeId(themeId);
 
-      if (response.status === 404) {
-        setTextAlert("Nenhuma questão cadastrada");
+    questionResponse.then(response => {
+      if(!response.success) {
+        setTextAlert(response.message);
         setInformationAlert(true);
+        return;
       }
 
-      const questionsJson = await response.json();
-      setLoading(false);
+      setQuestions(response.data);
 
-      setQuestions(questionsJson);
-
-      if (questionsJson.length < 5) {
+      if(response.data.length < 5){
         setTextAlert("Cadastre no mínimo 5 questões para jogar esse quiz");
         setInformationAlert(true);
       }
-    }
 
-    getQuestionsByThemeId();
-  }, []);
+      setLoading(false);
+    })
+  }, [themeId]);
 
   const [clickEnabled, setClickEnabled] = useState(true);
 
-  function handleAnswerClick(event, alternativeId, questionId, creatorId) {
+  function handleAnswerClick(event, alternativeId, questionId) {
     setClickEnabled(false);
 
     const isCorrect = isAlternativeCorrect(event);
@@ -98,7 +96,7 @@ const Quiz = () => {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     }, 1500);
 
-    if (token && user.uuid !== creatorId) {
+    if (token) {
       postResponse(user.uuid, questionId, alternativeId);
     }
   }
@@ -107,16 +105,11 @@ const Quiz = () => {
     return event.currentTarget.getAttribute("value") === "true";
   }
 
-  function postResponse(uuid, questionId, alternativeId) {
-    const basePath = `/response/${uuid}/${questionId}/${alternativeId}`;
-
-    const promisse = apiFetch.postResponse(basePath);
-
-    promisse.then((response) => {
-      if (!response.success) {
-        console.log(response.message);
-      }
-    });
+  async function postResponse(uuid, questionId, alternativeId) {
+    const response = await responseService.insertResponse(uuid, questionId, alternativeId);
+    if(!response.success) {
+      console.log("Usuário está jogando sem salvar suas respostas")
+    }
   }
 
   function restart() {

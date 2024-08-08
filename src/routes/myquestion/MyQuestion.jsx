@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Pagination from "../../components/pagination/Pagination";
 import SearchComponent from "../../components/searchComponent/SearchComponent";
-import { ApiFetch } from "../../util/ApiFetch";
 import Loading from "../../components/loading/Loading";
 import InformationBox from "../../components/informationBox/InformationBox";
 import ConfirmBox from "../../components/confirmBox/ConfirmBox";
@@ -9,11 +8,12 @@ import UpdateBox from "../../components/updateBox/UpdateBox";
 import NotFoundComponent from "../../components/notFound/NotFoundComponent";
 import MyAlternative from "./MyAlternative";
 import { DEFAULT_IMG } from "../../App";
+import { QuestionService } from "./../../service/QuestionService";
 
 import "./MyQuestion.css";
 
 const MyQuestion = () => {
-  const apiFetch = new ApiFetch();
+  const questionService = new QuestionService();
 
   const {
     id: themeId,
@@ -30,7 +30,7 @@ const MyQuestion = () => {
   const [isUpdateBox, setUpdateBox] = useState(false);
   const [isInformationBox, setInformationBox] = useState(false);
 
-  const [callBack, setCallBack] = useState();
+  const [callBack, setCallBack] = useState({});
 
   const [informationData, setInformationData] = useState({
     text: "",
@@ -40,27 +40,29 @@ const MyQuestion = () => {
 
   const [questionTitle, setQuestionTitle] = useState("");
 
-  function changeName(propsQuestionTitle){
+  function changeName(propsQuestionTitle) {
     setQuestionTitle(propsQuestionTitle);
   }
 
   useEffect(() => {
-    setLoading(true);
-    const promisse = apiFetch.getPages(
-      `/question/creator/theme/${themeId}?page=${currentPage}&title=${questionTitle}`,
-      "Questões não encontradas ou não cadastradas"
-    );
+    async function fetchData() {
+      setLoading(true);
+      const response = await questionService.findQuestionsByCreator(
+        themeId,
+        currentPage,
+        questionTitle
+      );
+      setLoading(false);
 
-    promisse.then((response) => {
       if (!response.success) {
         activeInformationBox(true, response.message);
-        setLoading(false);
+        return;
       }
+      setTotalPages(response.data.totalPages);
+      setQuestions(response.data.content);
+    }
 
-      setLoading(false);
-      setTotalPages(response.totalPages);
-      setQuestions(response.data);
-    });
+    fetchData();
   }, [currentPage, callBack]);
 
   const [newQuestion, setNewQuestion] = useState({
@@ -114,40 +116,36 @@ const MyQuestion = () => {
     setUpdateBox(true);
   }
 
-  function removeQuestion() {
+  async function removeQuestion() {
     setLoading(true);
-    const promisse = apiFetch.delete(`/question/${questionId}`, false);
+    const response = await questionService.removeQuestion(questionId);
+    setLoading(false);
 
-    promisse.then((response) => {
-      if (!response.removed) {
-        activeInformationBox(true, response.message);
-        setLoading(false);
-        return;
-      }
+    if (!response.success) {
+      activeInformationBox(true, response.message);
+      return;
+    }
 
-      activeInformationBox(false, "Questão removida com sucesso!");
-      setCallBack({})
-      setLoading(false);
-      setConfirmBox(false);
-    });
+    activeInformationBox(false, "Questão removida com sucesso!");
+    setCallBack({});
+    setConfirmBox(false);
   }
 
-  function updateQuestion() {
+  async function updateQuestion() {
     setLoading(true);
-    const promisse = apiFetch.patch(`/question/${questionId}`, newQuestion);
+    const response = await questionService.updateQuestion(
+      questionId,
+      newQuestion
+    );
+    setLoading(false);
+    if (!response.success) {
+      activeInformationBox(true, response.message);
+      return;
+    }
 
-    promisse.then((response) => {
-      if (!response.success) {
-        activeInformationBox(true, response.message);
-        setLoading(false);
-        return;
-      }
-
-      activeInformationBox(false, "Questão atualizada com sucesso");
-      setCallBack({});
-      setLoading(false);
-      setUpdateBox(false);
-    });
+    activeInformationBox(false, "Questão atualizada com sucesso");
+    setCallBack({});
+    setUpdateBox(false);
   }
 
   function activeInformationBox(isFail, message) {
@@ -177,7 +175,11 @@ const MyQuestion = () => {
       <div className="my-question">
         <div className="my-question-header">
           <div className="theme-info">
-            <img src={themeUrl == null || themeUrl == "" ? DEFAULT_IMG : themeUrl} alt="image-theme" loading="lazy"/>
+            <img
+              src={themeUrl == null || themeUrl == "" ? DEFAULT_IMG : themeUrl}
+              alt="image-theme"
+              loading="lazy"
+            />
             <span>{themeName}</span>
           </div>
 
@@ -245,7 +247,7 @@ const MyQuestion = () => {
               <NotFoundComponent title="Questão não encontrada" />
             )}
           </div>
-          
+
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

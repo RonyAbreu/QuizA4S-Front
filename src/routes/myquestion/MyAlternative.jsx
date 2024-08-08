@@ -1,13 +1,14 @@
 import { useState } from "react";
 import UpdateBox from "../../components/updateBox/UpdateBox";
 import Loading from "../../components/loading/Loading";
-import { ApiFetch } from "../../util/ApiFetch";
 import InformationBox from "../../components/informationBox/InformationBox";
+import { AlternativeService } from './../../service/AlternativeService';
 
 import "./MyAlternative.css";
 
 const MyAlternative = ({ alternatives, setShowAlternatives, setCallBack }) => {
-  const apiFetch = new ApiFetch();
+  const alternativeService = new AlternativeService();
+
   const alternativeList = ["A", "B", "C", "D"];
 
   const [newResponse, setResponse] = useState("");
@@ -65,27 +66,19 @@ const MyAlternative = ({ alternatives, setShowAlternatives, setCallBack }) => {
     setUpdateBox(true);
   }
 
-  function updateQuestion() {
+  async function updateAlternative() {
     setLoading(true);
-    const promisse = apiFetch.patch(`/alternative/${alternativeId}`, {
-      text: newResponse,
-    });
+    const response = await alternativeService.updateAlternative(alternativeId, {text: newResponse})
+    setLoading(false);
 
-    promisse.then((response) => {
-      if (!response.success) {
-        activeInformationBox(true, response.message);
-        setLoading(false);
-        return;
-      }
+    if (!response.success) {
+      activeInformationBox(true, response.message);
+      return;
+    }
 
-      setCallBack({});
-      activeInformationBox(false, "Alternativa atualizada com sucesso!");
-      setLoading(false);
-      setUpdateBox(false);
-      setTimeout(() =>{
-        setShowAlternatives(false);
-      }, 1000)
-    });
+    setCallBack({});
+    activeInformationBox(false, "Alternativa atualizada com sucesso!");
+    setUpdateBox(false);
   }
 
   return (
@@ -120,7 +113,7 @@ const MyAlternative = ({ alternatives, setShowAlternatives, setCallBack }) => {
           title="Atualizar Alternativa"
           inputs={inputs}
           onChange={changeValue}
-          onClickSave={updateQuestion}
+          onClickSave={updateAlternative}
           onClickCancel={() => setUpdateBox(false)}
         />
       )}

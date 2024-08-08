@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import { ApiFetch } from "../../util/ApiFetch";
 import Pagination from "../../components/pagination/Pagination";
 import Theme from "../../components/theme/Theme";
 import Loading from "../../components/loading/Loading";
 import SearchComponent from "../../components/searchComponent/SearchComponent";
 import NotFoundComponent from "../../components/notFound/NotFoundComponent";
+import { ThemeService } from "../../service/ThemeService";
 
 import "./MyTheme.css";
 
 const MyTheme = () => {
-  const apiFetch = new ApiFetch();
+  const themeService = new ThemeService();
 
   const [loading, setLoading] = useState(false);
 
@@ -20,29 +20,31 @@ const MyTheme = () => {
 
   const [themeName, setThemeName] = useState("");
 
-  function changeName(propsThemeName){
+  function changeName(propsThemeName) {
     setThemeName(propsThemeName);
   }
 
   useEffect(() => {
-    setLoading(true);
-    const promisse = apiFetch.getPages(
-      `/theme/creator?page=${currentPage}&name=${themeName}`,
-      "Nenhum tema encontrado!"
-    );
-    promisse.then((response) => {
+    async function fetchData() {
+      setLoading(true);
+      const response = await themeService.findThemesByCreator(
+        themeName,
+        currentPage
+      );
+
+      setLoading(false);
+
       if (!response.success) {
-        setLoading(false);
         return;
       }
 
-      setLoading(false);
-      setTotalPages(response.totalPages);
-      setThemes(response.data);
-    });
+      setTotalPages(response.data.totalPages);
+      setThemes(response.data.content);
+    }
+
+    fetchData();
   }, [currentPage, callBack]);
 
-  
   return (
     <div className="container-my-theme">
       <SearchComponent
@@ -54,10 +56,15 @@ const MyTheme = () => {
         onSearch={changeName}
       />
 
-      <Theme themes={themes} setThemes={setThemes} setCurrentPage={setCurrentPage} setCallBack={setCallBack}/>
+      <Theme
+        themes={themes}
+        setThemes={setThemes}
+        setCurrentPage={setCurrentPage}
+        setCallBack={setCallBack}
+      />
 
       {!loading && themes.length == 0 && (
-        <NotFoundComponent title="Tema não encontrado"/>
+        <NotFoundComponent title="Tema não encontrado" />
       )}
 
       <Pagination

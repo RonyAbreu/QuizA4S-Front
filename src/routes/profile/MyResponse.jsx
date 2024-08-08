@@ -3,43 +3,43 @@ import FilterComponent from "../../components/filterComponent/FilterComponent";
 import Pagination from "../../components/pagination/Pagination";
 import Loading from "../../components/loading/Loading";
 import NotFoundComponent from "../../components/notFound/NotFoundComponent";
-import { ApiFetch } from "../../util/ApiFetch";
+import { BsCheckCircleFill, BsFillXCircleFill } from "react-icons/bs";
+import { ResponseService } from "../../service/ResponseService";
 
 import "./MyResponse.css";
 
 const MyResponse = () => {
-  const apiFetch = new ApiFetch();
+  const responseService = new ResponseService();
 
   const [responses, setResponses] = useState([]);
-
   const [loading, setLoading] = useState(false);
-
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-
   const [date, setDate] = useState("");
   const [questionId, setQuestionId] = useState("");
 
-  const basePath = `/response/question/creator?page=${currentPage}&date=${date}&questionId=${questionId}`;
-
   useEffect(() => {
-    setLoading(true);
+    async function fetchData() {
+      setLoading(true);
 
-    const promisse = apiFetch.getPages(basePath, "Resposta não encontrada");
+      const response = await responseService.findResponsesByQuestionCreator(
+        currentPage
+      );
 
-    promisse.then((response) => {
+      setLoading(false);
       if (!response.success) {
-        setLoading(false);
         setResponses([]);
         setTotalPages(0);
         setCurrentPage(0);
+        return;
       }
 
-      setLoading(false);
-      setResponses(response.data);
-      setTotalPages(response.totalPages);
-    });
-  }, [currentPage, totalPages]);
+      setResponses(response.data.content);
+      setTotalPages(response.data.totalPages);
+    }
+
+    fetchData();
+  }, [currentPage]);
 
   function changeData(propsData) {
     setDate(propsData.date);
@@ -49,7 +49,6 @@ const MyResponse = () => {
   return (
     <div className="container-my-response">
       <FilterComponent
-        basePath={`/response/question/creator?page=${currentPage}`}
         onData={changeData}
         setResponses={setResponses}
         setCurrentPage={setCurrentPage}
@@ -74,14 +73,20 @@ const MyResponse = () => {
                   <td>{response.question.title}</td>
                   <td>{response.user.name}</td>
                   <td>{response.alternative.text}</td>
-                  <td>{response.alternative.correct ? "Sim" : "Não"}</td>
+                  <td>
+                    {response.alternative.correct ? (
+                      <BsCheckCircleFill className="correct-response" />
+                    ) : (
+                      <BsFillXCircleFill className="fail-response" />
+                    )}
+                  </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </div>
 
-      {!loading && responses.length == 0 && (
+      {!loading && responses.length === 0 && (
         <NotFoundComponent title="Nenhuma resposta encontrada" />
       )}
 

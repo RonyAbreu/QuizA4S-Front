@@ -3,15 +3,15 @@ import Header from "./components/header/Header";
 import { Outlet} from "react-router-dom";
 import Footer from "./components/footer/Footer";
 import { useContext } from "react";
-import { AuthenticationContext } from "./context/AutenticationContext";
+import { AuthenticationContext } from "./context/AuthenticationContext";
 import Loading from "./components/loading/Loading";
 import { useFooter } from "./hooks/useFooter";
 
 // Css
 import "./App.css";
 
-export const URL_BASE = "http://api.observatorioturismopb.com.br:8085/api/v1";
-export const DEFAULT_IMG = "https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg";
+export const URL_BASE = import.meta.env.VITE_URL_API;
+export const DEFAULT_IMG = import.meta.env.VITE_DEFAULT_IMG_URL;
 
 function App() {
   const { isAuthenticated, loading } = useContext(AuthenticationContext);

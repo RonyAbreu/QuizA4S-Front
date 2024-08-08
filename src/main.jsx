@@ -13,7 +13,7 @@ import Login from "./routes/user/Login.jsx";
 import Register from "./routes/user/Register.jsx";
 import ChooseTheme from "./routes/chooseTheme/ChooseTheme.jsx";
 import Quiz from "./routes/quiz/Quiz.jsx";
-import { AuthenticationProvider } from "./context/AutenticationContext.jsx";
+import { AuthenticationProvider } from "./context/AuthenticationContext.jsx";
 import CreateQuiz from "./routes/createQuiz/CreateQuiz.jsx";
 import Profile from "./routes/profile/Profile.jsx";
 import MyQuestion from "./routes/myquestion/MyQuestion.jsx";

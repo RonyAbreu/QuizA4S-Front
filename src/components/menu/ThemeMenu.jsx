@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { URL_BASE } from "../../App";
 import Loading from "../loading/Loading";
 import InformationBox from "../informationBox/InformationBox";
@@ -8,12 +8,14 @@ import { object, string } from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import "./ThemeMenu.css";
+import SearchImage from "../searchImageComponent/SearchImage";
 
 const url = `${URL_BASE}/theme`;
 
 const ThemeMenu = ({ setThemeMenu }) => {
   const [loadin, setLoading] = useState(false);
   const [informationBox, setInformationBox] = useState(false);
+  const [searchImage, setSearchImage] = useState(false);
 
   const navigate = useNavigate();
 
@@ -23,11 +25,19 @@ const ThemeMenu = ({ setThemeMenu }) => {
     icon: "",
   });
 
+  const inputImageUrl = document.getElementById("input-image-url");
+
+  function getUrlOfImage(imageUrl) {
+    inputImageUrl.value = imageUrl;
+    setSearchImage(false);
+  }
+
   function handleSubmit(themeRequest) {
     const token = localStorage.getItem("token");
 
     if (!token) return;
 
+    themeRequest.imageUrl = inputImageUrl.value
     postTheme(token, themeRequest);
   }
 
@@ -98,7 +108,7 @@ const ThemeMenu = ({ setThemeMenu }) => {
 
   return (
     <div className="theme-menu">
-      <form onSubmit={onSubmit(handleSubmit)} className="form-menu">
+      <form className="form-menu">
         <div className="theme-menu-close">
           <i
             className="bi bi-x-circle-fill"
@@ -121,14 +131,19 @@ const ThemeMenu = ({ setThemeMenu }) => {
         <label className="theme-menu-input">
           <p>Imagem:</p>
           <input
+            id="input-image-url"
             type="text"
-            placeholder="Digite a URL da imagem"
+            placeholder="Digite ou Pesquise a URL da imagem"
             {...register("imageUrl")}
           />
           <span className="span-error-message">{errors?.imageUrl?.message}</span>
         </label>
 
-        <button type="submit" className="theme-menu-btn">
+        <button type="button" className="theme-menu-btn" onClick={() => setSearchImage(true)}>
+          Pesquisar Imagem na Web
+        </button>
+
+        <button type="button" className="theme-menu-btn" onClick={onSubmit(handleSubmit)}>
           Criar
         </button>
 
@@ -141,6 +156,7 @@ const ThemeMenu = ({ setThemeMenu }) => {
           />
         )}
         {loadin && <Loading />}
+        {searchImage && <SearchImage setSearchImage={setSearchImage} getUrlOfImage={getUrlOfImage}/>}
       </form>
     </div>
   );

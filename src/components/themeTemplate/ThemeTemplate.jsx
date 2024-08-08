@@ -3,16 +3,15 @@ import { useLayoutEffect, useState } from "react";
 import Loading from "../loading/Loading";
 import SearchComponent from "../searchComponent/SearchComponent";
 import NotFoundComponent from "../notFound/NotFoundComponent";
-import { ApiFetch } from "../../util/ApiFetch";
 import Pagination from "../pagination/Pagination";
 import { DEFAULT_IMG } from "../../App";
+import { ThemeService } from "./../../service/ThemeService";
 
 //Css
 import "./ThemeTemplate.css";
 
 const ThemeTemplate = ({ baseUrl, onClickFunction }) => {
-  const apiFetch = new ApiFetch();
-
+  const themeService = new ThemeService();
 
   const [themes, setThemes] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,25 +26,21 @@ const ThemeTemplate = ({ baseUrl, onClickFunction }) => {
   }
 
   useLayoutEffect(() => {
-    setLoading(true);
+    async function fetchData() {
+      setLoading(true);
 
-    const promisse = apiFetch.getPages(
-      `${baseUrl}?page=${currentPage}&name=${themeName}`,
-      "Tema não encontrado"
-    );
-
-    promisse.then((response) => {
+      const response = await themeService.findAllThemes(themeName, currentPage);
+      setLoading(false);
       if (!response.success) {
-        setLoading(false);
         setTotalPages(0);
-        setThemes([])
+        setThemes([]);
         return;
       }
+      setTotalPages(response.data.totalPages);
+      setThemes(response.data.content);
+    }
 
-      setLoading(false);
-      setTotalPages(response.totalPages);
-      setThemes(response.data);
-    });
+    fetchData();
   }, [currentPage]);
 
   return (

@@ -1,151 +1,162 @@
-.filter-container{
-    width: 100%;
-    border-radius: 5px;
-    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.423);
-    display: flex;
-    align-items: center;
-    background-color: #ffffffef;
-    padding: 10px;
-    margin-bottom: 1em;
+.filter-container {
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.423);
+  display: flex;
+  align-items: center;
+  background-color: #ffffffef;
+  padding: 10px;
+  margin-bottom: 1em;
 }
 
-.filter-body{
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
+.filter-body {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  padding: 10px;
 }
 
-.container-filter-input{
-    width: 75%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1em;
+.container-filter-input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em;
 }
 
-.container-filter-input p{
-    font-size: 1.2em;
-    margin-left: -20px;
+.filter-input span {
+  font-size: 1.1em;
 }
 
-.filter-body button{
-    width: 100px;
-    height: 30px;
-    cursor: pointer;
-    background-color: rgb(1, 80, 130);
-    border: none;
-    border-radius: 7px;
-    font-size: 1.1em;
-    font-weight: bold;
-    color: #fff;
+.filter-input select {
+  width: 200px;
+  height: 25px;
+  font-size: 1em;
 }
 
-.filter-body button:hover{
-    background-color: #3498dbaf;
+.container-filter-input p {
+  font-size: 1.2em;
+  margin-left: -20px;
 }
 
-.filter-input{
-    display: flex;
-    flex-direction: column;
-    gap: .2em;
+.filter-body button {
+  width: 100px;
+  height: 40px;
+  cursor: pointer;
+  background-color: rgb(1, 80, 130);
+  border: none;
+  border-radius: 4px;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #fff;
 }
 
-.filter-input input{
-    width: 200px;
-    height: 25px;
-    outline: none;
-    padding: 5px;
+.filter-body button:nth-child(3) {
+  background-color: rgb(203, 7, 7);
+}
+
+.filter-input {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.filter-input input {
+  width: 200px;
+  height: 25px;
+  outline: none;
+  padding: 5px;
+  font-size: 1em;
+}
+
+.icon {
+  width: 32px;
+  height: 31px;
+  padding: 5px;
+  background-color: #3498db;
+  border-radius: 50px;
+  color: #fff;
+  cursor: pointer;
+  display: none;
+}
+
+#trash {
+    background-color: rgb(198, 8, 8);
+}
+
+@media (max-width: 1300px) {
+  .filter-body {
+    gap: 1.5em;
+  }
+
+  .container-filter-input p {
+    margin: 0;
     font-size: 1em;
+  }
+
+  .filter-input {
+    font-size: 0.9em;
+  }
+
+  .filter-input input {
+    width: 150px;
+  }
 }
 
-.bi-search{
-    width: 30px;
-    height: 30px;
-    background-color: #3498db;
-    border-radius: 50px;
-    color: #fff;
-    font-size: 1.1em;
+@media (max-width: 1150px) {
+  .filter-body {
+    justify-content: start;
+  }
+
+  .container-filter-input p {
+    width: 50px;
+  }
+  .icon {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  }
+
+  .filter-body button {
     display: none;
+  }
 }
 
-@media(max-width: 900px){
-    .filter-body{
-        justify-content: space-between;
-        gap: 1.5em;
-    }
+@media (max-width: 785px) {
+  .filter-body {
+    flex-direction: column;
+  }
 
-    .container-filter-input p{
-        margin: 0;
-        font-size: 1em;
-    }
+  .filter-body button {
+    width: 250px;
+    height: 30px;
+    display: block;
+    margin-top: 1em;
+  }
 
-    .filter-input{
-        font-size: .9em;
-    }
+  .filter-body i {
+    display: none;
+  }
 
-    .filter-input input{
-        width: 150px;
-    }
-}
+  .filter-input {
+    width: 100%;
+  }
 
-@media(max-width: 650px){
-    .filter-body{
-        justify-content: space-around;
-        gap: .5em;
-    }
+  .filter-input input,
+  .filter-input select {
+    width: 100%;
+  }
 
-    .container-filter-input{
-        width: 85%;
-    }
+  .container-filter-input {
+    flex-direction: column;
+    width: 90%;
+  }
 
-    .container-filter-input p{
-        width: 50px;
-    }
-    .bi-search{
-        display: flex;
-    }
+  .container-filter-input p {
+    width: 100%;
+    font-size: 1.2em;
+    text-align: center;
+  }
 
-    .filter-body button{
-        display: none;
-    }
-}
-
-@media(max-width: 520px){
-    .filter-body{
-        flex-direction: column;
-    }
-
-    .filter-body button{
-        width: 150px;
-        display: block;
-        margin-top: 1em;
-    }
-
-    .filter-body i{
-        display: none;
-    }
-
-    .filter-input{
-        width: 100%;
-    }
-
-    .filter-input input{
-        width: 100%;
-    }
-
-    .container-filter-input{
-        flex-direction: column;
-        width: 90%;
-    }
-
-    .container-filter-input p{
-        width: 100%;
-        font-size: 1.2em;
-        text-align: center;
-    } 
+  .icon {
+    display: none;
+  }
 }

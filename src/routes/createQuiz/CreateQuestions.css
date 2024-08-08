@@ -26,7 +26,7 @@
   width: 150px;
   height: 150px;
   position: absolute;
-  left: 0;
+  right: 0;
   top: -15px;
   display: flex;
   align-items: center;
@@ -207,12 +207,12 @@
   .container-create-theme-info{
     width: 100px;
     height: 100px;
-    left: 10px;
+    right: 10px;
     font-size: .9em;
   }
 }
 
-@media (max-width: 850px) {
+@media (max-width: 880px) {
   .container-create-theme-info{
     width: 160px;
     height: 160px;

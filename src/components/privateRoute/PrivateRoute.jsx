@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AuthenticationContext } from "../../context/AutenticationContext";
+import { AuthenticationContext } from "../../context/AuthenticationContext";
 import Login from "../../routes/user/Login";
 
 const PrivateRoute = ({ children }) => {

@@ -95,4 +95,8 @@
     .form-menu {
       width: 90%;
     }
+
+    .theme-menu-btn {
+      font-size: 1em;
+    }
   }
